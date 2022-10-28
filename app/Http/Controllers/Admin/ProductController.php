@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'products';
+        $title = 'Produits';
         if ($request->ajax()) {
             $products = Product::latest();
             return DataTables::of($products)
@@ -86,7 +86,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $title = 'add product';
+        $title = 'Ajouter un produit';
         $purchases = Purchase::get();
         return view('admin.products.create',compact(
             'title','purchases'
@@ -118,7 +118,7 @@ class ProductController extends Controller
             'discount'=>$request->discount,
             'description'=>$request->description,
         ]);
-        $notification = notify("Product has been added");
+        $notification = notify("Le produit a été ajouté");
         return redirect()->route('products.index')->with($notification);
     }
 
@@ -131,7 +131,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $title = 'edit product';
+        $title = 'Modifier le produit';
         $purchases = Purchase::get();
         return view('admin.products.edit',compact(
             'title','product','purchases'
@@ -164,7 +164,7 @@ class ProductController extends Controller
             'discount'=>$request->discount,
             'description'=>$request->description,
         ]);
-        $notification = notify('product has been updated');
+        $notification = notify('Le produit a été mis à jour');
         return redirect()->route('products.index')->with($notification);
     }
 
@@ -175,7 +175,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function expired(Request $request){
-        $title = "expired Products";
+        $title = "Produits expirés";
         if($request->ajax()){
             $products = Purchase::whereDate('expiry_date', '=', Carbon::now())->get();
             return DataTables::of($products)
@@ -200,7 +200,8 @@ class ProductController extends Controller
                     return $category;
                 })
                 ->addColumn('price',function($product){                   
-                    return settings('app_currency','$').' '. $product->price;
+                    /* return settings('app_currency','CFA').' '. $product->price; */
+                    return settings('app_currency','').' '. $product->price;
                 })
                 ->addColumn('quantity',function($product){
                     if(!empty($product->purchase)){
@@ -245,7 +246,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function outstock(Request $request){
-        $title = "outstocked Products";
+        $title = "Produits en surstock";
         if($request->ajax()){
             $products = Purchase::where('quantity', '<=', 0)->get();
             return DataTables::of($products)
@@ -270,7 +271,8 @@ class ProductController extends Controller
                     return $category;
                 })
                 ->addColumn('price',function($product){                   
-                    return settings('app_currency','$').' '. $product->price;
+                    /* return settings('app_currency','CFA').' '. $product->price; */
+                    return settings('app_currency','').' '. $product->price;
                 })
                 ->addColumn('quantity',function($product){
                     if(!empty($product->purchase)){

@@ -6,10 +6,10 @@
 
 @push('page-header')
 <div class="col-sm-12">
-	<h3 class="page-title">Edit Product</h3>
+	<h3 class="page-title">Modifier le produit</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Edit Product</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Modifier le produit</li>
 	</ul>
 </div>
 @endpush
@@ -21,7 +21,7 @@
 			<div class="card-body custom-edit-service">
 				
 
-			<!-- Edit Product -->
+			<!-- Modifier le produit -->
 				<form method="post" enctype="multipart/form-data" id="update_service" action="{{route('products.update',$product)}}">
 					@csrf
                     @method("PUT")
@@ -30,7 +30,7 @@
 							
 							<div class="col-lg-12">
 								<div class="form-group">
-									<label>Product <span class="text-danger">*</span></label>
+									<label>Produit <span class="text-danger">*</span></label>
 									<select class="select2 form-select form-control" name="product"> 
                                         @foreach ($purchases as $purchase)
                                             @if(!empty($product->purchase))
@@ -47,14 +47,14 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label>Selling Price<span class="text-danger">*</span></label>
+									<label>Prix de vente<span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="price" value="{{$product->price}}">
 								</div>
 							</div>
 	
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label>Discount (%)<span class="text-danger">*</span></label>
+									<label>Rabais (%)<span class="text-danger">*</span></label>
 									<input class="form-control" value="{{$product->discount}}" type="text" name="discount" value="{{old('discount')}}">
 								</div>
 							</div>
@@ -68,7 +68,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="form-group">
-									<label>Descriptions <span class="text-danger">*</span></label>
+									<label>Descriptions </label>
 									<textarea class="form-control service-desc" value="{{$product->description}}" name="description">{{$product->description}}</textarea>
 								</div>
 							</div>
@@ -77,10 +77,10 @@
 					</div>					
 					
 					<div class="submit-section">
-						<button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+						<button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Envoyer</button>
 					</div>
 				</form>
-			<!-- /Edit Product -->
+			<!-- /Modifier le produit -->
 			</div>
 		</div>
 	</div>			

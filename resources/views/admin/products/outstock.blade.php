@@ -8,10 +8,10 @@
 
 @push('page-header')
 <div class="col-sm-12">
-	<h3 class="page-title">Outstock</h3>
+	<h3 class="page-title">Stock épuisé</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('products.index')}}">Products</a></li>
-		<li class="breadcrumb-item active">Outstock</li>
+		<li class="breadcrumb-item"><a href="{{route('products.index')}}">Produits</a></li>
+		<li class="breadcrumb-item active">Stock épuisé</li>
 	</ul>
 </div>
 @endpush
@@ -20,19 +20,19 @@
 <div class="row">
 	<div class="col-md-12">
 	
-		<!-- Outstock Products -->
+		<!-- Stock de produit épuisé -->
 		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
 					<table id="outstock-product" class=" table table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Brand Name</th>
-								<th>Category</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th>Discount</th>
-								<th>Expire</th>
+								<th>Nom du produit</th>
+								<th>Catégorie</th>
+								<th>Prix (CFA)</th>
+								<th>Quantité</th>
+								<th>Rabais</th>
+								<th>Expirer</th>
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- /Outstock Products-->
+		<!-- /Stock de produit épuisé-->
 		
 	</div>
 </div>

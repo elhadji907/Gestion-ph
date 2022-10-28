@@ -8,10 +8,10 @@
 
 @push('page-header')
 <div class="col-sm-12">
-	<h3 class="page-title">Expired</h3>
+	<h3 class="page-title">Périmé</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('products.index')}}">Products</a></li>
-		<li class="breadcrumb-item active">Expired</li>
+		<li class="breadcrumb-item"><a href="{{route('products.index')}}">Produits</a></li>
+		<li class="breadcrumb-item active">Périmé</li>
 	</ul>
 </div>
 @endpush
@@ -27,12 +27,12 @@
 					<table id="expired-product" class="datatable table table-striped table-bordered table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Brand Name</th>
-								<th>Category</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th>Discount</th>
-								<th>Expire</th>
+								<th>Nom du produit</th>
+								<th>Catégorie</th>
+								<th>Prix (CFA)</th>
+								<th>Quantité</th>
+								<th>Rabais</th>
+								<th>Expirer</th>
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>
