@@ -45,7 +45,8 @@ class ProductController extends Controller
                     return $category;
                 })
                 ->addColumn('price',function($product){                   
-                    return settings('app_currency','$').' '. $product->price;
+                    /* return settings('app_currency','CFA').' '. $product->price; */
+                    return settings('app_currency','').' '. $product->price;
                 })
                 ->addColumn('quantity',function($product){
                     if(!empty($product->purchase)){
@@ -206,6 +207,11 @@ class ProductController extends Controller
                         return $product->purchase->quantity;
                     }
                 })
+                ->addColumn('discount',function($product){
+                    if(!empty($product->purchase)){
+                        return $product->purchase->discount;
+                    }
+                })
                 ->addColumn('expiry_date',function($product){
                     if(!empty($product->purchase)){
                         return date_format(date_create($product->purchase->expiry_date),'d M, Y');
@@ -269,6 +275,11 @@ class ProductController extends Controller
                 ->addColumn('quantity',function($product){
                     if(!empty($product->purchase)){
                         return $product->purchase->quantity;
+                    }
+                })
+                ->addColumn('discount',function($product){
+                    if(!empty($product->purchase)){
+                        return $product->purchase->discount;
                     }
                 })
                 ->addColumn('expiry_date',function($product){

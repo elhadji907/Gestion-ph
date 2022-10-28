@@ -99,12 +99,12 @@
             var route = $(this).data('route');
             swal.queue([
                 {
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
+                    title: "Es-tu sûr ?",
+                    text: "Vous ne pourrez pas annuler cette !",
                     type: "warning",
                     showCancelButton: !0,
-                    confirmButtonText: '<i class="fe fe-trash mr-1"></i> Delete!',
-                    cancelButtonText: '<i class="fa fa-times mr-1"></i> Cancel!',
+                    confirmButtonText: '<i class="fe fe-trash mr-1"></i> Supprimer !',
+                    cancelButtonText: '<i class="fa fa-times mr-1"></i> Annuler !',
                     confirmButtonClass: "btn btn-success mt-2",
                     cancelButtonClass: "btn btn-danger ml-2 mt-2",
                     buttonsStyling: !1,
@@ -117,8 +117,8 @@
                                 success: function(){
                                     swal.insertQueueStep(
                                         Swal.fire({
-                                            title: "Deleted!",
-                                            text: "Resource has been deleted.",
+                                            title: "Supprimé !",
+                                            text: "La ressource a été supprimée.",
                                             type: "success",
                                             showConfirmButton: !1,
                                             timer: 1500,

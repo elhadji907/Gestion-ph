@@ -14,7 +14,7 @@
                 @csrf
                 @method("DELETE")
                 <div class="modal-body">
-                    <p id="acc_msg">Are you sure you want to delete ?</p>
+                    <p id="acc_msg">Voulez-vous vraiment supprimer ?</p>
                     <input type="hidden" name="id" id="delete_id">
                 </div>
                 <div class="modal-footer">

@@ -5,7 +5,7 @@ return [
     // All the sections for the settings page
     'sections' => [
         'app' => [
-            'title' => 'General Settings',
+            'title' => 'Paramètres généraux',
             'descriptions' => '', // (optional)
             'icon' => 'fa fa-cog', // (optional)
 
@@ -15,12 +15,12 @@ return [
                     'type' => 'text', // type of input can be text, number, textarea, select, boolean, checkbox etc.
                     'label' => 'App Name', // label for input
                     // optional properties
-                    'placeholder' => 'Application Name', // placeholder for input
+                    'placeholder' => 'Nom de l’application', // placeholder for input
                     'class' => 'form-control', // override global input_class
                     'style' => '', // any inline styles
                     'rules' => 'required|min:2|max:20', // validation rules for this input
                     'value' => config('app.name'), // any default value
-                    'hint' => 'You can set the app name here' // help block text for input
+                    'hint' => 'Vous pouvez définir le nom de l’application ici' // help block text for input
                 ],
                 [
                     'name' => 'app_currency',
@@ -30,8 +30,8 @@ return [
                     'class' => 'form-control',
                     'style' => '', // any inline styles
                     'rules' => 'required|max:10', // validation rules for this input
-                    'value' => '$', // any default value
-                    'hint' => 'Use your currency symbol like $',
+                    'value' => 'CFA', // any default value
+                    'hint' => 'Utilisez votre symbole monétaire comme CFA',
                 ],
                 [
                     'name' => 'logo',

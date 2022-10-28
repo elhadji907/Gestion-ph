@@ -23,7 +23,7 @@ class DashboardController extends Controller
                 ->name('pieChart')
                 ->type('pie')
                 ->size(['width' => 400, 'height' => 200])
-                ->labels(['Total Purchases', 'Total Suppliers','Total Sales'])
+                ->labels(['Total des achats', 'Total des fournisseurs','Total des ventes'])
                 ->datasets([
                     [
                         'backgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
@@ -36,9 +36,14 @@ class DashboardController extends Controller
         $total_expired_products = Purchase::whereDate('expiry_date', '=', Carbon::now())->count();
         $latest_sales = Sale::whereDate('created_at','=',Carbon::now())->get();
         $today_sales = Sale::whereDate('created_at','=',Carbon::now())->sum('total_price');
+        
+        $sales = Sale::whereDate('created_at','=',Carbon::now())->get();
+
+        /* dd($sales); */
+
         return view('admin.dashboard',compact(
             'title','pieChart','total_expired_products',
-            'latest_sales','today_sales','total_categories'
+            'latest_sales','today_sales','total_categories','sales'
         ));
     }
 }

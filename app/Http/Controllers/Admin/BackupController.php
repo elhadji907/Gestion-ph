@@ -59,7 +59,7 @@ class BackupController extends Controller
      */
     public function create()
     {
-        $notification = 'backup created successfully';
+        $notification = 'Sauvegarde créée avec succès';
         try {
             ini_set('max_execution_time', 600);
 
@@ -68,7 +68,7 @@ class BackupController extends Controller
             Artisan::call('backup:run');
 
             $output = Artisan::output();
-            if (strpos($output, 'Backup failed because')) {
+            if (strpos($output, 'La sauvegarde a échoué car')) {
                 preg_match('/Backup failed because(.*?)$/ms', $output, $match);
                 $notification = notify('backup process failed because ');
                 $notification .= isset($match[1]) ? $match[1] : '';
@@ -124,7 +124,7 @@ class BackupController extends Controller
 
         if ($disk->exists($file_name)) {
             $disk->delete($file_name);
-            $notification = notify('backup created successfully');
+            $notification = notify('Sauvegarde créée avec succès');
             return back()->with($notification);
         } else {
             abort(404, trans('backup.backup_doesnt_exist'));

@@ -52,7 +52,7 @@
 @endsection
 
 @push('page-js')
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         var table = $('#expired-product').DataTable({
             processing: true,

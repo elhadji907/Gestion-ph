@@ -18,8 +18,9 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $title = 'categories';
+        $categories = Category::get();
         if($request->ajax()){
-            $categories = Category::get();
+            /* $categories = Category::get(); */
             return DataTables::of($categories)
                     ->addIndexColumn()
                     ->addColumn('created_at',function($category){
@@ -40,8 +41,9 @@ class CategoryController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
+
         return view('admin.products.categories',compact(
-            'title'
+            'title', 'categories'
         ));
     }
 
@@ -59,7 +61,7 @@ class CategoryController extends Controller
             'name'=>'required|max:100',
         ]);
         Category::create($request->all());
-        $notification=array("Category has been added");
+        $notification=array("La catégorie a été ajoutée");
         return back()->with($notification);
     }
 
@@ -80,7 +82,7 @@ class CategoryController extends Controller
         $category->update([
             'name'=>$request->name,
         ]);
-        $notification = notify("Category has been updated");
+        $notification = notify("La catégorie a été mise à jour");
         return back()->with($notification);
     }
 

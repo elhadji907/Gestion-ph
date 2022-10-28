@@ -45,12 +45,12 @@ class StockAlertNotification extends Notification
     {
         $url = url(route('purchases.edit',$this->data->id));
         return (new MailMessage)
-                    ->greeting('Hello!')
-                    ->line('The Product below is running out of stock.')
-                    ->line("Product's name is ".$this->data->product ." is only ".$this->data->quantity." left in quantity")
-                    ->line("Please update the product's quantity or make a new purchase.")
-                    ->action('View Product', $url)
-                    ->line('Thank you!');
+                    ->greeting('Bonjour !')
+                    ->line('Le produit ci-dessous est en rupture de stock.')
+                    ->line("Le nom du produit est ".$this->data->product ." est seulement ".$this->data->quantity." laissé en quantité")
+                    ->line("Veuillez mettre à jour la quantité du produit ou effectuer un nouvel achat.")
+                    ->action('Voir le produit', $url)
+                    ->line('Merci !');
     }
 
     /**

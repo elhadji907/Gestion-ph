@@ -33,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                    <button type="submit" class="btn btn-primary btn-block">Enregistrer les modifications</button>
                 </form>
             </div>
         </div>

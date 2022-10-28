@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "353d1bfb2b817e0d7bdb31b137344819",
+    "content-hash": "04b6f045569c20138fb64a8bf5078ab1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7217,16 +7217,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v9.19.0",
+            "version": "v9.21.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "553482df5f68969928acc0ee1a3af032cdaaf824"
+                "reference": "a7fd01f06282923e9c63fa27fe6b391e21dc321a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/553482df5f68969928acc0ee1a3af032cdaaf824",
-                "reference": "553482df5f68969928acc0ee1a3af032cdaaf824",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/a7fd01f06282923e9c63fa27fe6b391e21dc321a",
+                "reference": "a7fd01f06282923e9c63fa27fe6b391e21dc321a",
                 "shasum": ""
             },
             "require": {
@@ -7286,7 +7286,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v9.19.0"
+                "source": "https://github.com/yajra/laravel-datatables/tree/v9.21.2"
             },
             "funding": [
                 {
@@ -7298,7 +7298,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-01-18T01:13:47+00:00"
+            "time": "2022-07-12T04:48:03+00:00"
         }
     ],
     "packages-dev": [
@@ -10032,5 +10032,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }

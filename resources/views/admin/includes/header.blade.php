@@ -88,13 +88,13 @@
 					</div>
 				</div>
 				
-				<a class="dropdown-item" href="{{route('profile')}}">My Profile</a>
-				@can('view-settings')<a class="dropdown-item" href="{{route('settings')}}">Settings</a>@endcan
+				<a class="dropdown-item" href="{{route('profile')}}">Mon profil</a>
+				@can('view-settings')<a class="dropdown-item" href="{{route('settings')}}">Paramètres</a>@endcan
 				
 				<a href="javascript:void(0)" class="dropdown-item">
 					<form action="{{route('logout')}}" method="post">
 					@csrf
-					<button type="submit" class="btn">Logout</button>
+					<button type="submit" class="btn">Déconnexion</button>
 				</form>
 				</a>
 			</div>
