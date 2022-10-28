@@ -21,7 +21,7 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'purchases';
+        $title = 'Achats';
         if($request->ajax()){
             $purchases = Purchase::get();
             return DataTables::of($purchases)
@@ -75,7 +75,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        $title = 'create purchase';
+        $title = 'Créer un achat';
         $categories = Category::get();
         $suppliers = Supplier::get();
         return view('admin.purchases.create',compact(
@@ -114,7 +114,7 @@ class PurchaseController extends Controller
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
         ]);
-        $notifications = notify("Purchase has been added");
+        $notifications = notify("L’achat a été ajouté");
         return redirect()->route('purchases.index')->with($notifications);
     }
 
@@ -128,7 +128,7 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
-        $title = 'edit purchase';
+        $title = 'Modifier l’achat';
         $categories = Category::get();
         $suppliers = Supplier::get();
         return view('admin.purchases.edit',compact(
@@ -168,12 +168,12 @@ class PurchaseController extends Controller
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
         ]);
-        $notifications = notify("Purchase has been updated");
+        $notifications = notify("L’achat a été mis à jour");
         return redirect()->route('purchases.index')->with($notifications);
     }
 
     public function reports(){
-        $title ='purchase reports';
+        $title ='Rapports d’achat';
         return view('admin.purchases.reports',compact('title'));
     }
 
@@ -182,7 +182,7 @@ class PurchaseController extends Controller
             'from_date' => 'required',
             'to_date' => 'required'
         ]);
-        $title = 'purchases reports';
+        $title = 'Rapports d’achats';
         $purchases = Purchase::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
         return view('admin.purchases.reports',compact(
             'purchases','title'

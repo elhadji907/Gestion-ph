@@ -9,14 +9,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Purchases Reports</h3>
+	<h3 class="page-title">Rapports d’achats</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Generate Purchase Reports</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Générer des rapports d’achat</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="#generate_report" data-toggle="modal" class="btn btn-primary float-right mt-2">Generate Report</a>
+	<a href="#generate_report" data-toggle="modal" class="btn btn-primary float-right mt-2">Générer un rapport</a>
 </div>
 @endpush
 
@@ -24,19 +24,19 @@
     @isset($purchases)
     <div class="row">
         <div class="col-md-12">
-            <!-- Purchases reports-->
+            <!-- Rapports d’achats-->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="purchase-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Medicine Name</th>
-                                    <th>Category</th>
-                                    <th>Supplier</th>
-                                    <th>Purchase Cost</th>
-                                    <th>Quantity</th>
-                                    <th>Expire Date</th>                                </tr>
+                                    <th>Nom du médicament</th>
+                                    <th>Catégorie</th>
+                                    <th>Fournisseur</th>
+                                    <th>Coût d’achat</th>
+                                    <th>Quantité</th>
+                                    <th>Date d’expiration</th>                                </tr>
                             </thead>
                             <tbody>
                             @foreach ($purchases as $purchase)
@@ -76,7 +76,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Generate Report</h5>
+                    <h5 class="modal-title">Générer un rapport</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -89,20 +89,20 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>From</label>
+                                            <label>De</label>
                                             <input type="date" name="from_date" class="form-control from_date">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>To</label>
+                                            <label>À</label>
                                             <input type="date" name="to_date" class="form-control to_date">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block submit_report">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block submit_report">Envoyer</button>
                     </form>
                 </div>
             </div>
@@ -120,7 +120,7 @@
             buttons: [
                 {
                 extend: 'collection',
-                text: 'Export Data',
+                text: 'Exporter des données',
                 buttons: [
                     {
                         extend: 'pdf',

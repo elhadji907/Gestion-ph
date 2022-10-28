@@ -8,14 +8,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Supplier</h3>
+	<h3 class="page-title">Fournisseur</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Supplier</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Fournisseur</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="{{route('suppliers.create')}}" class="btn btn-primary float-right mt-2">Add New</a>
+	<a href="{{route('suppliers.create')}}" class="btn btn-primary float-right mt-2">Ajouter un nouveau</a>
 </div>
 @endpush
 
@@ -30,12 +30,12 @@
 					<table id="supplier-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Product</th>
-								<th>Name</th>
-								<th>Phone</th>
+								<th>Produit</th>
+								<th>Nom</th>
+								<th>Téléphone</th>
 								<th>Email</th>
-								<th>Address</th>
-								<th>Company</th>
+								<th>Addresse</th>
+								<th>Compagnie</th>
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>

@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     public function index(){
-        $title = 'dashboard';
+        $title = 'tableau de bord';
         $total_purchases = Purchase::where('expiry_date','!=',Carbon::now())->count();
         $total_categories = Category::count();
         $total_suppliers = Supplier::count();

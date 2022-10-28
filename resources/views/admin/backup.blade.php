@@ -2,17 +2,17 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Backups</h3>
+	<h3 class="page-title">Sauvegardes</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">App Backups</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Sauvegardes d’applications</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
     <form action="{{route('backup.store')}}" method="post">
         @csrf
         @method("PUT")
-        <button class="btn btn-primary float-right mt-2" type="submit">Create Backup</button>
+        <button class="btn btn-primary float-right mt-2" type="submit">Créer une sauvegarde</button>
     </form>
 	{{-- <a href="#add_categories" data-toggle="modal" class="btn btn-primary float-right mt-2">Add Category</a> --}}
 </div>
@@ -30,9 +30,9 @@
 						<thead>
 							<tr style="boder:1px solid black;">
                                 <th>ID</th>
-                                <th>Disk</th>
-                                <th>Backup Date</th>
-                                <th>File Size</th>
+                                <th>Disque</th>
+                                <th>Date de sauvegarde</th>
+                                <th>Taille du fichier</th>
 								<th class="text-center action-btn">Actions</th>
 							</tr>
 						</thead>

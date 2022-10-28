@@ -16,7 +16,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'permissions';
+        $title = 'Autorisations';
         if ($request->ajax()){
             $permissions = Permission::get();
             return DataTables::of($permissions)
@@ -61,7 +61,7 @@ class PermissionController extends Controller
             $permission = Permission::create(['name' => $permission]);
             $permission->assignRole('super-admin');
         }
-        $notification = notify("permission created");
+        $notification = notify("autorisation créée");
         return back()->with($notification);
     }
 
@@ -82,7 +82,7 @@ class PermissionController extends Controller
         $permission->update([
             'name' => $request->permission,
         ]);
-        $notification = notify('permission updated');
+        $notification = notify('autorisation mise à jour');
         return back()->with($notification);
     }
 

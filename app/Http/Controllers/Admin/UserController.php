@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'users';
+        $title = 'Utilisateurs';
         if ($request->ajax()) {
             $users = User::get();
             return DataTables::of($users)
@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $title = 'create user';
+        $title = 'Créer un utilisateur';
         $roles = Role::get();
         return view('admin.users.create', compact('title','roles'));
     }
@@ -98,7 +98,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole($request->role);
-        $notifiation = notify('user created successfully');
+        $notifiation = notify('utilisateur créé avec succès');
         return redirect()->route('users.index')->with($notifiation);
     }
 
@@ -111,7 +111,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $title = "edit user";
+        $title = "Modifier l’utilisateur";
         $roles = Role::get();
         return view('admin.users.edit',compact(
             'title','roles','user'
@@ -154,12 +154,12 @@ class UserController extends Controller
             $user->removeRole($userRole);
         }
         $user->assignRole($request->role);
-        $notification = notify('user updated successfully');
+        $notification = notify('Mise à jour réussie par l’utilisateur');
         return redirect()->route('users.index')->with($notification);
     }
 
     public function profile(){
-        $title = 'user profile';
+        $title = 'Profil utilisateur';
         $roles = Role::get();
         return view('admin.users.profile',compact(
             'title','roles'
@@ -184,7 +184,7 @@ class UserController extends Controller
             'email' => $request->email,
             'avatar' => $imageName,
         ]);
-        $notification = notify('profile updated successfully');
+        $notification = notify('Profil mis à jour avec succès');
         return redirect()->route('profile')->with($notification);
     }
 
@@ -203,11 +203,11 @@ class UserController extends Controller
         $verify_password = password_verify($request->current_password, $user->password);
         if ($verify_password) {
             $user->update(['password'=>Hash::make($request->password)]);
-            $notification = notify('User password updated successfully!!!');
+            $notification = notify('Le mot de passe utilisateur a été mis à jour avec succès!!!');
             $logout = auth()->logout();
             return back()->with($notification, $logout);
         } elseif(!$verify_password) {
-            $notification = notify("Incorrect Old Password!!!",'danger');
+            $notification = notify("Ancien mot de passe incorrect!!!",'danger');
             return back()->with($notification);
         }
     }

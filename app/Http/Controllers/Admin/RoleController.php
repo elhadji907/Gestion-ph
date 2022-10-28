@@ -18,7 +18,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'roles';
+        $title = 'Rôles';
         if($request->ajax()){
             $roles = Role::get();
             return DataTables::of($roles)
@@ -62,7 +62,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $title = 'create role';
+        $title = 'Créer un rôle';
         $permissions = Permission::get();
         return view('admin.roles.create',compact('title','permissions'));
     }
@@ -95,7 +95,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $title = 'edit role';
+        $title = 'Modifier le rôle';
         $permissions = Permission::get();
         return view('admin.roles.edit',compact(
             'title','role','permissions'
@@ -119,7 +119,7 @@ class RoleController extends Controller
             'name' => $request->role,
         ]);
         $role->syncPermissions($request->permission);
-        return redirect()->route('roles.index')->with(notify('Role updated successfully'));
+        return redirect()->route('roles.index')->with(notify('Rôle mis à jour avec succès'));
     }
 
     /**

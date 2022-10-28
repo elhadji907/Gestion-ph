@@ -7,10 +7,10 @@
 
 @push('page-header')
 <div class="col-sm-12">
-	<h3 class="page-title">Add Supplier</h3>
+	<h3 class="page-title">Ajouter un fournisseur</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Add Supplier</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Ajouter un fournisseur</li>
 	</ul>
 </div>
 @endpush
@@ -22,7 +22,7 @@
 			<div class="card-body custom-edit-service">
 				
 		
-			<!-- Add Supplier -->
+			<!-- Ajouter un fournisseur -->
 			<form method="post" enctype="multipart/form-data" action="{{route('suppliers.store')}}">
 				@csrf
 				
@@ -30,7 +30,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Name<span class="text-danger">*</span></label>
+								<label>Nom<span class="text-danger">*</span></label>
 								<input class="form-control" type="text" name="name">
 							</div>
 						</div>
@@ -45,12 +45,12 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Phone<span class="text-danger">*</span></label>
+								<label>Téléphone<span class="text-danger">*</span></label>
 								<input class="form-control" type="text" name="phone">
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>Company<span class="text-danger">*</span></label>
+							<label>Compagnie<span class="text-danger">*</span></label>
 							<input class="form-control" type="text" name="company">
 						</div>
 					</div>
@@ -60,12 +60,12 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Address <span class="text-danger">*</span></label>
+								<label>Addresse <span class="text-danger">*</span></label>
 								<input type="text" name="address" class="form-control">
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>Product</label>
+							<label>Produit</label>
 							<input type="text" name="product" class="form-control">
 						</div>
 					</div>
@@ -73,14 +73,14 @@
 				<div class="service-fields mb-3">
 					<div class="row">
 						<div class="col-12">
-							<label>Comment</label>
+							<label>Commentaire</label>
 							<textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
 						</div>
 					</div>
 				</div>
 				
 				<div class="submit-section">
-					<button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+					<button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Envoyer</button>
 				</div>
 			</form>
 			<!-- /Add Medicine -->

@@ -7,10 +7,10 @@
 
 @push('page-header')
 <div class="col-sm-12">
-	<h3 class="page-title">Add Purchase</h3>
+	<h3 class="page-title">Ajouter un achat</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Add Purchase</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Ajouter un achat</li>
 	</ul>
 </div>
 @endpush
@@ -22,20 +22,20 @@
 		<div class="card">
 			<div class="card-body custom-edit-service">
 				
-				<!-- Add Medicine -->
+				<!-- Ajouter un médicament -->
 				<form method="post" enctype="multipart/form-data" autocomplete="off" action="{{route('purchases.store')}}">
 					@csrf
 					<div class="service-fields mb-3">
 						<div class="row">
 							<div class="col-lg-4">
 								<div class="form-group">
-									<label>Medicine Name<span class="text-danger">*</span></label>
+									<label>Nom du médicament<span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="product" >
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
-									<label>Category <span class="text-danger">*</span></label>
+									<label>Catégorie <span class="text-danger">*</span></label>
 									<select class="select2 form-select form-control" name="category"> 
 										@foreach ($categories as $category)
 											<option value="{{$category->id}}">{{$category->name}}</option>
@@ -45,7 +45,7 @@
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
-									<label>Supplier <span class="text-danger">*</span></label>
+									<label>Fournisseur <span class="text-danger">*</span></label>
 									<select class="select2 form-select form-control" name="supplier"> 
 										@foreach ($suppliers as $supplier)
 											<option value="{{$supplier->id}}">{{$supplier->name}}</option>
@@ -60,13 +60,13 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label>Cost Price<span class="text-danger">*</span></label>
+									<label>Prix de revient<span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="cost_price">
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label>Quantity<span class="text-danger">*</span></label>
+									<label>Quantité<span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="quantity">
 								</div>
 							</div>
@@ -77,13 +77,13 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label>Expire Date<span class="text-danger">*</span></label>
+									<label>Date d’expiration<span class="text-danger">*</span></label>
 									<input class="form-control" type="date" name="expiry_date">
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label>Medicine Image</label>
+									<label>Image de médecine</label>
 									<input type="file" name="image" class="form-control">
 								</div>
 							</div>
@@ -92,7 +92,7 @@
 					
 					
 					<div class="submit-section">
-						<button class="btn btn-primary submit-btn" type="submit" >Submit</button>
+						<button class="btn btn-primary submit-btn" type="submit" >Envoyer</button>
 					</div>
 				</form>
 				<!-- /Add Medicine -->

@@ -9,14 +9,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Sales Reports</h3>
+	<h3 class="page-title">Rapports de vente</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Generate Sales Reports</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Générer des rapports de vente</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="#generate_report" data-toggle="modal" class="btn btn-primary float-right mt-2">Generate Report</a>
+	<a href="#generate_report" data-toggle="modal" class="btn btn-primary float-right mt-2">Générer un rapport</a>
 </div>
 @endpush
 
@@ -25,16 +25,16 @@
 	<div class="col-md-12">
 	
 		@isset($sales)
-            <!--  Sales Report -->
+            <!--  Rapport des ventes -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="sales-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Medicine Name</th>
-                                    <th>Quantity</th>
-                                    <th>Total Price</th>
+                                    <th>Nom du médicament</th>
+                                    <th>Quantité</th>
+                                    <th>Prix total</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <!-- / sales Report -->
+            <!-- / Rapport des ventes -->
         @endisset
        
 		
@@ -74,7 +74,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Generate Report</h5>
+				<h5 class="modal-title">Générer un rapport</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -87,20 +87,20 @@
 							<div class="row">
 								<div class="col-6">
 									<div class="form-group">
-										<label>From</label>
+										<label>De</label>
 										<input type="date" name="from_date" class="form-control from_date">
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="form-group">
-										<label>To</label>
+										<label>À</label>
 										<input type="date" name="to_date" class="form-control to_date">
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary btn-block submit_report">Submit</button>
+					<button type="submit" class="btn btn-primary btn-block submit_report">Envoyer</button>
 				</form>
 			</div>
 		</div>
@@ -117,7 +117,7 @@
 			buttons: [
 				{
 				extend: 'collection',
-				text: 'Export Data',
+				text: 'Exporter des données',
 				buttons: [
 					{
 						extend: 'pdf',

@@ -2,10 +2,10 @@
 
 @push('page-header')
 <div class="col">
-	<h3 class="page-title">Profile</h3>
+	<h3 class="page-title">Profil</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Profile</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Profil</li>
 	</ul>
 </div>
 @endpush
@@ -30,29 +30,29 @@
 		<div class="profile-menu">
 			<ul class="nav nav-tabs nav-tabs-solid">
 				<li class="nav-item">
-					<a class="nav-link active" data-toggle="tab" href="#per_details_tab">About</a>
+					<a class="nav-link active" data-toggle="tab" href="#per_details_tab">À propos de moi</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#password_tab">Password</a>
+					<a class="nav-link" data-toggle="tab" href="#password_tab">Mot de passe</a>
 				</li>
 			</ul>
 		</div>
 		<div class="tab-content profile-tab-cont">
 
-			<!-- Personal Details Tab -->
+			<!-- Données personnelles -->
 			<div class="tab-pane fade show active" id="per_details_tab">
 
-				<!-- Personal Details -->
+				<!-- Données personnelles -->
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title d-flex justify-content-between">
-									<span>Personal Details</span>
+									<span>Données personnelles</span>
 									<a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="fa fa-edit mr-1"></i>Edit</a>
 								</h5>
 								<div class="row">
-									<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
+									<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Nom</p>
 									<p class="col-sm-10">{{auth()->user()->name}}</p>
 								</div>
 
@@ -62,7 +62,7 @@
 								</div>
 
 								<div class="row">
-									<p class="col-sm-2 text-muted text-sm-right mv-0 mb-sm-3">User Role</p>
+									<p class="col-sm-2 text-muted text-sm-right mv-0 mb-sm-3">Rôle d’utilisateur</p>
 									<p class="col-sm-10">
 										@foreach (auth()->user()->getRoleNames() as $role)
 										{{$role}}
@@ -78,7 +78,7 @@
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title">Personal Details</h5>
+										<h5 class="modal-title">Données personnelles</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
@@ -89,20 +89,20 @@
 											<div class="row form-row">
 												<div class="col-12">
 													<div class="form-group">
-														<label>Full Name</label>
-														<input class="form-control" name="name" type="text" value="{{auth()->user()->name}}" placeholder="Full Name">
+														<label>Nom complet</label>
+														<input class="form-control" name="name" type="text" value="{{auth()->user()->name}}" placeholder="Nom complet">
 													</div>
 												</div>
 												<div class="col-12">
 													<div class="form-group">
-														<label>email</label>
+														<label>Email</label>
 														<input class="form-control" name="email" type="text" value="{{auth()->user()->email}}" placeholder="Email">
 													</div>
 												</div>
 												@can('edit-role')
 												<div class="col-12">
 													<div class="form-group">
-														<label>Role</label>
+														<label>Rôle</label>
 														<select class="form-control select edit_role" name="role">
 															@foreach ($roles as $role)
 																<option value="{{$role->name}}">{{$role->name}}</option>
@@ -113,13 +113,13 @@
 												@endcan
 												<div class="col-12">
 													<div class="form-group">
-														<label>User Avatar</label>
+														<label>Avatar de l’utilisateur</label>
 														<input type="file" value="{{auth()->user()->avatar}}" class="form-control" name="avatar">
 													</div>
 												</div>
 
 											</div>
-											<button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+											<button type="submit" class="btn btn-primary btn-block">Enregistrer les modifications</button>
 										</form>
 									</div>
 								</div>
@@ -131,42 +131,42 @@
 
 
 				</div>
-				<!-- /Personal Details -->
+				<!-- /Données personnelles -->
 
 			</div>
-			<!-- /Personal Details Tab -->
+			<!-- /Données personnelles Tab -->
 
-			<!-- Change Password Tab -->
+			<!-- Modifier le mot de passe -->
 			<div id="password_tab" class="tab-pane fade">
 
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Change Password</h5>
+						<h5 class="card-title">Modifier le mot de passe</h5>
 						<div class="row">
 							<div class="col-md-10 col-lg-12">
 								<form method="POST" action="{{route('update-password',auth()->user())}}">
 									@csrf
 									@method("PUT")
 									<div class="form-group">
-										<label>Current Password</label>
-										<input type="password" name="current_password" class="form-control" placeholder="enter your current password">
+										<label>Mot de passe actuel</label>
+										<input type="password" name="current_password" class="form-control" placeholder="Enter votre mot de passe actuel">
 									</div>
 									<div class="form-group">
-										<label>New Password</label>
-										<input type="password" name="password" class="form-control" placeholder="enter your new password">
+										<label>Nouveau mot de passe</label>
+										<input type="password" name="password" class="form-control" placeholder="Entrez votre nouveau mot de passe">
 									</div>
 									<div class="form-group">
-										<label>Confirm Password</label>
-										<input type="password" name="password_confirmation" class="form-control" placeholder="repeat your new password">
+										<label>Confirmer le mot de passe</label>
+										<input type="password" name="password_confirmation" class="form-control" placeholder="Répétez votre nouveau mot de passe">
 									</div>
-									<button class="btn btn-primary" type="submit">Save Changes</button>
+									<button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- /Change Password Tab -->
+			<!-- /Modifier le mot de passe-->
 
 		</div>
 	</div>

@@ -21,7 +21,7 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'sales';
+        $title = 'ventes';
         if($request->ajax()){
             $sales = Sale::latest();
             return DataTables::of($sales)
@@ -73,7 +73,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        $title = 'create sales';
+        $title = 'Créer des ventes';
         $products = Product::get();
         return view('admin.sales.create',compact(
             'title','products'
@@ -117,14 +117,14 @@ class SaleController extends Controller
                 'total_price'=>$total_price,
             ]);
 
-            $notification = notify("Product has been sold");
+            $notification = notify("Le produit a été vendu");
         } 
         if($new_quantity <=1 && $new_quantity !=0){
             // send notification 
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
             // end of notification 
-            $notification = notify("Product is running out of stock!!!");
+            $notification = notify("Le produit est en rupture de stock!!!");
             
         }
 
@@ -189,26 +189,26 @@ class SaleController extends Controller
                 'total_price'=>$total_price,
             ]);
 
-            $notification = notify("Product has been updated");
+            $notification = notify("Le produit a été mis à jour");
         } 
         if($new_quantity <=1 && $new_quantity !=0){
             // send notification 
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
             // end of notification 
-            $notification = notify("Product is running out of stock!!!");
+            $notification = notify("Le produit est en rupture de stock!!!");
             
         }
         return redirect()->route('sales.index')->with($notification);
     }
 
     /**
-     * Generate sales reports index
+     * Generate Rapports de ventes index
      *
      * @return \Illuminate\Http\Response
      */
     public function reports(Request $request){
-        $title = 'sales reports';
+        $title = 'Rapports de ventes';
         return view('admin.sales.reports',compact(
             'title'
         ));
@@ -225,7 +225,7 @@ class SaleController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
         ]);
-        $title = 'sales reports';
+        $title = 'Rapports de ventes';
         $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
         return view('admin.sales.reports',compact(
             'sales','title'

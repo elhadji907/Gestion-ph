@@ -17,7 +17,7 @@ class SupplierController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'suppliers';
+        $title = 'Fournisseurs';
         if($request->ajax()){
             $suppliers = Supplier::get();
             return DataTables::of($suppliers)
@@ -50,7 +50,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        $title = 'create supplier';
+        $title = 'Créer un fournisseur';
         return view('admin.suppliers.create',compact(
             'title'
         ));
@@ -82,7 +82,7 @@ class SupplierController extends Controller
             'product'=>$request->product,
             'comment'=>$request->comment,
         ]);
-        $notification = notify("Supplier has been added");
+        $notification = notify("Le fournisseur a été ajouté");
         return redirect()->route('suppliers.index')->with($notification);
     }
 
@@ -95,7 +95,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        $title = 'edit supplier';
+        $title = 'Modifier le fournisseur';
         return view('admin.suppliers.edit',compact(
             'title','supplier'
         ));
@@ -128,7 +128,7 @@ class SupplierController extends Controller
             'product'=>$request->product,
             'comment'=>$request->comment,
         ]);
-        $notification = notify("Supplier has been added");
+        $notification = notify("Le fournisseur a été ajouté");
         return redirect()->route('suppliers.index')->with($notification);
     }
 

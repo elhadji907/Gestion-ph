@@ -63,18 +63,18 @@ class BackupController extends Controller
         try {
             ini_set('max_execution_time', 600);
 
-            Log::info('Backpack\BackupManager -- Called backup:run from admin interface');
+            Log::info('Backpack\BackupManager -- Appelé backup:run à partir de l’interface d’administration');
 
             Artisan::call('backup:run');
 
             $output = Artisan::output();
             if (strpos($output, 'La sauvegarde a échoué car')) {
                 preg_match('/Backup failed because(.*?)$/ms', $output, $match);
-                $notification = notify('backup process failed because ');
+                $notification = notify('Le processus de sauvegarde a échoué car ');
                 $notification .= isset($match[1]) ? $match[1] : '';
                 Log::error($notification.PHP_EOL.$output);
             } else {
-                Log::info("BackupManager -- backup process has started");
+                Log::info("BackupManager -- Le processus de sauvegarde a démarré");
             }
         } catch (Exception $e) {
             Log::error($e);

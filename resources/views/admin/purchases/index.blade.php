@@ -8,14 +8,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Purchase</h3>
+	<h3 class="page-title">Achat</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Purchase</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Achat</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="{{route('purchases.create')}}" class="btn btn-primary float-right mt-2">Add New</a>
+	<a href="{{route('purchases.create')}}" class="btn btn-primary float-right mt-2">Ajouter un nouveau</a>
 </div>
 @endpush
 
@@ -23,19 +23,19 @@
 <div class="row">
 	<div class="col-md-12">
 	
-		<!-- Recent Orders -->
+		<!-- Commandes récentes -->
 		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
 					<table id="purchase-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Medicine Name</th>
-								<th>Category</th>
-								<th>Supplier</th>
-								<th>Purchase Cost</th>
-								<th>Quantity</th>
-								<th>Expire Date</th>
+								<th>Nom du médicament</th>
+								<th>Catégorie</th>
+								<th>Fournisseur</th>
+								<th>Coût d’achat</th>
+								<th>Quantité</th>
+								<th>Date d’expiration</th>
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- /Recent Orders -->
+		<!-- /Commandes récentes -->
 		
 	</div>
 </div>

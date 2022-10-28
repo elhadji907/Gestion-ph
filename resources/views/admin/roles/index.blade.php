@@ -4,14 +4,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Roles</h3>
+	<h3 class="page-title">Rôles</h3>
 	<ul class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Roles</li>
+		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
+		<li class="breadcrumb-item active">Rôles</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="{{route('roles.create')}}" class="btn btn-primary float-right mt-2">Add Role</a>
+	<a href="{{route('roles.create')}}" class="btn btn-primary float-right mt-2">Ajouter un rôle</a>
 </div>
 
 @endpush
@@ -26,8 +26,8 @@
 					<table id="role-table" class="datatable table table-striped table-bordered table-hover table-center mb-0">
 						<thead>
 							<tr style="boder:1px solid black;">
-								<th>Name</th>
-								<th>Permissions</th>
+								<th>Nom</th>
+								<th>Autorisations</th>
 								<th class="text-center action-btn">Actions</th>
 							</tr>
 						</thead>
