@@ -36,7 +36,8 @@
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label>Catégorie <span class="text-danger">*</span></label>
-									<select class="select2 form-select form-control" name="category"> 
+									<select class="select2 form-select form-control" name="category">
+										<option disabled selected > Sélectionner une catégorie</option>
 										@foreach ($categories as $category)
 											<option value="{{$category->id}}">{{$category->name}}</option>
 										@endforeach
@@ -47,6 +48,7 @@
 								<div class="form-group">
 									<label>Fournisseur <span class="text-danger">*</span></label>
 									<select class="select2 form-select form-control" name="supplier"> 
+										<option disabled selected > Sélectionner un fournisseur</option>
 										@foreach ($suppliers as $supplier)
 											<option value="{{$supplier->id}}">{{$supplier->name}}</option>
 										@endforeach

@@ -28,11 +28,11 @@
 							<div class="form-group">
 								<label>Produit <span class="text-danger">*</span></label>
 								<select class="select2 form-select form-control" name="product"> 
+									<option disabled selected > Sélectionner un produit</option>
 									@foreach ($products as $product)
 										@if (!empty($product->purchase))
 											@if (!($product->purchase->quantity <= 0))
-                                                <option disabled selected > Sélectionner un produit</option>
-												<option value="{{$product->id}}">{{$product->purchase->product}}</option>
+												<option value="{{$product->id}}">{{$product->purchase->product}} <span> [{{ $product->purchase->quantity }}] </span></option>
 											@endif
 										@endif
 									@endforeach

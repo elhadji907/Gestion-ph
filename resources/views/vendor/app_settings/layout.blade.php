@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    @yield('content', 'Settings body content will go here...')
+    @yield('content', 'Le contenu du corps des paramètres ira ici...')
 </div>
 
 <!-- Optional JavaScript -->

@@ -205,3 +205,9 @@ In order to ensure that the Laravel community is welcoming to all, please review
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 ## License
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Utilisation
+1. Ajouter d'abord une Catégorie ou un fournisseur
+2. Effectuer ensuite un achat, c'est à dire enregistrer les médicaments achetés
+3. Après avoir effectué des achats, on doit maintenant ajouter des produits à vendre en fixant les prix de vente
+4. On peut maintenant commencer à vendre les produits

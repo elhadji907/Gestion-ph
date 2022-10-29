@@ -50,7 +50,7 @@
                     </div>
                     <div class="dash-widget-info">
 
-                        <h6 class="text-muted">Catégories de produits</h6>
+                        <h6 class="text-muted">Catégories de médicaments</h6>
                         <div class="progress progress-sm">
                             <div class="progress-bar bg-success w-50"></div>
                         </div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="dash-widget-info">
 
-                        <h6 class="text-muted">Produits périmés</h6>
+                        <h6 class="text-muted">Médicaments périmés</h6>
                         <div class="progress progress-sm">
                             <div class="progress-bar bg-danger w-50"></div>
                         </div>
@@ -112,9 +112,9 @@
                         <table id="sales-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Médicament</th>
+                                    <th>Nom Médicament</th>
                                     <th>Quantité</th>
-                                    <th>Prix total</th>
+                                    <th>Prix total (CFA)</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>

@@ -47,7 +47,7 @@
                                     <div class="actions">
                                         @if ($b['download'])
                                         <a class="float-left" href="{{ route('backup.download') }}?disk={{ $b['disk'] }}&path={{ urlencode($b['file_path']) }}&file_name={{ urlencode($b['file_name']) }}">
-                                            <button title="download backup" class="btn btn-primary" >
+                                            <button title="Télécharger la sauvegarde" class="btn btn-primary" >
                                                 <i class="fe fe-download"></i>
                                             </button>
                                         </a>
@@ -55,7 +55,7 @@
                                         <form action="{{route('backup.destroy',$b['file_name'])}}?disk={{ $b['disk'] }}" method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <button title="delete backup" class="btn btn-danger" type="submit">
+                                            <button title="Supprimer la sauvegarde" class="btn btn-danger" type="submit">
                                                 <i class="fe fe-trash"></i>
                                             </button>
                                         </form>

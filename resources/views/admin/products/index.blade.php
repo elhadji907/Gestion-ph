@@ -32,9 +32,9 @@
 							<tr>
 								<th>Nom du produit</th>
 								<th>Catégorie</th>
-								<th>Prix (CFA)</th>
-								<th>Quantité</th>
-								<th>Rabais</th>
+								<th>Prix de vente (CFA)</th>
+								<th>Qté restante</th>
+								<th>Rabais (%)</th>
 								<th>Échéance</th>
 								<th class="action-btn">Action</th>
 							</tr>

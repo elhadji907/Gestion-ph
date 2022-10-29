@@ -13,7 +13,7 @@ return [
                 [
                     'name' => 'app_name', // unique key for setting
                     'type' => 'text', // type of input can be text, number, textarea, select, boolean, checkbox etc.
-                    'label' => 'App Name', // label for input
+                    'label' => 'Nom de l’application', // label for input
                     // optional properties
                     'placeholder' => 'Nom de l’application', // placeholder for input
                     'class' => 'form-control', // override global input_class
@@ -25,8 +25,8 @@ return [
                 [
                     'name' => 'app_currency',
                     'type' => 'text',
-                    'label' => 'App Currency',
-                    'placeholder' => 'Application Currency',
+                    'label' => 'Devise de l’application',
+                    'placeholder' => 'Devise de l’application',
                     'class' => 'form-control',
                     'style' => '', // any inline styles
                     'rules' => 'required|max:10', // validation rules for this input
@@ -36,8 +36,8 @@ return [
                 [
                     'name' => 'logo',
                     'type' => 'image',
-                    'label' => 'Upload logo',
-                    'hint' => 'Recommended image size is 150px x 150px',
+                    'label' => 'Télécharger le logo',
+                    'hint' => 'La taille d’image recommandée est 150px x 150px',
                     'rules' => 'image|max:500',
                     'disk' => 'public', // which disk you want to upload
                     'path' => 'logos', // path on the disk,
@@ -48,8 +48,8 @@ return [
                 [
                     'name' => 'favicon',
                     'type' => 'image',
-                    'label' => 'Upload favicon',
-                    'hint' => 'Recommended image size is 16px x 16px or 32px x 32px',
+                    'label' => 'Télécharger favicon',
+                    'hint' => 'La taille d’image recommandée est 16px x 16px or 32px x 32px',
                     'rules' => 'image|max:500',
                     'disk' => 'public', // which disk you want to upload
                     'path' => 'logos', // path on the disk,
@@ -86,8 +86,8 @@ return [
     'input_error_feedback_class' => 'text-danger',
 
     // Submit button
-    'submit_btn_text' => 'Save Settings',
-    'submit_success_message' => 'Settings has been saved.',
+    'submit_btn_text' => 'Enregistrer les paramètres',
+    'submit_success_message' => 'Les paramètres ont été enregistrés.',
 
     // Remove any setting which declaration removed later from sections
     'remove_abandoned_settings' => false,

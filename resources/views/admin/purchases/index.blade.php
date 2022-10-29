@@ -33,7 +33,7 @@
 								<th>Nom du médicament</th>
 								<th>Catégorie</th>
 								<th>Fournisseur</th>
-								<th>Coût d’achat</th>
+								<th>Prix d’achat (CFA)</th>
 								<th>Quantité</th>
 								<th>Date d’expiration</th>
 								<th class="action-btn">Action</th>

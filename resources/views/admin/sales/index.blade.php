@@ -34,7 +34,7 @@
 							<tr>
 								<th>Nom du médicament</th>
 								<th>Quantité</th>
-								<th>Prix total</th>
+								<th>Prix total (CFA)</th>
 								<th>Date</th>
 								<th class="action-btn">Action</th>
 							</tr>

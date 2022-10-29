@@ -21,7 +21,7 @@ class BackupController extends Controller
      */
     public function index()
     {
-        $title = 'backups';
+        $title = 'Sauvegardes';
         if (!count(config('backup.backup.destination.disks'))) {
             dd(trans('backup.no_disks_configured'));
         }
@@ -69,8 +69,8 @@ class BackupController extends Controller
 
             $output = Artisan::output();
             if (strpos($output, 'La sauvegarde a échoué car')) {
-                preg_match('/Backup failed because(.*?)$/ms', $output, $match);
-                $notification = notify('Le processus de sauvegarde a échoué car ');
+                preg_match('/La sauvegarde a échoué car(.*?)$/ms', $output, $match);
+                $notification = notify('le processus de sauvegarde a échoué car ');
                 $notification .= isset($match[1]) ? $match[1] : '';
                 Log::error($notification.PHP_EOL.$output);
             } else {
