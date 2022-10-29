@@ -30,9 +30,14 @@
                                     <div class="form-group">
                                         <label>Produit <span class="text-danger">*</span></label>
                                         <select class="select2 form-select form-control" name="product">
-                                            <option disabled selected > Sélectionner un produit</option>
+                                            <option disabled selected> Sélectionner un produit</option>
                                             @foreach ($purchases as $purchase)
-                                                <option value="{{ $purchase->id }}">{{ $purchase->product }}</option>
+                                                @if (!($purchase->quantity <= 0))
+                                                    <option value="{{ $purchase->id }}">{{ $purchase->product }}
+                                                        [{{ $purchase->quantity }}] du
+                                                        {{ optional($purchase->created_at)->format('d/m/yy') }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
