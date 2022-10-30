@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Password;
 class ForgotPasswordController extends Controller
 {
     public function index(){
-        $title = 'forgot password';
+        $title = 'mot de passe oublié';
         return view('admin.auth.password.email', compact('title'));
     }
 

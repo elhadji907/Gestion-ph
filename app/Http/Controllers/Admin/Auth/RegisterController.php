@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     public function index(){
-        $title = 'register';
+        $title = 'Inscription';
         return view('admin.auth.register',compact('title'));
     }
 

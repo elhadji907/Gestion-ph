@@ -12,7 +12,7 @@ use Illuminate\Auth\Events\PasswordReset;
 class ResetPasswordController extends Controller
 {
     public function index(){
-        $title = 'reset password';
+        $title = 'Réinitialiser le mot de passe';
         return view('admin.auth.password.reset',compact('title','token'));
     }
 

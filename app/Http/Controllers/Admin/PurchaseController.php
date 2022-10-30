@@ -47,11 +47,11 @@ class PurchaseController extends Controller
                     return $purchase->supplier->name;
                 })
                 ->addColumn('expiry_date',function($purchase){
-                    return date_format(date_create($purchase->expiry_date),'d M, Y');
+                    return date_format(date_create($purchase->expiry_date),'d/m/yy');
                 })
                 ->addColumn('action', function ($row) {
-                    $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('purchases.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                    $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('purchases.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                     if (!auth()->user()->hasPermissionTo('edit-purchase')) {
                         $editbtn = '';
                     }

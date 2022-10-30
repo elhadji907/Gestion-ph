@@ -24,7 +24,7 @@ class UserController extends Controller
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('created_at', function ($category) {
-                    return date_format(date_create($category->created_at), "d M,Y");
+                    return date_format(date_create($category->created_at), "d/m/yy");
                 })
                 ->addColumn('avatar', function ($user) {
                     $src = asset('assets/img/avatar.png');
@@ -39,8 +39,8 @@ class UserController extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    $editbtn = '<a href="'.route("users.edit", $row->id).'" class="editbtn"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('users.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                    $editbtn = '<a href="'.route("users.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('users.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                     if (!auth()->user()->hasPermissionTo('edit-user')) {
                         $editbtn = '';
                     }
@@ -111,10 +111,14 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        foreach ($user->getRoleNames() as $key => $role) {
+            $role = Role::findByName($role);
+        }
+
         $title = "Modifier l’utilisateur";
         $roles = Role::get();
         return view('admin.users.edit',compact(
-            'title','roles','user'
+            'title','roles','user', 'role'
         ));
     }
 

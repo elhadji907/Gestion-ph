@@ -25,8 +25,8 @@ class PermissionController extends Controller
                         return date_format(date_create($row->created_at),'D M Y');
                     })
                     ->addColumn('action',function ($row){
-                        $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary"><i class="fa fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('permissions.destroy',$row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>';
+                        $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('permissions.destroy',$row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button></a>';
                         if(!auth()->user()->hasPermissionTo('edit-permission')){
                             $editbtn = '';
                         }

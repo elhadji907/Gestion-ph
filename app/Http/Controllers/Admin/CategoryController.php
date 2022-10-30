@@ -24,11 +24,11 @@ class CategoryController extends Controller
             return DataTables::of($categories)
                     ->addIndexColumn()
                     ->addColumn('created_at',function($category){
-                        return date_format(date_create($category->created_at),"d M,Y");
+                        return date_format(date_create($category->created_at),"d/m/yy");
                     })
                     ->addColumn('action',function ($row){
-                        $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('categories.destroy',$row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                        $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('categories.destroy',$row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                         if(!auth()->user()->hasPermissionTo('edit-category')){
                             $editbtn = '';
                         }

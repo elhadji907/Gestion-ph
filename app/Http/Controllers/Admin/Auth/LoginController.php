@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     public function index(){
-        $title = 'login';
+        $title = 'Connexion';
         return view('admin.auth.login',compact('title'));
     }
 
@@ -19,7 +19,7 @@ class LoginController extends Controller
         ]);
        $authenticate = auth()->attempt($request->only('email','password'));
        if (!$authenticate){
-           return back()->with('login_error',"Invalid user credentials");
+           return back()->with('login_error',"Informations d’identification utilisateur non valides");
        }
        return redirect()->route('dashboard');
 

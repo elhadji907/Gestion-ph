@@ -43,11 +43,11 @@ class SaleController extends Controller
                         return settings('app_currency','').' '. $sale->total_price;
                     })
                     ->addColumn('date',function($row){
-                        return date_format(date_create($row->created_at),'d M, Y');
+                        return date_format(date_create($row->created_at),'d/m/yy à H\h i');
                     })
                     ->addColumn('action', function ($row) {
-                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                         if (!auth()->user()->hasPermissionTo('edit-sale')) {
                             $editbtn = '';
                         }
