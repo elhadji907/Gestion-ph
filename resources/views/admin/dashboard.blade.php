@@ -8,7 +8,7 @@
 
 @push('page-header')
     <div class="col-sm-12">
-        <h3 class="page-title">Bienvenue {{ auth()->user()->name }}!</h3>
+        <h3 class="page-title">Bienvenue {{ auth()->user()->name ?? '' }}!</h3>
         <ul class="breadcrumb">
             <li class="breadcrumb-item active">Tableau de bord</li>
         </ul>

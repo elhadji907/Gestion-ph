@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Inscription</h1>
-<p class="account-subtitle">Accès à notre tableau de bord</p>
+<div class="account-subtitle text-center dont-have"><a href="{{ url('/') }}">{{ __("Accès à la page d'accueil")}}</a></div>
 
 <!-- Form -->
 <form action="{{route('register')}}" method="POST">

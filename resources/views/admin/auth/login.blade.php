@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Connectez-vous</h1>
-<p class="account-subtitle">Accès à notre tableau de bord</p>
+<div class="account-subtitle text-center dont-have"><a href="{{ url('/') }}">{{ __("Accès à la page d'accueil")}}</a></div>
 @if (session('login_error'))
 <x-alerts.danger :error="session('login_error')" />
 @endif
