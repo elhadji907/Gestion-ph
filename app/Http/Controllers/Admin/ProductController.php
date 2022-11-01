@@ -318,7 +318,7 @@ class ProductController extends Controller
     public function outstock(Request $request)
     {
         $title = "Produits en surstock";
-        $products = Purchase::where('quantity', '<=', '0')->get();
+        $products = Purchase::where('quantity', '<=', 10)->get();
         foreach ($products as $key => $product) {
             //dd($product);
             if ($request->ajax()) {
@@ -378,7 +378,7 @@ class ProductController extends Controller
                         ->make(true);
             }
         }
-        $product = Purchase::where('quantity', '<=', 0)->first();
+        //$product = Purchase::where('quantity', '<=', 10)->first();
         return view('admin.products.outstock', compact(
             'title',
         ));

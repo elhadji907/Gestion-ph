@@ -62,6 +62,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::delete('backup/delete/{file_name?}', [BackupController::class,'destroy'])->where('file_name', '(.*)')->name('backup.destroy');
 
     Route::get('settings',[SettingController::class,'index'])->name('settings');
+
+    Route::get('/showFromNotification/{purchase}/{notification}', [PurchaseController::class, 'showFromNotification'])->name('purchases.showFromNotification');
+    Route::get('/showFrmNotification/{sale}/{notification}', [SaleController::class, 'showFrmNotification'])->name('sales.showFrmNotification');
 });
 
 Route::middleware(['guest'])->prefix('admin')->group(function () {

@@ -10,6 +10,8 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use QCod\AppSettings\Setting\AppSettings;
+use App\Notifications\StockAlertNotification;
+use Illuminate\Notifications\DatabaseNotification;
 
 class PurchaseController extends Controller
 {
@@ -22,32 +24,33 @@ class PurchaseController extends Controller
     public function index(Request $request)
     {
         $title = 'Achats';
-        if($request->ajax()){
+        if ($request->ajax()) {
             $purchases = Purchase::get();
+            //$purchase->notify(new StockAlertNotification($purchase));
             return DataTables::of($purchases)
-                ->addColumn('product',function($purchase){
+                ->addColumn('product', function ($purchase) {
                     $image = '';
-                    if(!empty($purchase->image)){
+                    if (!empty($purchase->image)) {
                         $image = '<span class="avatar avatar-sm mr-2">
 						<img class="avatar-img" src="'.asset("storage/purchases/".$purchase->image).'" alt="product">
 					    </span>';
-                    }                 
+                    }
                     return $purchase->product.' ' . $image;
                 })
-                ->addColumn('category',function($purchase){
-                    if(!empty($purchase->category)){
+                ->addColumn('category', function ($purchase) {
+                    if (!empty($purchase->category)) {
                         return $purchase->category->name;
                     }
                 })
-                ->addColumn('cost_price',function($purchase){
+                ->addColumn('cost_price', function ($purchase) {
                     /* return settings('app_currency','$'). ' '. $purchase->cost_price; */
-                    return settings('app_currency',''). ' '. $purchase->cost_price;
+                    return settings('app_currency', ''). ' '. $purchase->cost_price;
                 })
-                ->addColumn('supplier',function($purchase){
+                ->addColumn('supplier', function ($purchase) {
                     return $purchase->supplier->name;
                 })
-                ->addColumn('expiry_date',function($purchase){
-                    return date_format(date_create($purchase->expiry_date),'d/m/yy');
+                ->addColumn('expiry_date', function ($purchase) {
+                    return date_format(date_create($purchase->expiry_date), 'd/m/yy');
                 })
                 ->addColumn('action', function ($row) {
                     $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
@@ -64,7 +67,7 @@ class PurchaseController extends Controller
                 ->rawColumns(['product','action'])
                 ->make(true);
         }
-        return view('admin.purchases.index',compact(
+        return view('admin.purchases.index', compact(
             'title'
         ));
     }
@@ -79,8 +82,10 @@ class PurchaseController extends Controller
         $title = 'Créer un achat';
         $categories = Category::get();
         $suppliers = Supplier::get();
-        return view('admin.purchases.create',compact(
-            'title','categories','suppliers'
+        return view('admin.purchases.create', compact(
+            'title',
+            'categories',
+            'suppliers'
         ));
     }
 
@@ -92,7 +97,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'product'=>'required|max:200',
             'category'=>'required',
             'cost_price'=>'required|min:1',
@@ -102,11 +107,11 @@ class PurchaseController extends Controller
             'image'=>'file|image|mimes:jpg,jpeg,png,gif',
         ]);
         $imageName = null;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('storage/purchases'), $imageName);
         }
-        Purchase::create([
+        $purchase = Purchase::create([
             'product'=>$request->product,
             'category_id'=>$request->category,
             'supplier_id'=>$request->supplier,
@@ -115,11 +120,14 @@ class PurchaseController extends Controller
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
         ]);
+
+        $purchase->notify(new StockAlertNotification($purchase, auth()->user()));
+
         $notifications = notify("L’achat a été ajouté");
         return redirect()->route('purchases.index')->with($notifications);
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -132,9 +140,18 @@ class PurchaseController extends Controller
         $title = 'Modifier l’achat';
         $categories = Category::get();
         $suppliers = Supplier::get();
-        return view('admin.purchases.edit',compact(
-            'title','purchase','categories','suppliers'
+        return view('admin.purchases.edit', compact(
+            'title',
+            'purchase',
+            'categories',
+            'suppliers'
         ));
+    }
+
+    public function showFromNotification(Purchase $purchase, DatabaseNotification $notification)
+    {
+        $notification->markAsRead();
+        return back();
     }
 
     /**
@@ -146,7 +163,7 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, Purchase $purchase)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'product'=>'required|max:200',
             'category'=>'required',
             'cost_price'=>'required|min:1',
@@ -155,8 +172,9 @@ class PurchaseController extends Controller
             'supplier'=>'required',
             'image'=>'file|image|mimes:jpg,jpeg,png,gif',
         ]);
+        
         $imageName = $purchase->image;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('storage/purchases'), $imageName);
         }
@@ -173,20 +191,23 @@ class PurchaseController extends Controller
         return redirect()->route('purchases.index')->with($notifications);
     }
 
-    public function reports(){
+    public function reports()
+    {
         $title ='Rapports d’achat';
-        return view('admin.purchases.reports',compact('title'));
+        return view('admin.purchases.reports', compact('title'));
     }
 
-    public function generateReport(Request $request){
-        $this->validate($request,[
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
             'from_date' => 'required',
             'to_date' => 'required'
         ]);
         $title = 'Rapports d’achats';
         $purchases = Purchase::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
-        return view('admin.purchases.reports',compact(
-            'purchases','title'
+        return view('admin.purchases.reports', compact(
+            'purchases',
+            'title'
         ));
     }
 

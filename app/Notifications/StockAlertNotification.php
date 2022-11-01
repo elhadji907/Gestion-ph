@@ -7,21 +7,31 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use App\Models\Purchase;
+use App\Models\User;
 
 class StockAlertNotification extends Notification
 {
     use Queueable;
 
-    private $data;
+    protected $purchase;
+    protected $user;
+
+    /* private $data; */
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+  /*   public function __construct($data)
     {
         $this->data = $data;
+    } */
+    public function __construct(Purchase $purchase, User $user)
+    {
+        $this->purchase = $purchase;
+        $this->user = $user;
     }
 
     /**
@@ -32,7 +42,8 @@ class StockAlertNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database','broadcast'];
+        /* return ['mail','database','broadcast']; */
+        return ['database'];
     }
 
     /**
@@ -59,12 +70,23 @@ class StockAlertNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+ /*    public function toArray($notifiable)
     {
         return [
             'product_name'=>$this->data->product,
             'quantity'=>$this->data->quantity,
             'image'=>$this->data->image,
+        ];
+    } */
+    
+    public function toArray($notifiable)
+    {
+        return [
+            'purchaseId'=>$this->purchase->id,
+            'product_name'=>$this->purchase->product,
+            'quantity'=>$this->purchase->id,
+            'expiry_date'=>$this->purchase->expiry_date,
+            'image'=>$this->purchase->image,
         ];
     }
 

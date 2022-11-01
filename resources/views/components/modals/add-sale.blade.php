@@ -20,7 +20,8 @@
                                     @foreach (\App\Models\Product::get() as $product)
                                         @if (!empty($product->purchase))
                                             @if (!($product->purchase->quantity <= 0))
-                                                <option value="{{ $product->id }}">{{ $product->purchase->product }} [{{ $product->purchase->quantity }}]
+                                                <option value="{{ $product->id }}">{{ $product->purchase->product }}
+                                                    [{{ $product->purchase->quantity }}]
                                                 </option>
                                             @endif
                                         @endif
@@ -30,8 +31,22 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label>Quantité</label>
+                                <label>Quantité <span class="text-danger">*</span></label>
                                 <input type="number" value="1" class="form-control" name="quantity">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Client <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="nom_client"
+                                    placeholder="Nom du client">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Téléphone </label>
+                                <input class="form-control" type="text" name="telephone_client"
+                                    placeholder="Telephone du client">
                             </div>
                         </div>
                     </div>

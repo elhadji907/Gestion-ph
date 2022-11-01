@@ -23,7 +23,7 @@
                     <form method="POST" action="{{ route('sales.store') }}">
                         @csrf
                         <div class="row form-row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label>Produit <span class="text-danger">*</span></label>
                                     <select class="select2 form-select form-control" name="product">
@@ -32,17 +32,32 @@
                                             @if (!empty($product->purchase))
                                                 @if (!($product->purchase->quantity <= 0))
                                                     <option value="{{ $product->id }}">{{ $product->purchase->product }}
-                                                        <span> [{{ $product->purchase->quantity }}] </span></option>
+                                                        <span> [{{ $product->purchase->quantity }}] </span>
+                                                    </option>
                                                 @endif
                                             @endif
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <label>Quantité</label>
+                                    <label>Quantité <span class="text-danger">*</span></label>
                                     <input type="number" value="1" class="form-control" name="quantity">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Client <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="nom_client"
+                                        placeholder="Nom du client">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Téléphone </label>
+                                    <input class="form-control" type="text" name="telephone_client"
+                                        placeholder="Telephone du client">
                                 </div>
                             </div>
                         </div>

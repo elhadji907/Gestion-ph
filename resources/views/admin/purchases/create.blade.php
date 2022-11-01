@@ -30,7 +30,7 @@
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label>Nom du médicament<span class="text-danger">*</span></label>
-									<input class="form-control" type="text" name="product" >
+									<input class="form-control" type="text" name="product" placeholder="Nom du médicament">
 								</div>
 							</div>
 							<div class="col-lg-4">
@@ -63,13 +63,13 @@
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label>Prix de revient<span class="text-danger">*</span></label>
-									<input class="form-control" type="text" name="cost_price">
+									<input class="form-control" type="text" name="cost_price" placeholder="Coût d'achat du médicament">
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label>Quantité<span class="text-danger">*</span></label>
-									<input class="form-control" type="text" name="quantity">
+									<input class="form-control" type="text" name="quantity" placeholder="Quantité achetée">
 								</div>
 							</div>
 						</div>

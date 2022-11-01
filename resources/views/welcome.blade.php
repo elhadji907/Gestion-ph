@@ -60,6 +60,12 @@
                                             src="{{ !empty(auth()->user()->avatar) ? asset('storage/users/' . auth()->user()->avatar) : asset('assets/img/avatar.png') }}"
                                             width="31" alt="avatar"></span>
                                     {{ auth()->user()->name }}
+                                    <a href="javascript:void(0)" class="dropdown-item">
+                                      <form action="{{ route('logout') }}" method="post">
+                                          @csrf
+                                          <button type="submit" class="btn">Déconnexion</button>
+                                      </form>
+                                  </a>
                                 </a>
                             </li>
                         @else

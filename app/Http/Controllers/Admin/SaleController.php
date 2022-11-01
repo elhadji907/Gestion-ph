@@ -10,6 +10,8 @@ use App\Events\PurchaseOutStock;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Notifications\SaleAlertNotification;
+use Illuminate\Notifications\DatabaseNotification;
 
 class SaleController extends Controller
 {
@@ -22,29 +24,35 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         $title = 'ventes';
-        if($request->ajax()){
+        if ($request->ajax()) {
             $sales = Sale::latest();
             return DataTables::of($sales)
                     ->addIndexColumn()
-                    ->addColumn('product',function($sale){
+                    ->addColumn('product', function ($sale) {
                         $image = '';
-                        if(!empty($sale->product)){
+                        if (!empty($sale->product)) {
                             $image = null;
-                            if(!empty($sale->product->purchase->image)){
+                            if (!empty($sale->product->purchase->image)) {
                                 $image = '<span class="avatar avatar-sm mr-2">
                                 <img class="avatar-img" src="'.asset("storage/purchases/".$sale->product->purchase->image).'" alt="image">
                                 </span>';
                             }
                             return $sale->product->purchase->product. ' ' . $image;
-                        }                 
+                        }
                     })
-                    ->addColumn('total_price',function($sale){                   
+                    ->addColumn('total_price', function ($sale) {
                         /* return settings('app_currency','$').' '. $sale->total_price; */
-                        return settings('app_currency','').' '. $sale->total_price;
+                        return settings('app_currency', '').' '. $sale->total_price;
                     })
-                    ->addColumn('date',function($row){
-                        return date_format(date_create($row->created_at),'d/m/yy à H\h i');
+                    ->addColumn('date', function ($row) {
+                        return date_format(date_create($row->created_at), 'd/m/yy à H\h i');
                     })
+                   /*  ->addColumn('nom_client',function($row){
+                        return settings('app_currency','').' '. $sale->nom_client;
+                    })
+                    ->addColumn('telephone_client',function($row){
+                        return settings('app_currency','').' '. $sale->telephone_client;
+                    }) */
                     ->addColumn('action', function ($row) {
                         $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
@@ -59,11 +67,11 @@ class SaleController extends Controller
                     })
                     ->rawColumns(['product','action'])
                     ->make(true);
-
         }
         $products = Product::get();
-        return view('admin.sales.index',compact(
-            'title','products',
+        return view('admin.sales.index', compact(
+            'title',
+            'products',
         ));
     }
 
@@ -76,8 +84,9 @@ class SaleController extends Controller
     {
         $title = 'Créer des ventes';
         $products = Product::get();
-        return view('admin.sales.create',compact(
-            'title','products'
+        return view('admin.sales.create', compact(
+            'title',
+            'products'
         ));
     }
 
@@ -89,12 +98,14 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'product'=>'required',
+            'nom_client'=>'required|min:5|max:255',
+            'telephone_client'=>'nullable|min:10|max:20',
             'quantity'=>'required|integer|min:1'
         ]);
         $sold_product = Product::find($request->product);
-        
+
         /**update quantity of
             sold item from
          purchases
@@ -102,8 +113,7 @@ class SaleController extends Controller
         $purchased_item = Purchase::find($sold_product->purchase->id);
         $new_quantity = ($purchased_item->quantity) - ($request->quantity);
         $notification = '';
-        if (!($new_quantity < 0)){
-
+        if (!($new_quantity < 1)) {
             $purchased_item->update([
                 'quantity'=>$new_quantity,
             ]);
@@ -112,27 +122,36 @@ class SaleController extends Controller
              * calcualting item's total price
             **/
             $total_price = ($request->quantity) * ($sold_product->price);
-            Sale::create([
+            $sale = Sale::create([
                 'product_id'=>$request->product,
                 'quantity'=>$request->quantity,
+                'purchase_quantity'=>$purchased_item->quantity+1,
                 'total_price'=>$total_price,
+                'nom_client'=>$request->nom_client,
+                'telephone_client'=>$request->telephone_client,
             ]);
 
             $notification = notify("Le produit a été vendu");
-        } 
-        if($new_quantity <=1 && $new_quantity !=0){
-            // send notification 
+        }
+        if ($new_quantity <=1 && $new_quantity !=0) {
+            // send notification
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
-            // end of notification 
+            // end of notification
+
             $notification = notify("Le produit est en rupture de stock!!!");
-            
         }
 
-        return redirect()->route('sales.index')->with($notification);
+        /* return redirect()->route('sales.index')->with($notification); */
+
+        if ($new_quantity <=10) {
+            $sale->notify(new SaleAlertNotification($sale, auth()->user()));
+        }
+
+        return back()->with($notification);
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -144,11 +163,19 @@ class SaleController extends Controller
     {
         $title = 'edit sale';
         $products = Product::get();
-        return view('admin.sales.edit',compact(
-            'title','sale','products'
+        return view('admin.sales.edit', compact(
+            'title',
+            'sale',
+            'products'
         ));
     }
 
+    
+    public function showFrmNotification(Sale $sale, DatabaseNotification $notification)
+    {
+        $notification->markAsRead();
+        return back();
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -158,7 +185,7 @@ class SaleController extends Controller
      */
     public function update(Request $request, Sale $sale)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'product'=>'required',
             'quantity'=>'required|integer|min:1'
         ]);
@@ -167,12 +194,12 @@ class SaleController extends Controller
          * update quantity of sold item from purchases
         **/
         $purchased_item = Purchase::find($sold_product->purchase->id);
-        if(!empty($request->quantity)){
+        if (!empty($request->quantity)) {
             $new_quantity = ($purchased_item->quantity) - ($request->quantity);
         }
         $new_quantity = $sale->quantity;
         $notification = '';
-        if (!($new_quantity < 0)){
+        if (!($new_quantity < 0)) {
             $purchased_item->update([
                 'quantity'=>$new_quantity,
             ]);
@@ -180,7 +207,7 @@ class SaleController extends Controller
             /**
              * calcualting item's total price
             **/
-            if(!empty($request->quantity)){
+            if (!empty($request->quantity)) {
                 $total_price = ($request->quantity) * ($sold_product->price);
             }
             $total_price = $sale->total_price;
@@ -188,17 +215,18 @@ class SaleController extends Controller
                 'product_id'=>$request->product,
                 'quantity'=>$request->quantity,
                 'total_price'=>$total_price,
+                'nom_client'=>$request->nom_client,
+                'telephone_client'=>$request->telephone_client,
             ]);
 
             $notification = notify("Le produit a été mis à jour");
-        } 
-        if($new_quantity <=1 && $new_quantity !=0){
-            // send notification 
+        }
+        if ($new_quantity <=1 && $new_quantity !=0) {
+            // send notification
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
-            // end of notification 
+            // end of notification
             $notification = notify("Le produit est en rupture de stock!!!");
-            
         }
         return redirect()->route('sales.index')->with($notification);
     }
@@ -208,9 +236,10 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reports(Request $request){
+    public function reports(Request $request)
+    {
         $title = 'Rapports de ventes';
-        return view('admin.sales.reports',compact(
+        return view('admin.sales.reports', compact(
             'title'
         ));
     }
@@ -221,15 +250,17 @@ class SaleController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function generateReport(Request $request){
-        $this->validate($request,[
+    public function generateReport(Request $request)
+    {
+        $this->validate($request, [
             'from_date' => 'required',
             'to_date' => 'required',
         ]);
         $title = 'Rapports de ventes';
         $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
-        return view('admin.sales.reports',compact(
-            'sales','title'
+        return view('admin.sales.reports', compact(
+            'sales',
+            'title'
         ));
     }
 

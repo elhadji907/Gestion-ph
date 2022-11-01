@@ -15,6 +15,7 @@ class DashboardController extends Controller
     public function index(){
         $title = 'tableau de bord';
         $total_purchases = Purchase::where('expiry_date','!=',Carbon::now())->count();
+        /* $stock_out_purchases = Purchase::where('expiry_date','<=',Carbon::now()->addDays(30))->count(); */
         $total_categories = Category::count();
         $total_suppliers = Supplier::count();
         $total_sales = Sale::count();
@@ -36,6 +37,8 @@ class DashboardController extends Controller
         $total_expired_products = Purchase::whereDate('expiry_date', '=', Carbon::now())->count();
         $latest_sales = Sale::whereDate('created_at','=',Carbon::now())->get();
         $today_sales = Sale::whereDate('created_at','=',Carbon::now())->sum('total_price');
+        $stock_out_purchases = Purchase::where('quantity','<=',10)->count();
+        //dd($stock_out_purchases);
         
         $sales = Sale::whereDate('created_at','=',Carbon::now())->get();
 
@@ -43,7 +46,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard',compact(
             'title','pieChart','total_expired_products',
-            'latest_sales','today_sales','total_categories','sales'
+            'latest_sales','today_sales','total_categories','sales', 'stock_out_purchases'
         ));
     }
 }

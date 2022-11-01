@@ -22,7 +22,7 @@ class PermissionController extends Controller
             return DataTables::of($permissions)
                     ->addIndexColumn()
                     ->addColumn('created_at',function($row){
-                        return date_format(date_create($row->created_at),'D M Y');
+                        return date_format(date_create($row->created_at),'d/m/yy');
                     })
                     ->addColumn('action',function ($row){
                         $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>';

@@ -25,7 +25,7 @@
 					@csrf
 					@method("PUT")
 					<div class="row form-row">
-						<div class="col-12">
+						<div class="col-6">
 							<div class="form-group">
 								<label>Produit <span class="text-danger">*</span></label>
 								<select class="select2 form-select form-control edit_product" name="product"> 
@@ -39,10 +39,24 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-12">
+						<div class="col-6">
 							<div class="form-group">
 								<label>Quantité</label>
 								<input type="number" class="form-control edit_quantity" value="{{$sale->quantity ?? '1'}}" name="quantity">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Client <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="nom_client" value="{{$sale->nom_client ?? ''}}"
+									placeholder="Nom du client">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Téléphone </label>
+								<input class="form-control" type="text" name="telephone_client" value="{{$sale->telephone_client ?? ''}}"
+									placeholder="Telephone du client">
 							</div>
 						</div>
 					</div>
