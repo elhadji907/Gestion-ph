@@ -54,11 +54,11 @@
                 <div class="dropdown-menu notifications">
                     <div class="topnav-dropdown-header">
                         <span class="notification-title">Notifications</span>
-                        <a href="{{ route('mark-as-read') }}" class="clear-noti">MARQUER TOUT COMME LU </a>
+                        {{--  <a href="{{ route('mark-as-read') }}" class="clear-noti">MARQUER TOUT COMME LU </a>  --}}
                     </div>
                     <div class="noti-content">
                         <ul class="notification-list">
-                            @foreach (\App\Models\Sale::get() as $sale)
+                            @foreach (\App\Models\Sale::get()->sortByDesc('created_at') as $sale)
                                 @foreach ($sale->unReadNotifications as $notification)
                                     <li class="notification-message">
                                         <a
@@ -88,9 +88,9 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div class="topnav-dropdown-footer">
+                    {{--  <div class="topnav-dropdown-footer">
                         <a href="#">Voir toutes les notifications</a>
-                    </div>
+                    </div>  --}}
                 </div>
             </li>
         @endunless

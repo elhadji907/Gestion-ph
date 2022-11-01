@@ -31,12 +31,12 @@
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Nom<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="name">
+								<input class="form-control" type="text" name="name" placeholder="Nom du fournisseur">
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>Email<span class="text-danger">*</span></label>
-							<input class="form-control" type="text" name="email" id="email">
+							<label>E-mail<span class="text-danger">*</span></label>
+							<input class="form-control" type="text" name="email" id="email" placeholder="E-mail du fournisseur">
 						</div>
 					</div>
 				</div>
@@ -46,12 +46,12 @@
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Téléphone<span class="text-danger">*</span></label>
-								<input class="form-control" type="text" name="phone">
+								<input class="form-control" type="text" name="phone" placeholder="Contact du fournisseur">
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<label>Compagnie<span class="text-danger">*</span></label>
-							<input class="form-control" type="text" name="company">
+							<input class="form-control" type="text" name="company" placeholder="Compagnie">
 						</div>
 					</div>
 				</div>
@@ -61,12 +61,12 @@
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Addresse <span class="text-danger">*</span></label>
-								<input type="text" name="address" class="form-control">
+								<input type="text" name="address" class="form-control" placeholder="Adresse">
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>Produit</label>
-							<input type="text" name="product" class="form-control">
+							<label>Produit <span class="text-danger">*</span></label>
+							<input type="text" name="product" class="form-control" placeholder="Produit fournis">
 						</div>
 					</div>
 				</div>			
@@ -74,7 +74,7 @@
 					<div class="row">
 						<div class="col-12">
 							<label>Commentaire</label>
-							<textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+							<textarea name="comment" class="form-control" cols="30" rows="10" placeholder="Commentaires..."></textarea>
 						</div>
 					</div>
 				</div>

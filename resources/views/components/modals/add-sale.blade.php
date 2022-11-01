@@ -18,7 +18,13 @@
                                 <select class="select2 form-select form-control" name="product">
                                     <option disabled selected> Sélectionner un produit</option>
                                     @foreach (\App\Models\Product::get() as $product)
-                                        @if (!empty($product->purchase))
+                                    <?php
+                                            $expiry_date = strtotime($product->purchase->expiry_date);
+                                            $now = strtotime(now());
+                                            $perime = $expiry_date - $now;
+                                            $perime = floor($perime / 3600 / 24);
+                                            ?>
+                                        @if (!empty($product->purchase) && $perime > 0)
                                             @if (!($product->purchase->quantity <= 0))
                                                 <option value="{{ $product->id }}">{{ $product->purchase->product }}
                                                     [{{ $product->purchase->quantity }}]

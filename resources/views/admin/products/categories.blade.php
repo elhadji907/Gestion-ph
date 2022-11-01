@@ -59,7 +59,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Catégorie</label>
-                                    <input type="text" name="name" class="form-control">
+                                    <input type="text" name="name" class="form-control" placeholder="Catégorie">
                                 </div>
                             </div>
                         </div>

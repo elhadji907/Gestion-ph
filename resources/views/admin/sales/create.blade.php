@@ -27,12 +27,19 @@
                                 <div class="form-group">
                                     <label>Produit <span class="text-danger">*</span></label>
                                     <select class="select2 form-select form-control" name="product">
-                                        <option disabled selected> Sélectionner un produit</option>
+                                        <option disabled selected> Sélectionner un produit </option>
                                         @foreach ($products as $product)
+                                            <?php
+                                            $expiry_date = strtotime($product->purchase->expiry_date);
+                                            $now = strtotime(now());
+                                            $perime = $expiry_date - $now;
+                                            $perime = floor($perime / 3600 / 24);
+                                            ?>
                                             @if (!empty($product->purchase))
-                                                @if (!($product->purchase->quantity <= 0))
+                                                @if (!($product->purchase->quantity <= 0) && $perime > 0)
                                                     <option value="{{ $product->id }}">{{ $product->purchase->product }}
                                                         <span> [{{ $product->purchase->quantity }}] </span>
+                                                        <span> [{{ $perime }}] </span>
                                                     </option>
                                                 @endif
                                             @endif
