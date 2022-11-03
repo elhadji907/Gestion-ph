@@ -31,10 +31,11 @@
                                 <tr>
                                     <th>Nom du médicament</th>
                                     <th>Catégorie</th>
-                                    <th>Fournisseur</th>
+                                    <th width="10%">Fournisseur</th>
                                     <th>Prix d’achat (CFA)</th>
                                     <th>Quantité</th>
                                     <th>Date d’expiration</th>
+                                    <th>En vente</th>
                                     <th class="action-btn">Action</th>
                                 </tr>
                             </thead>
@@ -148,6 +149,10 @@
                     {
                         data: 'expiry_date',
                         name: 'expiry_date'
+                    },
+                    {
+                        data: 'vendu',
+                        name: 'vendu'
                     },
                     {
                         data: 'action',

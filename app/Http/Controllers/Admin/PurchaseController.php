@@ -120,6 +120,7 @@ class PurchaseController extends Controller
             'quantity'=>$request->quantity,
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
+            'vendu'=>"Non",
         ]);
 
         $purchase->notify(new StockAlertNotification($purchase, auth()->user()));

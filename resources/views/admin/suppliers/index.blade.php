@@ -30,13 +30,13 @@
                             <table id="supplier-table" class="table table-hover table-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Produit</th>
+                                        {{--  <th>Produit</th>  --}}
                                         <th>Nom</th>
                                         <th>Téléphone</th>
-                                        <th>Email</th>
-                                        <th width="5%">Addresse</th>
-                                        <th>Compagnie</th>
-                                        <th class="action-btn">Action</th>
+                                        {{--  <th>Email</th>  --}}
+                                        <th>Addresse</th>
+                                        {{--  <th>Compagnie</th>  --}}
+                                        <th width="8%" class="action-btn">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,18 +147,19 @@
                         }
                     }
                 },
-                columns: [{
+                columns: [
+                  {{--    {
                         data: 'product',
                         name: 'product'
-                    },
+                    },  --}}
                     {
                         data: 'name',
                         name: 'name'
                     },
-                    {
+                  {{--    {
                         data: 'email',
                         name: 'email'
-                    },
+                    },  --}}
                     {
                         data: 'phone',
                         name: 'phone'
@@ -167,10 +168,10 @@
                         data: 'address',
                         name: 'address'
                     },
-                    {
+                   {{--   {
                         data: 'company',
                         name: 'company'
-                    },
+                    },  --}}
                     {
                         data: 'action',
                         name: 'action',

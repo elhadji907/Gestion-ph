@@ -8,19 +8,22 @@ use Illuminate\Notifications\Notifiable;
 
 class Purchase extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'product','category_id','supplier_id',
-        'cost_price','quantity','expiry_date',
+        'cost_price','quantity','expiry_date','vendu','item',
         'image'
     ];
 
-    public function supplier(){
+    public function supplier()
+    {
         return $this->belongsTo(Supplier::class);
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 }

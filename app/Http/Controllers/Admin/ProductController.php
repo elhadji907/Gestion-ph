@@ -58,6 +58,11 @@ class ProductController extends Controller
                         return date_format(date_create($product->purchase->expiry_date), 'd/m/yy');
                     }
                 })
+                ->addColumn('vendu', function ($product) {
+                    if (!empty($product->purchase)) {
+                        return $product->purchase->vendu;
+                    }
+                })
                 ->addColumn('action', function ($row) {
                     $editbtn = '<a href="'.route("products.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
                     $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('products.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
@@ -112,12 +117,21 @@ class ProductController extends Controller
         if ($request->discount >0) {
             $price = $request->discount * $request->price;
         }
+
+        $purchase = Purchase::findOrFail($request->product);
+
+        $purchase->update([
+            'vendu'=>"Oui",
+        ]);
+
         Product::create([
             'purchase_id'=>$request->product,
             'price'=>$price,
             'discount'=>$request->discount,
             'description'=>$request->description,
         ]);
+
+
         $notification = notify("Le produit a été ajouté");
         return redirect()->route('products.index')->with($notification);
     }

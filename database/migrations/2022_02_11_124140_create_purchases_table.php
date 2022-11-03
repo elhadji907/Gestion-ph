@@ -22,6 +22,8 @@ class CreatePurchasesTable extends Migration
             $table->string('quantity');
             $table->string('expiry_date')->nullable();
             $table->string('image')->nullable();
+            $table->string('vendu')->nullable();
+            $table->string('item')->nullable();
             $table->timestamps();
         });
     }

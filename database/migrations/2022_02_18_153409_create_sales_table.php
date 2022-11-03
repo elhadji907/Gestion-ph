@@ -21,6 +21,9 @@ class CreateSalesTable extends Migration
             $table->decimal('total_price');
             $table->string('nom_client')->nullable();
             $table->string('telephone_client')->nullable();
+            $table->string('item1')->nullable();
+            $table->string('item2')->nullable();
+            $table->string('item3')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

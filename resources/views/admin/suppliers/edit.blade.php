@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label>Email<span class="text-danger">*</span></label>
+                                    <label>Email</label>
                                     <input class="form-control" type="text"
                                         value="{{ $supplier->email ?? old('email') }}" name="email">
                                 </div>
@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label>Compagnie<span class="text-danger">*</span></label>
+                                    <label>Compagnie</label>
                                     <input class="form-control" type="text"
                                         value="{{ $supplier->company ?? old('company') }}" name="company">
                                 </div>

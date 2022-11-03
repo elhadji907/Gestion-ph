@@ -35,7 +35,7 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>E-mail<span class="text-danger">*</span></label>
+							<label>E-mail</label>
 							<input class="form-control" type="text" name="email" id="email" placeholder="E-mail du fournisseur">
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>Compagnie<span class="text-danger">*</span></label>
+							<label>Compagnie</label>
 							<input class="form-control" type="text" name="company" placeholder="Compagnie">
 						</div>
 					</div>
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label>Produit <span class="text-danger">*</span></label>
+							<label>Produit </label>
 							<input type="text" name="product" class="form-control" placeholder="Produit fournis">
 						</div>
 					</div>

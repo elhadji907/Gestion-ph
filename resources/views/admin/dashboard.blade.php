@@ -154,10 +154,10 @@
                                 <?php $i = 1; ?>
                                 @foreach ($sales as $sale)
                                     <tr>
-                                        <td>{!! $sale->product->purchase->product !!}</td>
-                                        <td>{!! $sale->quantity !!}</td>
-                                        <td>{!! number_format($sale->total_price, 2, ',', ' ') !!}</td>
-                                        <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') !!}</td>
+                                        <td>{!! $sale->product->purchase->product ?? '' !!}</td>
+                                        <td>{!! $sale->quantity ?? '' !!}</td>
+                                        <td>{!! $sale->total_price ?? '' !!}</td>
+                                        <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') ?? '' !!}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
