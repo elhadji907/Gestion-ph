@@ -11,6 +11,16 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+        /* $this->middleware(['role:super-admin']); */
+        $this->middleware('permission:view-user|create-user|edit-user|destroy-user', ['only' => ['index']]);
+         $this->middleware('permission:create-user', ['only' => ['create','store']]);
+         $this->middleware('permission:edit-user', ['only' => ['edit','update']]);
+         $this->middleware('permission:delete-user', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

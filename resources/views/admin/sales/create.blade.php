@@ -39,7 +39,7 @@
                                                 @if (!($product->purchase->quantity <= 0) && $perime > 0)
                                                     <option value="{{ $product->id }}">{{ $product->purchase->product }}
                                                         <span> [{{ $product->purchase->quantity }}] </span>
-                                                        <span> [{{ $perime }}] </span>
+                                                        {{--  <span> [{{ $perime }}] </span>  --}}
                                                     </option>
                                                 @endif
                                             @endif
@@ -50,7 +50,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Quantité <span class="text-danger">*</span></label>
-                                    <input type="number" value="1" class="form-control" name="quantity">
+                                    <input type="number" value="1" class="form-control" name="quantity" min="1">
                                 </div>
                             </div>
                             <div class="col-lg-6">

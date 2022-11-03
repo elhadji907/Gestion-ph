@@ -38,7 +38,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label>Quantité <span class="text-danger">*</span></label>
-                                <input type="number" value="1" class="form-control" name="quantity">
+                                <input type="number" value="1" class="form-control" name="quantity" min="1">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label>Téléphone </label>
                                 <input class="form-control" type="text" name="telephone_client"
-                                    placeholder="Telephone du client">
+                                    placeholder="Telephone du client" value="+221">
                             </div>
                         </div>
                     </div>

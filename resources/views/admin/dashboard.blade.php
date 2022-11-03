@@ -84,7 +84,7 @@
                 </div>
             </a>
         </div>
-        @can('view-users')
+        {{--  @can('view-users')  --}}
             <div class="col-xl-2 col-sm-6 col-12">
                 <a href="{{ route('users.index') }}" target="_blank">
                     <div class="card">
@@ -108,7 +108,7 @@
                     </div>
                 </a>
             </div>
-        @endcan
+        {{--  @endcan  --}}
         <div class="col-xl-2 col-sm-6 col-12">
             <a href="{{ route('outstock') }}" target="_blank">
                 <div class="card">
@@ -195,30 +195,30 @@
                 dom: 'lBfrtip',
                 buttons: [{
                         extend: 'copyHtml5',
-                        text: '<i class="fas fa-copy"></i> Copy',
-                        titleAttr: 'Copy'
+                        text: '<i class="fas fa-copy"></i> ',
+                        titleAttr: 'Copier'
                     },
                     {
                         extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        text: '<i class="fas fa-file-excel"></i> ',
                         titleAttr: 'Excel'
                     },
                     {
                         extend: 'csvHtml5',
-                        text: '<i class="fas fa-file-csv"></i> CSV',
+                        text: '<i class="fas fa-file-csv"></i> ',
                         titleAttr: 'CSV'
                     },
                     {
                         extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        text: '<i class="fas fa-file-pdf"></i> ',
                         orientation: 'landscape',
                         pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
                         extend: 'print',
-                        text: '<i class="fas fa-print"></i> Print',
-                        titleAttr: 'Print'
+                        text: '<i class="fas fa-print"></i> ',
+                        titleAttr: 'Imprimer'
                     }
                 ],
                 "lengthMenu": [

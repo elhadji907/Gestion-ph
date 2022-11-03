@@ -75,6 +75,8 @@
 <script>
     $(document).ready(function() {
         var table = $('#outstock-product').DataTable({
+            processing: true,
+            serverSide: true,
 			dom: 'lBfrtip',
 			buttons: [{
 					extend: 'copyHtml5',
@@ -108,8 +110,6 @@
 				[10, 25, 50, 100, -1],
 				[10, 25, 50, 100, "Tout"]
 			],
-            processing: true,
-            serverSide: true,
             ajax: "{{route('outstock')}}",
             columns: [
                 {data: 'product', name: 'product'},

@@ -242,8 +242,8 @@ class ProductController extends Controller
 
 
         $title = 'Produits expirés';
-        $products = Purchase::whereDate('expiry_date', '=', Carbon::now())->where('quantity', '>', '0')->get();
-        
+        $products = Purchase::whereDate('expiry_date', '<=', Carbon::now())->where('quantity', '>', '0')->get();
+
         foreach ($products as $key => $product) {
             //dd($product);
             if ($request->ajax()) {
@@ -318,7 +318,7 @@ class ProductController extends Controller
     public function outstock(Request $request)
     {
         $title = "Produits en surstock";
-        $products = Purchase::where('quantity', '<=', 10)->get();
+        $products = Purchase::where('quantity', '<=', 0)->get();
         foreach ($products as $key => $product) {
             //dd($product);
             if ($request->ajax()) {

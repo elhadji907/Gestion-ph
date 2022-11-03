@@ -33,6 +33,7 @@
 								<th>Qté restante</th>
 								{{--  <th>Rabais (%)</th>  --}}
 								<th>Expirer</th>
+								<th>Statut</th>
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>
@@ -116,6 +117,7 @@
                 {data: 'price', name: 'price'},
                 {data: 'quantity', name: 'quantity'},
                 {{--  {data: 'discount', name: 'discount'},  --}}
+				{data: 'expiry_date', name: 'expiry_date'},
 				{data: 'expiry_date', name: 'expiry_date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],

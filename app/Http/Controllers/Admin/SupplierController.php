@@ -111,7 +111,7 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier)
     {
         $this->validate($request,[
-            'name'=>'required|min:10|max:255',
+            'name'=>'required|min:5|max:255',
             'product'=>'required',
             'email'=>'nullable|email|string',
             'phone'=>'nullable|min:10|max:20',

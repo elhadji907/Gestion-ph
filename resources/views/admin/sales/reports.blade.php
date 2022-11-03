@@ -9,7 +9,7 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Rapports de vente</h3>
+	<h3 class="page-title">{{ $title }}</h3>
 	<ul class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
 		<li class="breadcrumb-item active">Générer des rapports de vente</li>
@@ -34,7 +34,7 @@
                                 <tr>
                                     <th>Nom du médicament</th>
                                     <th>Quantité</th>
-                                    <th>Prix total</th>
+                                    <th>Prix total (CFA)</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
@@ -51,8 +51,9 @@
                                                 @endif
                                             </td>
                                             <td>{{$sale->quantity}}</td>
-                                            <td>{{AppSettings::get('app_currency', '$')}} {{($sale->total_price)}}</td>
-                                            <td>{{date_format(date_create($sale->created_at),"d M, Y")}}</td>
+                                            {{--  <td>{{AppSettings::get('app_currency', 'CFA')}} {{($sale->total_price)}}</td>  --}}
+                                            <td>{{($sale->total_price)}}</td>
+                                            <td>{{date_format(date_create($sale->created_at),"d/m/yy")}}</td>
                                             
                                         </tr>
                                     @endif

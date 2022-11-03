@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use QCod\AppSettings\Setting\AppSettings;
 use App\Notifications\StockAlertNotification;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Carbon;
 
 class PurchaseController extends Controller
 {
@@ -203,10 +204,18 @@ class PurchaseController extends Controller
             'from_date' => 'required',
             'to_date' => 'required'
         ]);
-        $title = 'Rapports d’achats';
+        $now =  Carbon::now()->format('H:i:s');
+        //dd($now);
+        $from_date = date_format(date_create($request->from_date), 'd/m/yy');
+        $to_date = date_format(date_create($request->to_date), 'd/m/yy');
+        if ($from_date == $to_date) {
+            $title = 'Rapports d’achats du '.$from_date.' à '.$now;
+        }else {
+            $title = 'Rapports d’achats du '.$from_date.' au '.$to_date.' à '.$now;
+        }
         $purchases = Purchase::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
         return view('admin.purchases.reports', compact(
-            'purchases',
+            'purchases','from_date','to_date',
             'title'
         ));
     }

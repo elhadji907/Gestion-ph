@@ -42,14 +42,22 @@
         @foreach (\App\Models\Sale::get() as $sale)
             <?php $vente = $vente + $sale->unReadNotifications->count(); ?>
         @endforeach
-        @unless(isset($sale) && $sale->unReadNotifications->isEmpty())
+        {{--  @unless(isset($sale) && $sale->unReadNotifications->isEmpty())  --}}
+        @if (isset($vente) && $vente != 0)
             <li class="nav-item dropdown noti-dropdown">
 
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                     {{--  <i class="fe fe-bell"></i> <span class="badge badge-pill">{{auth()->user()->unReadNotifications->count()}}</span>  --}}
-                    <i class="fe fe-bell"></i> <span class="badge badge-pill">
-                        {{ $vente }}
-                    </span>
+                    <i class="fe fe-bell"></i>
+                    @if (isset($vente) && $vente != 0)
+                        <span class="badge badge-pill badge-danger">
+                            {{ $vente }}
+                        </span>
+                    @else
+                        <span class="badge badge-pill badge-default">
+                            {{ $vente }}
+                        </span>
+                    @endif
                 </a>
                 <div class="dropdown-menu notifications">
                     <div class="topnav-dropdown-header">
@@ -71,8 +79,9 @@
                                                 <div class="media-body">
                                                     {{--  <h6 class="text-danger">Alerte stock</h6>  --}}
                                                     <p class="noti-details">
-                                                        <span class="noti-title">{{ $notification->data['product_name'] }}
-                                                            reste seulement
+                                                        <span
+                                                            class="noti-title">{{ $notification->data['product_name'] }},</span>
+                                                        <span class="text-danger">reste
                                                             {{ $notification->data['quantity'] }}.<br></span>
                                                         <span>Veuillez mettre à jour la quantité achetée </span>
                                                     </p>
@@ -93,7 +102,9 @@
                     </div>  --}}
                 </div>
             </li>
-        @endunless
+        @else
+        @endif
+        {{--  @endunless  --}}
         <!-- /Notifications -->
 
         <!-- User Menu -->

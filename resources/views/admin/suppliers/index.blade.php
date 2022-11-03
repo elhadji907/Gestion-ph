@@ -19,27 +19,28 @@
 @endpush
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
 
-            <!-- Suppliers -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="supplier-table" class="datatable table table-hover table-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Produit</th>
-                                    <th>Nom</th>
-                                    <th>Téléphone</th>
-                                    <th>Email</th>
-                                    <th>Addresse</th>
-                                    <th>Compagnie</th>
-                                    <th class="action-btn">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{-- @foreach ($suppliers as $supplier)
+                <!-- Suppliers -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="supplier-table" class="table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th>Nom</th>
+                                        <th>Téléphone</th>
+                                        <th>Email</th>
+                                        <th width="5%">Addresse</th>
+                                        <th>Compagnie</th>
+                                        <th class="action-btn">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- @foreach ($suppliers as $supplier)
 							<tr>
 								<td>										
 									{{$supplier->product}}
@@ -61,13 +62,14 @@
 								</td>
 							</tr>
 							@endforeach							 --}}
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- /Suppliers-->
+                <!-- /Suppliers-->
 
+            </div>
         </div>
     </div>
 @endsection

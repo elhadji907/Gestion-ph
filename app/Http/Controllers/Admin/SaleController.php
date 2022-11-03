@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\SaleAlertNotification;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Carbon;
 
 class SaleController extends Controller
 {
@@ -113,7 +114,7 @@ class SaleController extends Controller
         $purchased_item = Purchase::find($sold_product->purchase->id);
         $new_quantity = ($purchased_item->quantity) - ($request->quantity);
         $notification = '';
-        if (!($new_quantity < 1)) {
+        if (!($new_quantity < 0)) {
             $purchased_item->update([
                 'quantity'=>$new_quantity,
             ]);
@@ -131,21 +132,27 @@ class SaleController extends Controller
                 'telephone_client'=>$request->telephone_client,
             ]);
 
-            $notification = notify("Le produit a été vendu");
+            if ($purchased_item->quantity == 0) {
+                $notification = notify("Le produit a été vendu mais et il n'en reste plus en stock");
+            } else {
+                $notification = notify("Le produit a été vendu");
+            }
         }
-        if ($new_quantity <=1 && $new_quantity !=0) {
+        if ($new_quantity <=0 && $new_quantity !=0) {
             // send notification
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
             // end of notification
 
+            //$sale->notify(new SaleAlertNotification($sale, auth()->user()));
             $notification = notify("Le produit est en rupture de stock!!!");
         }
 
         /* return redirect()->route('sales.index')->with($notification); */
 
-        if ($new_quantity <=10) {
+        if (isset($sale) && $new_quantity <=10) {
             $sale->notify(new SaleAlertNotification($sale, auth()->user()));
+            //dd($sale);
         }
 
         return back()->with($notification);
@@ -170,7 +177,6 @@ class SaleController extends Controller
         ));
     }
 
-    
     public function showFrmNotification(Sale $sale, DatabaseNotification $notification)
     {
         $notification->markAsRead();
@@ -256,10 +262,20 @@ class SaleController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
         ]);
-        $title = 'Rapports de ventes';
+        $now =  Carbon::now()->format('H:i:s');
+        $from_date = date_format(date_create($request->from_date), 'd/m/yy');
+        $to_date = date_format(date_create($request->to_date), 'd/m/yy');
+        if ($from_date == $to_date) {
+            $title = 'Rapports de vente du '.$from_date.' à '.$now;
+        } else {
+            $title = 'Rapports de vente du '.$from_date.' au '.$to_date.' à '.$now;
+        }
+        //dd($from_date);
         $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
         return view('admin.sales.reports', compact(
             'sales',
+            'from_date',
+            'to_date',
             'title'
         ));
     }
