@@ -58,7 +58,7 @@ return [
                 ],
             ]
         ],
-        
+
     ],
 
     // Setting page url, will be used for get and post request
@@ -86,7 +86,10 @@ return [
     'input_error_feedback_class' => 'text-danger',
 
     // Submit button
-    'submit_btn_text' => 'Enregistrer les paramètres',
+
+    /* commenter par lamine */
+    /* 'submit_btn_text' => 'Enregistrer les paramètres', */
+
     'submit_success_message' => 'Les paramètres ont été enregistrés.',
 
     // Remove any setting which declaration removed later from sections
@@ -96,7 +99,7 @@ return [
     'controller' => '\App\Http\Controllers\Admin\SettingController',
 
     // settings group
-    'setting_group' => function() {
+    'setting_group' => function () {
         // return 'user_'.auth()->id();
         return 'default';
     }

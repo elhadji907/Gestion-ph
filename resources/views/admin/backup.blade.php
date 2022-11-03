@@ -33,7 +33,7 @@
                                 <th>Disque</th>
                                 <th>Date de sauvegarde</th>
                                 <th>Taille du fichier</th>
-								<th class="text-center action-btn">Actions</th>
+								{{--  <th class="text-center action-btn">Actions</th>  --}}
 							</tr>
 						</thead>
 						<tbody>
@@ -43,7 +43,7 @@
                                 <td>{{ $b['disk'] }}</td>
                                 <td>{{ \Carbon\Carbon::createFromTimeStamp($b['last_modified'])->formatLocalized('%d %B %Y, %H:%M') }}</td>
                                 <td>{{ round((int)$b['file_size']/1048576, 2).' MB' }}</td>
-                                <td class="text-center">
+                             {{--     <td class="text-center">
                                     <div class="actions">
                                         @if ($b['download'])
                                         <a class="float-left" href="{{ route('backup.download') }}?disk={{ $b['disk'] }}&path={{ urlencode($b['file_path']) }}&file_name={{ urlencode($b['file_name']) }}">
@@ -60,7 +60,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                </td>
+                                </td>  --}}
                             </tr>
                             @endforeach
 						</tbody>

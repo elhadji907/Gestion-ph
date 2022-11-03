@@ -27,13 +27,15 @@
                     @endforeach
                 @endif
 
-                <div class="row m-b-md">
+                {{--  commenter par lamine  --}}
+                {{--  <div class="row m-b-md">
                     <div class="col-md-12">
                         <button class="btn-primary btn">
                             {{ Arr::get($settingsUI, 'submit_btn_text', 'Enregistrer les paramètres') }}
                         </button>
                     </div>
-                </div>
+                </div>  --}}
+
             </form>
         </div>
     </div>
