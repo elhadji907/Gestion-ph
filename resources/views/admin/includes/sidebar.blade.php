@@ -29,17 +29,17 @@
 				</li>
 				@endcan
 				
-				@can('view-purchase')
+				{{--  @can('view-purchase')  --}}
 				<li class="submenu">
-					<a href="#"><i class="fe fe-star-o"></i> <span> Achat</span> <span class="menu-arrow"></span></a>
+					<a href="#"><i class="fe fe-star-o"></i> <span> Stock</span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
-						<li><a class="{{ route_is('purchases.*') ? 'active' : '' }}" href="{{route('purchases.index')}}">Achat</a></li>
+						<li><a class="{{ route_is('purchases.*') ? 'active' : '' }}" href="{{route('purchases.index')}}">Entrer stock</a></li>
 						@can('create-purchase')
-						<li><a class="{{ route_is('purchases.create') ? 'active' : '' }}" href="{{route('purchases.create')}}">Ajouter un achat</a></li>
+						<li><a class="{{ route_is('purchases.create') ? 'active' : '' }}" href="{{route('purchases.create')}}">Ajouter un stock</a></li>
 						@endcan
 					</ul>
 				</li>
-				@endcan
+				{{--  @endcan  --}}
 				@can('view-sales')
 				<li class="submenu">
 					<a href="#"><i class="fe fe-activity"></i> <span> Vente</span> <span class="menu-arrow"></span></a>
