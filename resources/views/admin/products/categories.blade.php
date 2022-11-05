@@ -21,9 +21,10 @@
     <div class="row">
 
         <div class="col-sm-4">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-header">
-                    <h2>Ajouter des catégories</h2>
+                    <h4><i class="fas fa-table"></i>
+                    Ajouter des catégories</h4>
                 </div>
                 <div class="card-body">
                     <form action="" method="POST">
@@ -46,18 +47,22 @@
                         <table class="table table-bordered" id="dynamicAddRemove">
                             <tr>
                                 <th>Catégories</th>
-                                <th>Action</th>
+                                <th width="15%">Action</th>
                             </tr>
                             <tr>
                                 <td><input type="text" name="categories[0][categorie]" placeholder="Entrer la catégorie"
                                         class="form-control" /></td>
                                 <td><button type="button" name="add" id="add-btn" class="btn btn-success"
-                                        title="Ajouter une ligne"><i class='fas fa-plus-square'></i>&nbsp;Ajouter</button>
+                                        title="Ajouter une ligne">Ajouter</button>
                                 </td>
                             </tr>
                         </table>
-                        <button type="submit" class="btn btn-success" title="Enregistrer"><i
-                                class='fa fa-save'></i>&nbsp;Enregistrer</button>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
+                            <button type="submit" class="btn btn-outline-success"><i
+                                    class="far fa-save"></i>&nbsp;Enregistrer</button>
+                        </div>
+                        {{--  <button type="submit" class="btn btn-success" title="Enregistrer"><i
+                                class='fa fa-save'></i>&nbsp;Enregistrer</button>  --}}
                     </form>
                 </div>
             </div>
@@ -81,6 +86,10 @@
         </div>  --}}
         <div class="col-sm-8">
             <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-table"></i>
+                    Liste des catégories</h4>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="category-table"
