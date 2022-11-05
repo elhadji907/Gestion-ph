@@ -13,13 +13,56 @@
             <li class="breadcrumb-item active">Catégories</li>
         </ul>
     </div>
-   {{--   <div class="col-sm-5 col">
+    {{--   <div class="col-sm-5 col">
         <a href="#add_categories" data-toggle="modal" class="btn btn-primary float-right mt-2">Ajouter une catégorie</a>
     </div>  --}}
 @endpush
 @section('content')
     <div class="row">
+
         <div class="col-sm-4">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h2>Ajouter des catégories</h2>
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST">
+                        @csrf
+                        {{--        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif  --}}
+                        @if (Session::has('success'))
+                            <div class="alert alert-success text-center">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                <p>{{ Session::get('success') }}</p>
+                            </div>
+                        @endif
+                        <table class="table table-bordered" id="dynamicAddRemove">
+                            <tr>
+                                <th>Catégories</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="categories[0][categorie]" placeholder="Entrer la catégorie"
+                                        class="form-control" /></td>
+                                <td><button type="button" name="add" id="add-btn" class="btn btn-success"
+                                        title="Ajouter une ligne"><i class='fas fa-plus-square'></i>&nbsp;Ajouter</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="btn btn-success" title="Enregistrer"><i
+                                class='fa fa-save'></i>&nbsp;Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{--     <div class="col-sm-4">
             <div class="modal-body">
                 <form method="POST" action="{{ route('categories.store') }}">
                     @csrf
@@ -27,14 +70,15 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label>Ajouter une catégorie <span class="text-danger">*</span></label>
-                                <input type="text" name="name" class="form-control" placeholder="Ajouter nouvelle catégorie" autocomplete="name">
+                                <input type="text" name="name" class="form-control"
+                                    placeholder="Ajouter nouvelle catégorie" autocomplete="name">
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
                 </form>
             </div>
-        </div>
+        </div>  --}}
         <div class="col-sm-8">
             <div class="card">
                 <div class="card-body">
@@ -75,7 +119,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Catégorie</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Catégorie">
+                                    <input type="text" name="categorie" class="form-control" placeholder="Catégorie">
                                 </div>
                             </div>
                         </div>
@@ -106,7 +150,7 @@
                                 <input type="hidden" name="id" id="edit_id">
                                 <div class="form-group">
                                     <label>Catégorie</label>
-                                    <input type="text" class="form-control edit_name" name="name">
+                                    <input type="text" class="form-control edit_name" name="categorie">
                                 </div>
                             </div>
 
@@ -121,6 +165,18 @@
 @endsection
 
 @push('page-js')
+    <script type="text/javascript">
+        var i = 0;
+        $("#add-btn").click(function() {
+            ++i;
+            $("#dynamicAddRemove").append('<tr><td><input type="text" name="categories[' + i +
+                '][categorie]" placeholder="Entrer une autre catégorie" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Supprimer</button></td></tr>'
+            );
+        });
+        $(document).on('click', '.remove-tr', function() {
+            $(this).parents('tr').remove();
+        });
+    </script>
     <script>
         $(document).ready(function() {
             var table = $('#category-table').DataTable({
@@ -157,8 +213,8 @@
                 serverSide: true,
                 ajax: "{{ route('categories.index') }}",
                 columns: [{
-                        data: 'name',
-                        name: 'name'
+                        data: 'categorie',
+                        name: 'categorie'
                     },
                     {
                         data: 'created_at',
@@ -211,7 +267,7 @@
             $('#category-table').on('click', '.editbtn', function() {
                 $('#edit_category').modal('show');
                 var id = $(this).data('id');
-                var name = $(this).data('name');
+                var name = $(this).data('categorie');
                 $('#edit_id').val(id);
                 $('.edit_name').val(name);
             });

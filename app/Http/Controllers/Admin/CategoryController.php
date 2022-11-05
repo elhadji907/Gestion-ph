@@ -45,7 +45,7 @@ class CategoryController extends Controller
                         return date_format(date_create($category->created_at), "d/m/yy");
                     })
                     ->addColumn('action', function ($row) {
-                        $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->categorie.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('categories.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                         if (!auth()->user()->hasPermissionTo('edit-category')) {
                             $editbtn = '';
@@ -77,7 +77,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:100|unique:categories,name,NULL,id,deleted_at,NULL',
+            /* 'name'=>'required|max:100|unique:categories,name,NULL,id,deleted_at,NULL', */
+            'categories.*.categorie' => 'required'
         ]);
 
         $user_connect           =   Auth::user();
@@ -87,13 +88,24 @@ class CategoryController extends Controller
 
         /* Category::create($request->all()); */
 
-        Category::create(
-            [
-            'name'=>$request->name,
-            'created_by'=>$created_by,
-            'updated_by'=>$updated_by,
-        ]
-        );
+        foreach ($request->categories as $key => $value) {
+            Category::create($value);
+            /*  Category::create(
+                 [
+                 'name'=>$value->categorie,
+                 'created_by'=>$created_by,
+                 'updated_by'=>$updated_by,
+             ]
+             ); */
+        }
+
+        /*       Category::create(
+                  [
+                  'name'=>$request->name,
+                  'created_by'=>$created_by,
+                  'updated_by'=>$updated_by,
+              ]
+              ); */
 
         $notification=notify("La catégorie a été ajoutée");
         return back()->with($notification);
@@ -111,15 +123,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request)
     {
-        $this->validate($request, ['name'=>'required|max:100|unique:categories,name,'.$request->id.',id,deleted_at,NULL']);
+        $this->validate($request, ['categorie'=>'required|max:100|unique:categories,categorie,'.$request->id.',id,deleted_at,NULL']);
         $category = Category::find($request->id);
-        
+
         $user_connect           =   Auth::user();
 
         $updated_by  = strtolower($user_connect->name);
 
         $category->update([
-            'name'=>$request->name,
+            'categorie'=>$request->categorie,
             'updated_by'=>$updated_by,
         ]);
         $notification = notify("La catégorie a été mise à jour");
