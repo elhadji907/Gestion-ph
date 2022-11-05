@@ -21,6 +21,9 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable();
             $table->string('item1')->nullable();
             $table->string('item2')->nullable();
+            $table->string('created_by', 200)->nullable();
+            $table->string('updated_by', 200)->nullable();
+            $table->string('deleted_by', 200)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

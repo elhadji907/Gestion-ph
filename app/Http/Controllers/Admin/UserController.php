@@ -90,7 +90,7 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'name'=>'required|max:100',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:users,email',
             'role'=>'required',
             'password'=>'required|confirmed|max:200',
             'avatar'=>'nullable|file|image|mimes:jpg,jpeg,gif,png',

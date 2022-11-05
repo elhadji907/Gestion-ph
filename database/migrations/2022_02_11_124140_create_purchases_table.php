@@ -21,9 +21,13 @@ class CreatePurchasesTable extends Migration
             $table->decimal('cost_price')->nullable();
             $table->string('quantity');
             $table->string('expiry_date')->nullable();
+            $table->string('created_by', 200)->nullable();
+            $table->string('updated_by', 200)->nullable();
+            $table->string('deleted_by', 200)->nullable();
             $table->string('image')->nullable();
             $table->string('vendu')->nullable();
             $table->string('item')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

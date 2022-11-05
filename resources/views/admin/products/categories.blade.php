@@ -13,13 +13,29 @@
             <li class="breadcrumb-item active">Catégories</li>
         </ul>
     </div>
-    <div class="col-sm-5 col">
+   {{--   <div class="col-sm-5 col">
         <a href="#add_categories" data-toggle="modal" class="btn btn-primary float-right mt-2">Ajouter une catégorie</a>
-    </div>
+    </div>  --}}
 @endpush
 @section('content')
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
+            <div class="modal-body">
+                <form method="POST" action="{{ route('categories.store') }}">
+                    @csrf
+                    <div class="row form-row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Ajouter une catégorie <span class="text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" placeholder="Ajouter nouvelle catégorie" autocomplete="name">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-8">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -136,9 +152,9 @@
                         text: '<i class="fas fa-print"></i> Print',
                         titleAttr: 'Print'
                     }
-                ],				
-				processing: true,
-				serverSide: true,
+                ],
+                processing: true,
+                serverSide: true,
                 ajax: "{{ route('categories.index') }}",
                 columns: [{
                         data: 'name',

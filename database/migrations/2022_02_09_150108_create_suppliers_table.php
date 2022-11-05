@@ -22,6 +22,10 @@ class CreateSuppliersTable extends Migration
             $table->string('address')->nullable();
             $table->string('product')->nullable();
             $table->text('comment')->nullable();
+            $table->string('created_by', 200)->nullable();
+            $table->string('updated_by', 200)->nullable();
+            $table->string('deleted_by', 200)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
