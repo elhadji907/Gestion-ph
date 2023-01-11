@@ -145,9 +145,10 @@
                             <thead>
                                 <tr>
                                     <th>Nom Médicament</th>
-                                    <th>Quantité</th>
+                                    <th>Qté</th>
                                     <th>Prix total (CFA)</th>
-                                    <th>Date</th>
+                                    <th>Client</th>
+                                    <th>Heure</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -157,7 +158,9 @@
                                         <td>{!! $sale->product->purchase->product ?? '' !!}</td>
                                         <td>{!! $sale->quantity ?? '' !!}</td>
                                         <td>{!! $sale->total_price ?? '' !!}</td>
-                                        <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') ?? '' !!}</td>
+                                        <td>{!! $sale->nom_client ?? '' !!}</td>
+                                        {{--  <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') ?? '' !!}</td>  --}}
+                                        <td>{!! optional($sale->created_at)->translatedFormat('H\h:i') ?? '' !!}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

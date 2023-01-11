@@ -279,7 +279,7 @@ class ProductController extends Controller
                     ->addColumn('category', function ($product) {
                         $category = null;
                         if (!empty($product->category)) {
-                            $category = $product->category->name;
+                            $category = $product->category->categorie;
                         }
                         return $category;
                     })
@@ -353,7 +353,7 @@ class ProductController extends Controller
                         ->addColumn('category', function ($product) {
                             $category = null;
                             if (!empty($product->category)) {
-                                $category = $product->category->name;
+                                $category = $product->category->categorie;
                             }
                             return $category;
                         })

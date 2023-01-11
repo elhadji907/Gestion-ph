@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\SaleAlertNotification;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Carbon;
+use Auth;
 
 class SaleController extends Controller
 {
@@ -104,8 +105,20 @@ class SaleController extends Controller
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
       foreach($data as $row)
       {
+        
+        $now = strtotime(now());
+        
+        /* $expiry_date = strtotime($product->purchase->expiry_date);
+        $now = strtotime(now());
+        $perime = $expiry_date - $now;
+        $perime = floor($perime / 3600 / 24); */
+
+        $product = $row->product;
+        $expiry_date = $row->expiry_date;
+
        $output .= '
-       <li><a href="#">'.$row->product.'</a></li>
+       
+       <li><a href="#">'.$product.'</a></li>
        ';
       }
       $output .= '</ul>';
@@ -120,8 +133,7 @@ class SaleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-       
+    {      
         $this->validate($request, [
             'product'=>'required',
             /* 'nom_client'=>'required|min:5|max:255',
@@ -129,36 +141,41 @@ class SaleController extends Controller
             'quantity'=>'required|min:1'
         ]);
 
+        $user_connect           =   Auth::user();
+        $created_by  = strtolower($user_connect->name);
+        $updated_by  = strtolower($user_connect->name);
 
         $count = count($request->product);
 
-        for ($i=0; $i < $count; $i++) {
-
-        $product_id = Purchase::where('product', $request->product[$i])->first()->id;
-
-        $sold_product = Product::find($product_id);
-
-        $code = Sale::get()->last();
+          $code = Sale::get()->last();
         if (isset($code)) {
             $code = Sale::get()->last()->code;
                 $code = ++$code;
            
         } else {
-            $code = "0001";
+            $code = "00001";
 
         }
 
         $longueur = strlen($code);
 
         if ($longueur <= 1) {
-            $code   =   strtolower("000".$code);
+            $code   =   strtolower("0000".$code);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $code   =   strtolower("00".$code);
+            $code   =   strtolower("000".$code);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $code   =   strtolower("00".$code);
+        } elseif ($longueur >= 4 && $longueur < 4) {
             $code   =   strtolower("0".$code);
         } else {
             $code   =   strtolower($code);
         }
+
+        for ($i=0; $i < $count; $i++) {
+
+        $product_id = Purchase::where('product', $request->product[$i])->first()->id;
+
+        $sold_product = Product::find($product_id);
 
         /**update quantity of
             sold item from
@@ -179,15 +196,18 @@ class SaleController extends Controller
              * calcualting item's total price
             **/
             $total_price = ($request->quantity[$i]) * ($sold_product->price);
+
             $sale = Sale::create([
-                'product_id'=>$product_id,
-                'code'=>$code,
-                'quantity'=>$request->quantity[$i],
-                'purchase_quantity'=>$purchased_item->quantity+1,
-                'total_price'=>$total_price,
-                'nom_client'=>$request->nom_client,
-                'name'=>$request->product[$i],
-                'telephone_client'=>$request->telephone_client,
+                'product_id'         =>   $product_id,
+                'code'               =>   $code,
+                'quantity'           =>   $request->quantity[$i],
+                'purchase_quantity'  =>   $purchased_item->quantity+1,
+                'total_price'        =>   $total_price,
+                'nom_client'         =>   $request->nom_client,
+                'name'               =>   $request->product[$i],
+                'telephone_client'   =>   $request->telephone_client,
+                'created_by'         =>   $created_by,
+                'updated_by'         =>   $updated_by
             ]);
 
             if ($purchased_item->quantity == 0) {
@@ -268,6 +288,9 @@ class SaleController extends Controller
             'quantity'=>'required|integer|min:1'
         ]);
         $sold_product = Product::find($request->product);
+        
+        $user_connect           =   Auth::user();
+        $updated_by  = strtolower($user_connect->name);
         /**
          * update quantity of sold item from purchases
         **/
@@ -290,11 +313,12 @@ class SaleController extends Controller
             }
             $total_price = $sale->total_price;
             $sale->update([
-                'product_id'=>$request->product,
-                'quantity'=>$request->quantity,
-                'total_price'=>$total_price,
-                'nom_client'=>$request->nom_client,
-                'telephone_client'=>$request->telephone_client,
+                'product_id'            =>  $request->product,
+                'quantity'              =>  $request->quantity,
+                'total_price'           =>  $total_price,
+                'nom_client'            =>  $request->nom_client,
+                'updated_by'            =>  $updated_by,
+                'telephone_client'      =>  $request->telephone_client,
             ]);
 
             $notification = notify("Le produit a été mis à jour");

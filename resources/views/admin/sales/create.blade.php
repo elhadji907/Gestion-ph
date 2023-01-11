@@ -81,7 +81,24 @@
                 <div class="card-body custom-edit-service">
                     @csrf
                     <div class="row form-row">
-                        <div class="col-4">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Client <span class="text-danger">*</span></label>
+                                <input type="text" placeholder="Client"
+                                    class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
+                                    name="nom_client" id="nom_client" value="">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Téléphone </label>
+                                <input type="text" placeholder="Telephone du client"
+                                    class="form-control form-control-sm @error('telephone_client') is-invalid @enderror"
+                                    name="telephone_client" id="telephone_client" value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Nom produit</label>
                                 <input type="text" placeholder="Nom produit"
@@ -96,7 +113,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Prix de vente</label>
                                 <input type="number" placeholder="Entrer prix de vente"
@@ -107,15 +124,14 @@
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-                                {{--  <font style="color:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
+                                {{--  <font style="col-lgor:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
                             </div>
                         </div>
-
                         <input type="hidden" placeholder="Entrer quantite"
                             class="form-control form-control-sm @error('quantite') is-invalid @enderror" name="quantite"
                             id="quantite" value="0.0" min="0">
 
-                        <div class="col-2">
+                        <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="">Quantity</label>
                                 <input type="number" placeholder="Entrer prix de vente"
@@ -203,15 +219,15 @@
           <td>
             <input type="text" name="product[]" value="@{{ product }}">
           </td>
+            <input type="hidden" name="nom_client" value="@{{ nom_client }}">
+            <input type="hidden" name="telephone_client" value="@{{ telephone_client }}">
             <td>
               <input type="number" class="quantity" name="quantity[]" value="@{{ quantity }}">
             </td>
             <td>
             <input type="number" class="total_price" name="total_price[]" value="@{{ total_price }}">
           </td>
-            <td>
             <input type="hidden" class="quantite" name="quantite[]" value="@{{ quantite }}">
-          </td>
           <td>
            <i class="removeaddmore" style="cursor:pointer;color:red;">Supprimer</i>
           </td>    
@@ -227,6 +243,8 @@
             var quantity = $("#quantity").val();
             var total_price = $("#total_price").val();
             var quantite = $("#quantite").val();
+            var nom_client = $("#nom_client").val();
+            var telephone_client = $("#telephone_client").val();
             var source = $("#document-template").html();
             var template = Handlebars.compile(source);
 
@@ -234,6 +252,8 @@
                 product: product,
                 quantity: quantity,
                 quantite: quantite,
+                nom_client: nom_client,
+                telephone_client: telephone_client,
                 total_price: total_price * quantity
             }
 
