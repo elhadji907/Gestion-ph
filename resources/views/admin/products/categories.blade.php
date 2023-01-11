@@ -38,12 +38,12 @@
                             </ul>
                         </div>
                     @endif  --}}
-                        @if (Session::has('success'))
+                        {{--  @if (Session::has('success'))
                             <div class="alert alert-success text-center">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                                 <p>{{ Session::get('success') }}</p>
                             </div>
-                        @endif
+                        @endif  --}}
                         <table class="table table-bordered" id="dynamicAddRemove">
                             <tr>
                                 <th>Catégories</th>
@@ -276,7 +276,7 @@
             $('#category-table').on('click', '.editbtn', function() {
                 $('#edit_category').modal('show');
                 var id = $(this).data('id');
-                var name = $(this).data('categorie');
+                var name = $(this).data('name');
                 $('#edit_id').val(id);
                 $('.edit_name').val(name);
             });

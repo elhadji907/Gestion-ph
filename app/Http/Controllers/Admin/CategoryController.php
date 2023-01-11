@@ -42,7 +42,7 @@ class CategoryController extends Controller
             return DataTables::of($categories)
                     ->addIndexColumn()
                     ->addColumn('created_at', function ($category) {
-                        return date_format(date_create($category->created_at), "d/m/yy");
+                        return date_format(date_create($category->created_at), "d/m/Y");
                     })
                     ->addColumn('action', function ($row) {
                         $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->categorie.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';

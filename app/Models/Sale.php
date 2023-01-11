@@ -9,17 +9,21 @@ use Illuminate\Notifications\Notifiable;
 
 class Sale extends Model
 {
-    use HasFactory,SoftDeletes,  Notifiable;
+    use HasFactory;
+    use SoftDeletes;
+    use Notifiable;
 
     protected $fillable = [
-        'product_id','quantity','total_price', 'nom_client', 'telephone_client', 'purchase_quantity', 'item1', 'item2', 'item3'
+        'product_id','quantity','total_price', 'nom_client', 'telephone_client', 'purchase_quantity', 'item1', 'item2', 'item3', 'code', 'name'
     ];
 
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 
-    public function purchase(){
+    public function purchase()
+    {
         return $this->belongsTo(Purchase::class);
     }
 }

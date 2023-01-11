@@ -37,7 +37,7 @@
 								<label>Catégorie <span class="text-danger">*</span></label>
 								<select class="select2 form-select form-control" name="category"> 
 									@foreach ($categories as $category)
-										<option {{($purchase->category->id == $category->id) ? 'selected': ''}} value="{{$category->id}}">{{$category->name}}</option>
+										<option {{($purchase->category->id == $category->id) ? 'selected': ''}} value="{{$category->id}}">{{$category->categorie}}</option>
 									@endforeach
 								</select>
 							</div>

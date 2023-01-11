@@ -40,7 +40,7 @@ class ProductController extends Controller
                 ->addColumn('category', function ($product) {
                     $category = null;
                     if (!empty($product->purchase->category)) {
-                        $category = $product->purchase->category->name;
+                        $category = $product->purchase->category->categorie;
                     }
                     return $category;
                 })
@@ -55,7 +55,7 @@ class ProductController extends Controller
                 })
                 ->addColumn('expiry_date', function ($product) {
                     if (!empty($product->purchase)) {
-                        return date_format(date_create($product->purchase->expiry_date), 'd/m/yy');
+                        return date_format(date_create($product->purchase->expiry_date), 'd/m/Y');
                     }
                 })
                 ->addColumn('vendu', function ($product) {
@@ -231,7 +231,7 @@ class ProductController extends Controller
                 })
                 ->addColumn('expiry_date', function ($product) {
                     if (!empty($product->purchase)) {
-                        return date_format(date_create($product->purchase->expiry_date), 'd/m/yy');
+                        return date_format(date_create($product->purchase->expiry_date), 'd/m/Y');
                     }
                 })
                 ->addColumn('action', function ($row) {
@@ -299,7 +299,7 @@ class ProductController extends Controller
                     })
                     ->addColumn('expiry_date', function ($product) {
                         if (!empty($product)) {
-                            return date_format(date_create($product->expiry_date), 'd/m/yy');
+                            return date_format(date_create($product->expiry_date), 'd/m/Y');
                         }
                     })
                     ->addColumn('action', function ($row) {
@@ -373,7 +373,7 @@ class ProductController extends Controller
                         })
                         ->addColumn('expiry_date', function ($product) {
                             if (!empty($product)) {
-                                return date_format(date_create($product->expiry_date), 'd/m/yy');
+                                return date_format(date_create($product->expiry_date), 'd/m/Y');
                             }
                         })
                         ->addColumn('action', function ($row) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Sale;
+use App\Models\Task;
 use App\Models\Product;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class SaleController extends Controller
                         return settings('app_currency', '').' '. $sale->total_price;
                     })
                     ->addColumn('date', function ($row) {
-                        return date_format(date_create($row->created_at), 'd/m/yy à H\h i');
+                        return date_format(date_create($row->created_at), 'd/m/Y à H\h i');
                     })
                    /*  ->addColumn('nom_client',function($row){
                         return settings('app_currency','').' '. $sale->nom_client;
@@ -85,10 +86,31 @@ class SaleController extends Controller
     {
         $title = 'Créer des ventes';
         $products = Product::get();
+
         return view('admin.sales.create', compact(
             'title',
             'products'
         ));
+    }
+
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      $data = DB::table('purchases')
+        ->where('product', 'LIKE', "%{$query}%")
+        ->get();
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+       $output .= '
+       <li><a href="#">'.$row->product.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 
     /**
@@ -99,20 +121,54 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+       
         $this->validate($request, [
             'product'=>'required',
-            'nom_client'=>'required|min:5|max:255',
-            'telephone_client'=>'nullable|min:10|max:20',
-            'quantity'=>'required|integer|min:1'
+            /* 'nom_client'=>'required|min:5|max:255',
+            'telephone_client'=>'nullable|min:10|max:20', */
+            'quantity'=>'required|min:1'
         ]);
-        $sold_product = Product::find($request->product);
+
+
+        $count = count($request->product);
+
+        for ($i=0; $i < $count; $i++) {
+
+        $product_id = Purchase::where('product', $request->product[$i])->first()->id;
+
+        $sold_product = Product::find($product_id);
+
+        $code = Sale::get()->last();
+        if (isset($code)) {
+            $code = Sale::get()->last()->code;
+                $code = ++$code;
+           
+        } else {
+            $code = "0001";
+
+        }
+
+        $longueur = strlen($code);
+
+        if ($longueur <= 1) {
+            $code   =   strtolower("000".$code);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $code   =   strtolower("00".$code);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $code   =   strtolower("0".$code);
+        } else {
+            $code   =   strtolower($code);
+        }
 
         /**update quantity of
             sold item from
          purchases
         **/
-        $purchased_item = Purchase::find($sold_product->purchase->id);
-        $new_quantity = ($purchased_item->quantity) - ($request->quantity);
+
+        $purchased_item = Purchase::find($sold_product->purchase_id);
+        
+        $new_quantity = ($purchased_item->quantity) - ($request->quantity[$i]);
+
         $notification = '';
         if (!($new_quantity < 0)) {
             $purchased_item->update([
@@ -122,13 +178,15 @@ class SaleController extends Controller
             /**
              * calcualting item's total price
             **/
-            $total_price = ($request->quantity) * ($sold_product->price);
+            $total_price = ($request->quantity[$i]) * ($sold_product->price);
             $sale = Sale::create([
-                'product_id'=>$request->product,
-                'quantity'=>$request->quantity,
+                'product_id'=>$product_id,
+                'code'=>$code,
+                'quantity'=>$request->quantity[$i],
                 'purchase_quantity'=>$purchased_item->quantity+1,
                 'total_price'=>$total_price,
                 'nom_client'=>$request->nom_client,
+                'name'=>$request->product[$i],
                 'telephone_client'=>$request->telephone_client,
             ]);
 
@@ -138,6 +196,20 @@ class SaleController extends Controller
                 $notification = notify("Le produit a été vendu");
             }
         }
+
+            /* 'product_id'=>$request->product[$i]; */
+
+           /*  $task = new Task();
+            $task->task_name = $request->task_name[$i];
+            $task->cost = $request->cost[$i];
+            $task->save(); */
+        }
+
+
+
+
+
+
         if ($new_quantity <=0 && $new_quantity !=0) {
             // send notification
             $product = Purchase::where('quantity', '<=', 1)->first();
@@ -263,8 +335,8 @@ class SaleController extends Controller
             'to_date' => 'required',
         ]);
         $now =  Carbon::now()->format('H:i:s');
-        $from_date = date_format(date_create($request->from_date), 'd/m/yy');
-        $to_date = date_format(date_create($request->to_date), 'd/m/yy');
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
         if ($from_date == $to_date) {
             $title = 'Rapports de vente du '.$from_date.' à '.$now;
         } else {
@@ -290,5 +362,27 @@ class SaleController extends Controller
     public function destroy(Request $request)
     {
         return Sale::findOrFail($request->id)->delete();
+    }
+
+    public function tasks(Request $request)
+    {
+        $request->validate([
+            'task_name' => 'required',
+            'cost' => 'required',
+            'quantite' => 'required',
+         ]);
+
+        $count = count($request->task_name);
+
+        for ($i=0; $i < $count; $i++) {
+            $task = new Task();
+            $task->task_name = $request->task_name[$i];
+            $task->cost = $request->cost[$i];
+            $task->save();
+        }
+
+        $notification = notify("Le produit a été vendu");
+
+        return redirect()->back()->with($notification);
     }
 }

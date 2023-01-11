@@ -40,7 +40,7 @@ class PurchaseController extends Controller
                 })
                 ->addColumn('category', function ($purchase) {
                     if (!empty($purchase->category)) {
-                        return $purchase->category->name;
+                        return $purchase->category->categorie;
                     }
                 })
                 ->addColumn('cost_price', function ($purchase) {
@@ -51,7 +51,7 @@ class PurchaseController extends Controller
                     return $purchase->supplier->name;
                 })
                 ->addColumn('expiry_date', function ($purchase) {
-                    return date_format(date_create($purchase->expiry_date), 'd/m/yy');
+                    return date_format(date_create($purchase->expiry_date), 'd/m/Y');
                 })
                 ->addColumn('action', function ($row) {
                     $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
@@ -207,8 +207,8 @@ class PurchaseController extends Controller
         ]);
         $now =  Carbon::now()->format('H:i:s');
         //dd($now);
-        $from_date = date_format(date_create($request->from_date), 'd/m/yy');
-        $to_date = date_format(date_create($request->to_date), 'd/m/yy');
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
         if ($from_date == $to_date) {
             $title = 'Rapports d’achats du '.$from_date.' à '.$now;
         }else {

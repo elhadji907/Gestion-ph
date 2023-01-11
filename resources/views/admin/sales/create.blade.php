@@ -6,7 +6,7 @@
 
 @push('page-header')
     <div class="col-sm-12">
-        <h3 class="page-title">Créer une vente</h3>
+        <h3 class="page-title">Créer une vente </h3>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Tableau de bord</a></li>
             <li class="breadcrumb-item active">Créer une vente</li>
@@ -15,8 +15,8 @@
 @endpush
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
+    {{--   <div class="row justify-content-center">
+        <div class="col-sm-6 col-md-6">
             <div class="card">
                 <div class="card-body custom-edit-service">
                     <!-- Create Sale -->
@@ -39,7 +39,6 @@
                                                 @if (!($product->purchase->quantity <= 0) && $perime > 0)
                                                     <option value="{{ $product->id }}">{{ $product->purchase->product }}
                                                         <span> [{{ $product->purchase->quantity }}] </span>
-                                                        {{--  <span> [{{ $perime }}] </span>  --}}
                                                     </option>
                                                 @endif
                                             @endif
@@ -50,7 +49,8 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Quantité <span class="text-danger">*</span></label>
-                                    <input type="number" value="1" class="form-control" name="quantity" min="1">
+                                    <input type="number" value="1" class="form-control" name="quantity"
+                                        min="1">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -74,7 +74,217 @@
                 </div>
             </div>
         </div>
+    </div>  --}}
+    <div class="container-fluid row justify-content-center">
+        <div class="col-sm-6 col-md-12">
+            <div class="card">
+                <div class="card-body custom-edit-service">
+                    @csrf
+                    <div class="row form-row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Nom produit</label>
+                                <input type="text" placeholder="Nom produit"
+                                    class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                    name="product" id="product" value="">
+                                <div id="countryList">
+                                </div>
+                                @error('product')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Prix de vente</label>
+                                <input type="number" placeholder="Entrer prix de vente"
+                                    class="form-control form-control-sm @error('total_price') is-invalid @enderror"
+                                    name="total_price" id="total_price" value="0.0" min="0">
+                                @error('total_price')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                {{--  <font style="color:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
+                            </div>
+                        </div>
+
+                        <input type="hidden" placeholder="Entrer quantite"
+                            class="form-control form-control-sm @error('quantite') is-invalid @enderror" name="quantite"
+                            id="quantite" value="0.0" min="0">
+
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="">Quantity</label>
+                                <input type="number" placeholder="Entrer prix de vente"
+                                    class="form-control form-control-sm @error('quantity') is-invalid @enderror"
+                                    name="quantity" id="quantity" value="1" min="1">
+                                @error('quantity')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                {{--  <font style="color:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
+                            </div>
+                        </div>
+                        {{--  <div class="col-2">
+                            <div class="form-group">
+                                <label for="">Quantité</label>
+                                <input type="number" placeholder="Entrer quantité"
+                                    class="form-control form-control-sm @error('quantity') is-invalid @enderror"
+                                    name="quantity" id="quantity" value="1" min="1">
+                                @error('quantity')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>  --}}
+                        <div class="col-md-2" style="margin-top:32px;">
+                            <div class="form-group">
+                                <button id="addMore" class="btn btn-success btn-sm">Ajouter</button>
+                            </div>
+                        </div>
+                        <div class="row  form-row justify-content-center" style="margin-top:26px;">
+                            <div class="col-md-6">
+                                {{--  <form action="{{ route('task') }}" method="post">  --}}
+                                <form method="POST" action="{{ route('sales.store') }}">
+                                    @csrf
+
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-sm table-bordered" style="display: none;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produit</th>
+                                                            <th>Quantité</th>
+                                                            <th>Prix</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody id="addRow" class="addRow">
+
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="1" class="text-right">
+                                                                <strong>Total:</strong>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" id="estimated_ammount"
+                                                                    class="estimated_ammount" value="0" readonly>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                                <div>
+                                                    <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                                                </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+
+    <script id="document-template" type="text/x-handlebars-template">
+      <tr class="delete_add_more_item" id="delete_add_more_item">    
+          <td>
+            <input type="text" name="product[]" value="@{{ product }}">
+          </td>
+            <td>
+              <input type="number" class="quantity" name="quantity[]" value="@{{ quantity }}">
+            </td>
+            <td>
+            <input type="number" class="total_price" name="total_price[]" value="@{{ total_price }}">
+          </td>
+            <td>
+            <input type="hidden" class="quantite" name="quantite[]" value="@{{ quantite }}">
+          </td>
+          <td>
+           <i class="removeaddmore" style="cursor:pointer;color:red;">Supprimer</i>
+          </td>    
+      </tr>
+     </script>
+
+    <script type="text/javascript">
+        $(document).on('click', '#addMore', function() {
+
+            $('.table').show();
+
+            var product = $("#product").val();
+            var quantity = $("#quantity").val();
+            var total_price = $("#total_price").val();
+            var quantite = $("#quantite").val();
+            var source = $("#document-template").html();
+            var template = Handlebars.compile(source);
+
+            var data = {
+                product: product,
+                quantity: quantity,
+                quantite: quantite,
+                total_price: total_price * quantity
+            }
+
+            var html = template(data);
+            $("#addRow").append(html)
+
+            total_ammount_price();
+        });
+
+        $(document).on('click', '.removeaddmore', function(event) {
+            $(this).closest('.delete_add_more_item').remove();
+            total_ammount_price();
+        });
+
+        function total_ammount_price() {
+            var sum = 0;
+            $('.total_price').each(function() {
+                var value = $(this).val();
+                if (value.length != 0) {
+                    sum += parseFloat(value);
+                }
+            });
+            $('#estimated_ammount').val(sum);
+        }
+
+
+
+        $('#product').keyup(function() {
+            var query = $(this).val();
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ route('product.fetch') }}",
+                    method: "POST",
+                    data: {
+                        query: query,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#countryList').fadeIn();
+                        $('#countryList').html(data);
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', 'li', function() {
+            $('#product').val($(this).text());
+            $('#countryList').fadeOut();
+        });
+    </script>
 @endsection
 
 
