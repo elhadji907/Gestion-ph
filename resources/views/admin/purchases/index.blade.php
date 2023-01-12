@@ -29,14 +29,14 @@
                         <table id="purchase-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Nom du médicament</th>
+                                    <th>Médicament</th>
                                     <th>Catégorie</th>
                                     <th width="10%">Fournisseur</th>
                                     <th>Prix d’achat (CFA)</th>
-                                    <th>Quantité</th>
+                                    <th>Qté</th>
                                     <th>Date d’expiration</th>
                                     <th>En vente</th>
-                                    <th class="action-btn">Action</th>
+                                    <th class="action-btn"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,7 +95,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [6, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

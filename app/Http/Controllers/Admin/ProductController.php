@@ -115,7 +115,8 @@ class ProductController extends Controller
         ]);
         $price = $request->price;
         if ($request->discount >0) {
-            $price = $request->discount * $request->price;
+            /* $price = $request->discount * $request->price; */
+            $price = $request->price - ($request->price * ($request->discount/100));
         }
 
         $purchase = Purchase::findOrFail($request->product);
@@ -172,7 +173,8 @@ class ProductController extends Controller
 
         $price = $request->price;
         if ($request->discount >0) {
-            $price = $request->discount * $request->price;
+            /* $price = $request->discount * $request->price; */            
+            $price = $request->price - ($request->price * ($request->discount/100));
         }
         $product->update([
              'purchase_id'=>$request->product,

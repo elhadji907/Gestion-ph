@@ -20,7 +20,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
                     <h4><i class="fas fa-table"></i>
@@ -84,7 +84,7 @@
                 </form>
             </div>
         </div>  --}}
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
                     <h4><i class="fas fa-table"></i>
@@ -97,8 +97,8 @@
                             <thead>
                                 <tr style="boder:1px solid black;">
                                     <th>Nom</th>
-                                    <th style="width:15%;">Date de création</th>
-                                    <th class="text-center action-btn-sm" style="width:7%;">Actions</th>
+                                    <th style="width:10%;">Date</th>
+                                    <th class="text-center action-btn-sm" style="width:7%;"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -237,8 +237,8 @@
                     },
                 ],
                 "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "Tout"]
+                    [5, 10, 25, 50, 100, -1],
+                    [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
                     [1, 'desc']

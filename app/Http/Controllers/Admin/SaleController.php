@@ -145,8 +145,6 @@ class SaleController extends Controller
         $created_by  = strtolower($user_connect->name);
         $updated_by  = strtolower($user_connect->name);
 
-        $count = count($request->product);
-
           $code = Sale::get()->last();
         if (isset($code)) {
             $code = Sale::get()->last()->code;
@@ -171,11 +169,59 @@ class SaleController extends Controller
             $code   =   strtolower($code);
         }
 
+
+        if (isset($request->modal_vente) && $request->modal_vente == 'oui') {
+            
+        $sold_product = Product::find($request->product);
+
+        /**update quantity of
+            sold item from
+         purchases
+        **/
+        $purchased_item = Purchase::find($sold_product->purchase->id);
+        $new_quantity = ($purchased_item->quantity) - ($request->quantity);
+        $notification = '';
+        if (!($new_quantity < 0)) {
+            $purchased_item->update([
+                'quantity'=>$new_quantity,
+            ]);
+
+            /**
+             * calcualting item's total price
+            **/
+            $total_price = ($request->quantity) * ($sold_product->price);
+            $sale = Sale::create([
+                'product_id'          =>    $request->product,
+                'code'                =>    $code,
+                'quantity'            =>    $request->quantity,
+                'purchase_quantity'   =>    $purchased_item->quantity+1,
+                'total_price'         =>    $total_price,
+                'nom_client'          =>    $request->nom_client,
+                'name'                =>    $request->product,
+                'telephone_client'    =>    $request->telephone_client,
+                'created_by'          =>    $created_by,
+                'updated_by'          =>    $updated_by
+            ]);
+
+            if ($purchased_item->quantity == 0) {
+                $notification = notify("Le produit a été vendu mais et il n'en reste plus en stock");
+            } else {
+                $notification = notify("Le produit a été vendu");
+            }
+        }
+        } else {
+            
+        $count = count($request->product);
+        
         for ($i=0; $i < $count; $i++) {
 
         $product_id = Purchase::where('product', $request->product[$i])->first()->id;
 
         $sold_product = Product::find($product_id);
+
+        if ($sold_product == null) {
+            dd("Le produit n'est pas encore mis en vente");
+        }
 
         /**update quantity of
             sold item from
@@ -216,19 +262,8 @@ class SaleController extends Controller
                 $notification = notify("Le produit a été vendu");
             }
         }
-
-            /* 'product_id'=>$request->product[$i]; */
-
-           /*  $task = new Task();
-            $task->task_name = $request->task_name[$i];
-            $task->cost = $request->cost[$i];
-            $task->save(); */
         }
-
-
-
-
-
+        }
 
         if ($new_quantity <=0 && $new_quantity !=0) {
             // send notification

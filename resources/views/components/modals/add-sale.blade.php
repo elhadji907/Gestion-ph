@@ -55,6 +55,9 @@
                                     placeholder="Telephone du client" value="+221">
                             </div>
                         </div>
+                                <input class="form-control" type="hidden" name="modal_vente"
+                                    placeholder="" value="oui">
+                            
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Effectuer la vente</button>
                 </form>
