@@ -30,7 +30,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Nom<span class="text-danger">*</span></label>
+								<label>Fournisseur <span class="text-danger">*</span></label>
 								<input class="form-control" type="text" name="name" placeholder="Nom du fournisseur">
 							</div>
 						</div>
@@ -45,7 +45,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Téléphone<span class="text-danger">*</span></label>
+								<label>Téléphone <span class="text-danger">*</span></label>
 								<input class="form-control" type="text" name="phone" placeholder="Contact du fournisseur">
 							</div>
 						</div>

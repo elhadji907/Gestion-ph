@@ -11,9 +11,18 @@
             <li class="breadcrumb-item active">Ajouter un produit</li>
         </ul>
     </div>
+    {{--  <div class="col-sm-12">
+	<a href="{{route('products.index')}}" class="btn btn-primary float-right mt-2">Retour</a>
+</div>  --}}
+
+
+    <div class="container row justify-content-center pt-5">
+        <div class="col-lg-12">
+            <a class="btn btn-outline-primary" href="{{ route('products.index') }}"> <i
+                    class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+        </div>
+    </div>
 @endpush
-
-
 @section('content')
     <div class="row">
         <div class="col-sm-12">
@@ -32,11 +41,11 @@
                                         <select class="select2 form-select form-control" name="product">
                                             <option disabled selected> Sélectionner un produit</option>
                                             @foreach ($purchases->sortByDesc('created_at') as $purchase)
-                                                @if (!($purchase->quantity <= 0) && ($purchase->vendu !="Oui"))
-                                                    <option value="{{ $purchase->id }}">{{ $purchase->product }},
+                                                @if (!($purchase->quantity <= 0) && $purchase->vendu != 'Oui')
+                                                    <option value="{{ $purchase->id }}">{{ $purchase->product }}
                                                         {{--  [{{ $purchase->quantity }}] 
                                                         du {{ optional($purchase->created_at)->format('d/m/yy') }}  --}}
-                                                       {{--   <p class="noti-time"><span
+                                                        {{--   <p class="noti-time"><span
                                                                 class="notification-time"> ajouté {{ $purchase->created_at->diffForHumans() }}</span>
                                                         </p>  --}}
                                                     </option>

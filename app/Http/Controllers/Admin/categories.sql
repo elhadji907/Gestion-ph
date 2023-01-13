@@ -1,4 +1,4 @@
-INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+INSERT INTO `categories` (`id`, `categorie`, `created_at`, `updated_at`) VALUES
 (1, 'ALLERGIE, MÉDICAMENT DU CHOC', '2022-10-29 14:09:17', '2022-10-29 14:09:17'),
 (2, 'ANESTHÉSIQUES GÉNÉRAUX', '2022-10-29 14:09:39', '2022-10-29 14:09:39'),
 (3, 'ANESTHÉSIQUES LOCAUX', '2022-10-29 14:09:50', '2022-10-29 14:09:50'),

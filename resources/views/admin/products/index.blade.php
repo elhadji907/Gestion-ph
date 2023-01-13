@@ -8,14 +8,14 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Produits</h3>
+	<h3 class="page-title">Produits mis en vente</h3>
 	<ul class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Tableau de bord</a></li>
-		<li class="breadcrumb-item active">Produits</li>
+		<li class="breadcrumb-item active">Produits mis en vente</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
-	<a href="{{route('products.create')}}" class="btn btn-primary float-right mt-2">Ajouter un produit</a>
+	<a href="{{route('products.create')}}" class="btn btn-primary float-right mt-2">Mettre un produit en vendre</a>
 </div>
 @endpush
 
@@ -30,17 +30,16 @@
 					<table id="product-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Nom du produit</th>
+								<th>Produit</th>
 								<th>Catégorie</th>
 								<th>Prix de vente (CFA)</th>
 								<th>Qté restante</th>
 								<th>Rabais (%)</th>
 								<th>Échéance</th>
-								<th class="action-btn">Action</th>
+								<th class="action-btn"></th>
 							</tr>
 						</thead>
 						<tbody>
-
 														
 						</tbody>
 					</table>

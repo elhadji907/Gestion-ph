@@ -134,7 +134,7 @@ class ProductController extends Controller
 
 
         $notification = notify("Le produit a été ajouté");
-        return redirect()->route('products.index')->with($notification);
+        return redirect()->route('products.create')->with($notification);
     }
 
 

@@ -107,6 +107,7 @@ class SaleController extends Controller
         ->where('product', 'LIKE', "%{$query}%")
         ->where('expiry_date', '>=', "{$mytime}")
         ->where('quantity', '>=', "1")
+        ->where('vendu', "Oui")
         ->get();
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
       foreach($data as $row)
@@ -120,7 +121,6 @@ class SaleController extends Controller
         $perime = floor($perime / 3600 / 24); */
 
         $product = $row->product;
-        $expiry_date = $row->expiry_date;
 
        $output .= '
        
@@ -221,9 +221,14 @@ class SaleController extends Controller
         
         for ($i=0; $i < $count; $i++) {
 
-        $product_id = Purchase::where('product', $request->product[$i])->first()->id;
+        $purchase_id = Purchase::where('product', $request->product[$i])->first()->id;
 
-        $sold_product = Product::find($product_id);
+
+        $sold_product = Product::where('purchase_id', $purchase_id)->get();
+
+        foreach ($sold_product as $sold_product)
+
+        $product_id = $sold_product->id;
 
         if ($sold_product == null) {
             dd("Le produit n'est pas encore mis en vente");
@@ -233,11 +238,12 @@ class SaleController extends Controller
             sold item from
          purchases
         **/
+        
 
         $purchased_item = Purchase::find($sold_product->purchase_id);
         
         $new_quantity = ($purchased_item->quantity) - ($request->quantity[$i]);
-
+        
         $notification = '';
         if (!($new_quantity < 0)) {
             $purchased_item->update([
