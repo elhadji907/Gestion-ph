@@ -1,9 +1,6 @@
 @extends('admin.layouts.app')
-
-
 @push('page-css')
 @endpush
-
 @push('page-header')
     <div class="col-sm-12">
         <h3 class="page-title">Créer une vente </h3>
@@ -178,7 +175,7 @@
                                                             <th>Produit</th>
                                                             <th>Quantité</th>
                                                             <th>Prix</th>
-                                                            <th>Action</th>
+                                                            <th>#</th>
                                                         </tr>
                                                     </thead>
 
@@ -196,11 +193,42 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="1" class="text-right">
+                                                                <strong>Avoir:</strong>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" id="avoir_ammount"
+                                                                    class="avoir_ammount" value="0">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="1" class="text-right">
+                                                                <strong>Reste:</strong>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" id="reste_ammount"
+                                                                    class="reste_ammount" value="0" readonly>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="1" class="text-right">
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit"
+                                                                    class="btn btn-success btn-sm">Valider</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
                                                 </table>
-                                                <div>
+                                                {{--  <div>
                                                     <button type="submit" class="btn btn-success btn-sm">Valider</button>
-                                                </div>
+                                                </div>  --}}
                                 </form>
 
                             </div>
@@ -229,7 +257,7 @@
           </td>
             <input type="hidden" class="quantite" name="quantite[]" value="@{{ quantite }}">
           <td>
-           <i class="removeaddmore" style="cursor:pointer;color:red;">Supprimer</i>
+           <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>
           </td>    
       </tr>
      </script>
@@ -278,9 +306,6 @@
             });
             $('#estimated_ammount').val(sum);
         }
-
-
-
         $('#product').keyup(function() {
             var query = $(this).val();
             if (query != '') {
@@ -306,7 +331,6 @@
         });
     </script>
 @endsection
-
 
 @push('page-js')
 @endpush
