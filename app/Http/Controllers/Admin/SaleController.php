@@ -99,8 +99,14 @@ class SaleController extends Controller
      if($request->get('query'))
      {
       $query = $request->get('query');
+      
+      $mytime = Carbon::now();
+      $mytime = $mytime->toDateTimeString();
+
       $data = DB::table('purchases')
         ->where('product', 'LIKE', "%{$query}%")
+        ->where('expiry_date', '>=', "{$mytime}")
+        ->where('quantity', '>=', "1")
         ->get();
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
       foreach($data as $row)

@@ -193,7 +193,7 @@
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                    <tbody>
+                                                   {{--   <tbody>
                                                         <tr>
                                                             <td colspan="1" class="text-right">
                                                                 <strong>Avoir:</strong>
@@ -203,8 +203,8 @@
                                                                     class="avoir_ammount" value="0">
                                                             </td>
                                                         </tr>
-                                                    </tbody>
-                                                    <tbody>
+                                                    </tbody>  --}}
+                                                    {{--  <tbody>
                                                         <tr>
                                                             <td colspan="1" class="text-right">
                                                                 <strong>Reste:</strong>
@@ -214,7 +214,7 @@
                                                                     class="reste_ammount" value="0" readonly>
                                                             </td>
                                                         </tr>
-                                                    </tbody>
+                                                    </tbody>  --}}
                                                     <tbody>
                                                         <tr>
                                                             <td colspan="1" class="text-right">
@@ -245,7 +245,7 @@
     <script id="document-template" type="text/x-handlebars-template">
       <tr class="delete_add_more_item" id="delete_add_more_item">    
           <td>
-            <input type="text" name="product[]" value="@{{ product }}">
+            <input type="text" name="product[]" value="@{{ product }}" required>
           </td>
             <input type="hidden" name="nom_client" value="@{{ nom_client }}">
             <input type="hidden" name="telephone_client" value="@{{ telephone_client }}">
