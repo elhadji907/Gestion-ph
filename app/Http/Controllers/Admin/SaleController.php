@@ -121,10 +121,19 @@ class SaleController extends Controller
         $perime = floor($perime / 3600 / 24); */
 
         $product = $row->product;
+        $quantity = $row->quantity;
+        
+        $purchase_id = Purchase::where('product', $product)->first()->id;
+        $product_id = Product::where('purchase_id', $purchase_id)->first()->price;
+
+        $cost_price = $row->cost_price;
 
        $output .= '
        
        <li><a href="#">'.$product.'</a></li>
+       <li><option value="">------------</option></li>
+       <li><option value="">Qtité : '.$quantity.'</option></li>
+       <li><option value="">Prix : '.$product_id.'</option></li>
        ';
       }
       $output .= '</ul>';

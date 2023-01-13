@@ -8,6 +8,12 @@
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Tableau de bord</a></li>
             <li class="breadcrumb-item active">Créer une vente</li>
         </ul>
+        <div class="container row justify-content-center pt-5">
+            <div class="col-lg-12">
+                <a class="btn btn-outline-primary" href="{{ route('sales.index') }}"> <i
+                        class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+            </div>
+        </div>
     </div>
 @endpush
 
@@ -174,7 +180,8 @@
                                                         <tr>
                                                             <th>Produit</th>
                                                             <th>Quantité</th>
-                                                            <th>Prix</th>
+                                                            <th>Prix Unitaire (PU)</th>
+                                                            <th>Prix Total</th>
                                                             <th>#</th>
                                                         </tr>
                                                     </thead>
@@ -184,8 +191,8 @@
                                                     </tbody>
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="1" class="text-right">
-                                                                <strong>Total:</strong>
+                                                            <td colspan="3" class="text-center">
+                                                                <strong>NET À PAYER :</strong>
                                                             </td>
                                                             <td>
                                                                 <input type="number" id="estimated_ammount"
@@ -253,6 +260,9 @@
               <input type="number" class="quantity" name="quantity[]" value="@{{ quantity }}">
             </td>
             <td>
+            <input type="number" class="price" name="price[]" value="@{{ price }}">
+          </td>
+            <td>
             <input type="number" class="total_price" name="total_price[]" value="@{{ total_price }}">
           </td>
             <input type="hidden" class="quantite" name="quantite[]" value="@{{ quantite }}">
@@ -270,6 +280,7 @@
             var product = $("#product").val();
             var quantity = $("#quantity").val();
             var total_price = $("#total_price").val();
+            var price = $("#total_price").val();
             var quantite = $("#quantite").val();
             var nom_client = $("#nom_client").val();
             var telephone_client = $("#telephone_client").val();
@@ -282,7 +293,8 @@
                 quantite: quantite,
                 nom_client: nom_client,
                 telephone_client: telephone_client,
-                total_price: total_price * quantity
+                total_price: total_price * quantity,
+                price: total_price
             }
 
             var html = template(data);
