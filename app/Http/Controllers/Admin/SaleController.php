@@ -131,9 +131,9 @@ class SaleController extends Controller
        $output .= '
        
        <li><a href="#">'.$product.'</a></li>
-       <li><option value="">------------</option></li>
-       <li><option value="">Qtité : '.$quantity.'</option></li>
-       <li><option value="">Prix : '.$product_id.'</option></li>
+       <div value="">------------</div>
+       <div value="">Qté R. = '.$quantity.'</div>
+       <div value="">Prix V. = '.$product_id.'</div>
        ';
       }
       $output .= '</ul>';
@@ -151,8 +151,8 @@ class SaleController extends Controller
     {      
         $this->validate($request, [
             'product'=>'required',
-            /* 'nom_client'=>'required|min:5|max:255',
-            'telephone_client'=>'nullable|min:10|max:20', */
+            'nom_client'=>'required|min:2|max:255',
+            'telephone_client'=>'nullable|min:9|max:20',
             'quantity'=>'required|min:1'
         ]);
 

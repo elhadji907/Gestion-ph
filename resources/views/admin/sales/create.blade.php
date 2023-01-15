@@ -107,7 +107,7 @@
                                 <input type="text" placeholder="Nom produit"
                                     class="form-control form-control-sm @error('product') is-invalid @enderror"
                                     name="product" id="product" value="">
-                                <div id="countryList">
+                                <div id="productList">
                                 </div>
                                 @error('product')
                                     <span class="invalid-feedback" role="alert">
@@ -119,9 +119,9 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Prix de vente</label>
-                                <input type="number" placeholder="Entrer prix de vente"
+                                <input type="text" placeholder="Entrer prix de vente"
                                     class="form-control form-control-sm @error('total_price') is-invalid @enderror"
-                                    name="total_price" id="total_price" value="0.0" min="0">
+                                    name="total_price" id="total_price" value="" min="0">
                                 @error('total_price')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -139,7 +139,7 @@
                                 <label for="">Quantity</label>
                                 <input type="number" placeholder="Entrer prix de vente"
                                     class="form-control form-control-sm @error('quantity') is-invalid @enderror"
-                                    name="quantity" id="quantity" value="1" min="1">
+                                    name="quantity" id="quantity" value="1" min="1" required>
                                 @error('quantity')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -330,17 +330,19 @@
                         _token: _token
                     },
                     success: function(data) {
-                        $('#countryList').fadeIn();
-                        $('#countryList').html(data);
+                        $('#productList').fadeIn();
+                        $('#productList').html(data);
                     }
                 });
             }
         });
 
         $(document).on('click', 'li', function() {
+            {{--  Ici je récupère le produit selectioné sur la liste autoload  --}}
             $('#product').val($(this).text());
-            $('#countryList').fadeOut();
+            {{--  $('#productList').fadeOut();  --}}
         });
+        
     </script>
 @endsection
 
