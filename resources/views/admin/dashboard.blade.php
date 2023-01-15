@@ -144,7 +144,7 @@
                         <table id="sales-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Nom Médicament</th>
+                                    <th>Produit</th>
                                     <th>Qté</th>
                                     <th>Prix total (CFA)</th>
                                     <th>Client</th>

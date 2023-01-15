@@ -257,13 +257,13 @@
             <input type="hidden" name="nom_client" value="@{{ nom_client }}">
             <input type="hidden" name="telephone_client" value="@{{ telephone_client }}">
             <td>
-              <input type="number" class="quantity" name="quantity[]" value="@{{ quantity }}">
+              <input type="number" class="quantity" name="quantity[]" value="@{{ quantity }}" required min="1">
             </td>
             <td>
-            <input type="number" class="price" name="price[]" value="@{{ price }}">
+            <input type="number" class="price" name="price[]" value="@{{ price }}" required min="1">
           </td>
             <td>
-            <input type="number" class="total_price" name="total_price[]" value="@{{ total_price }}">
+            <input type="number" class="total_price" name="total_price[]" value="@{{ total_price }}" required min="1">
           </td>
             <input type="hidden" class="quantite" name="quantite[]" value="@{{ quantite }}">
           <td>

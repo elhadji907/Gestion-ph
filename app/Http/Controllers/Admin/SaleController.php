@@ -205,6 +205,7 @@ class SaleController extends Controller
              * calcualting item's total price
             **/
             $total_price = ($request->quantity) * ($sold_product->price);
+
             $sale = Sale::create([
                 'product_id'          =>    $request->product,
                 'code'                =>    $code,
@@ -263,13 +264,16 @@ class SaleController extends Controller
              * calcualting item's total price
             **/
             $total_price = ($request->quantity[$i]) * ($sold_product->price);
+            
+            /* dd($request->total_price[$i]); */
 
             $sale = Sale::create([
                 'product_id'         =>   $product_id,
                 'code'               =>   $code,
                 'quantity'           =>   $request->quantity[$i],
                 'purchase_quantity'  =>   $purchased_item->quantity+1,
-                'total_price'        =>   $total_price,
+                /* 'total_price'        =>   $total_price, */
+                'total_price'        =>   $request->total_price[$i],
                 'nom_client'         =>   $request->nom_client,
                 'name'               =>   $request->product[$i],
                 'telephone_client'   =>   $request->telephone_client,
