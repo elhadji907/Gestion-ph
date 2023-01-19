@@ -24,10 +24,10 @@
                                             $perime = $expiry_date - $now;
                                             $perime = floor($perime / 3600 / 24);
                                             ?>
-                                        @if (!empty($product->purchase) && $perime > 0)
+                                        @if (!empty($product->purchase) && $perime >= 0)
                                             @if (!($product->purchase->quantity <= 0))
                                                 <option value="{{ $product->id }}">{{ $product->purchase->product }}
-                                                    {{--  [{{ $product->purchase->quantity }}]  --}}
+                                                    [{{ $product->purchase->quantity }}]
                                                 </option>
                                             @endif
                                         @endif
