@@ -116,7 +116,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="">Prix de vente</label>
                                 <input type="text" placeholder="Entrer prix de vente"
@@ -136,8 +136,22 @@
 
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label for="">Quantity</label>
-                                <input type="number" placeholder="Entrer prix de vente"
+                                <label for="">Quantité Restante</label>
+                                <input type="number" placeholder="Restant en stock"
+                                    class="form-control form-control-sm @error('quantite_res') is-invalid @enderror"
+                                    name="quantite_res" id="quantite_res" value="" min="1" readonly>
+                                @error('quantite_res')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                                {{--  <font style="color:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="">Quantité achetée</label>
+                                <input type="number" placeholder="Quantité à acheter"
                                     class="form-control form-control-sm @error('quantity') is-invalid @enderror"
                                     name="quantity" id="quantity" value="1" min="1" required>
                                 @error('quantity')
@@ -340,7 +354,9 @@
         $(document).on('click', 'li', function() {
             {{--  Ici je récupère le produit selectioné sur la liste autoload  --}}
             $('#product').val($(this).text());
-            {{--  $('#productList').fadeOut();  --}}
+            $('#total_price').val($(this).data("price"));
+            $('#quantite_res').val($(this).data("quantity"));
+            $('#productList').fadeOut();
         });
         
     </script>

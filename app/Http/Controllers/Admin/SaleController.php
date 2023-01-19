@@ -124,16 +124,13 @@ class SaleController extends Controller
         $quantity = $row->quantity;
         
         $purchase_id = Purchase::where('product', $product)->first()->id;
-        $product_id = Product::where('purchase_id', $purchase_id)->first()->price;
+        $price = Product::where('purchase_id', $purchase_id)->first()->price;
 
-        $cost_price = $row->cost_price;
+        /* $cost_price = $row->cost_price; */
 
        $output .= '
        
-       <li><a href="#">'.$product.'</a></li>
-       <div value="">------------</div>
-       <div value="">Qté R. = '.$quantity.'</div>
-       <div value="">Prix V. = '.$product_id.'</div>
+       <li data-price="'.$price.'" data-quantity="'.$quantity.'"><a href="#">'.$product.'</a></li>
        ';
       }
       $output .= '</ul>';
@@ -151,7 +148,7 @@ class SaleController extends Controller
     {      
         $this->validate($request, [
             'product'=>'required',
-            'nom_client'=>'required|min:2|max:255',
+            'nom_client'=>'required|min:2|max:100',
             'telephone_client'=>'nullable|min:9|max:20',
             'quantity'=>'required|min:1'
         ]);
