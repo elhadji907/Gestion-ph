@@ -264,6 +264,12 @@ class SaleController extends Controller
             
             /* dd($request->total_price[$i]); */
 
+            $product = Product::find($product_id);
+
+            $product->update([
+                'price'=>$request->price[$i],
+            ]);
+
             $sale = Sale::create([
                 'product_id'         =>   $product_id,
                 'code'               =>   $code,
