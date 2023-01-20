@@ -42,9 +42,9 @@
                                             <option disabled selected> Sélectionner un produit</option>
                                             @foreach ($purchases->sortByDesc('created_at') as $purchase)
                                                 @if (!($purchase->quantity <= 0) && $purchase->vendu != 'Oui')
-                                                    <option value="{{ $purchase->id }}">{{ $purchase->product }}
-                                                        {{--  [{{ $purchase->quantity }}] 
-                                                        du {{ optional($purchase->created_at)->format('d/m/yy') }}  --}}
+                                                    <option value="{{ $purchase->id }}">{{ $purchase->product }}, 
+                                                        [ {{ __("prix de revient : ")}} {{ $purchase->cost_price }}] 
+                                                        {{--  du {{ optional($purchase->created_at)->format('d/m/yy') }}  --}}
                                                         {{--   <p class="noti-time"><span
                                                                 class="notification-time"> ajouté {{ $purchase->created_at->diffForHumans() }}</span>
                                                         </p>  --}}

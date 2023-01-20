@@ -59,12 +59,14 @@
                         <a href="#"><i class="fe fe-activity"></i> <span> Vente</span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a class="{{ route_is('sales.*') ? 'active' : '' }}"
+                            <li><a class="{{ route_is('sales.index') ? 'active' : '' }}"
                                     href="{{ route('sales.index') }}">Ventes</a></li>
                             @can('create-sale')
                                 <li><a class="{{ route_is('sales.create') ? 'active' : '' }}"
                                         href="{{ route('sales.create') }}">Ajouter une vente</a></li>
                             @endcan
+                            {{--  <li><a class="{{ route_is('sales.facture') ? 'active' : '' }}"
+                                    href="{{ route('sales.facture') }}">Facture</a></li>  --}}
                         </ul>
                     </li>
                 @endcan

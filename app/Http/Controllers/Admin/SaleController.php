@@ -15,6 +15,7 @@ use App\Notifications\SaleAlertNotification;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Carbon;
 use Auth;
+use Dompdf\Dompdf;
 
 class SaleController extends Controller
 {
@@ -43,12 +44,15 @@ class SaleController extends Controller
                             return $sale->product->purchase->product. ' ' . $image;
                         }
                     })
-                    ->addColumn('total_price', function ($sale) {
-                        /* return settings('app_currency','$').' '. $sale->total_price; */
+                    /* ->addColumn('total_price', function ($sale) {
                         return settings('app_currency', '').' '. $sale->total_price;
-                    })
+                    }) */
+                   /*  ->addColumn('code', function ($sale) {
+                        return settings('app_currency', '').' '. $sale->code;
+                    }) */
                     ->addColumn('date', function ($row) {
-                        return date_format(date_create($row->created_at), 'd/m/Y à H\h i');
+                        /* return date_format(date_create($row->created_at), 'd/m/Y à H\h:i'); */
+                        return date_format(date_create($row->created_at), 'd/m/Y');
                     })
                    /*  ->addColumn('nom_client',function($row){
                         return settings('app_currency','').' '. $sale->nom_client;
@@ -58,6 +62,7 @@ class SaleController extends Controller
                     }) */
                     ->addColumn('action', function ($row) {
                         $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $showbtn = '<a href="'.route("sales.show", $row->id).'" class="showbtn" target="_blank"><button class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                         if (!auth()->user()->hasPermissionTo('edit-sale')) {
                             $editbtn = '';
@@ -65,7 +70,7 @@ class SaleController extends Controller
                         if (!auth()->user()->hasPermissionTo('destroy-sale')) {
                             $deletebtn = '';
                         }
-                        $btn = $editbtn.' '.$deletebtn;
+                        $btn = $editbtn.' '.$showbtn.' '.$deletebtn;
                         return $btn;
                     })
                     ->rawColumns(['product','action'])
@@ -396,6 +401,55 @@ class SaleController extends Controller
         return redirect()->route('sales.index')->with($notification);
     }
 
+
+    public function show($id)
+    {
+        $sale = Sale::find($id);
+        $code = $sale->code;
+
+
+        $title = 'Factures de ventes';
+
+        $sales = Sale::where('code', $code)->get();
+
+        $total = $sales->sum('total_price');
+      
+        $title =' Facture n° : '.$code;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('admin.sales.factures', compact(
+            'sales',
+            'code',
+            'sale',
+            'total',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $name = 'Facture n° '.$code.' du '.$anne.'.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+
+    }
+
     /**
      * Generate Rapports de ventes index
      *
@@ -435,6 +489,83 @@ class SaleController extends Controller
             'sales',
             'from_date',
             'to_date',
+            'title'
+        ));
+    }
+
+    public function factures(Request $request)
+    {
+        $title = 'Factures de ventes';
+        $sales = Sale::get();
+        return view('admin.sales.factures', compact(
+            'title',
+            'sales'
+        ));
+    }
+
+    public function generateFacture($id)
+    {
+        dd($id);
+      /*   $this->validate($request, [
+            'code' => 'required|numeric',
+        ]); */
+
+        $now =  Carbon::now()->format('H:i:s');
+        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
+        /* if ($from_date == $to_date) {
+            $title = 'Rapports de vente du '.$from_date.' à '.$now;
+        } else {
+            $title = 'Rapports de vente du '.$from_date.' au '.$to_date.' à '.$now;
+        } */
+
+        $code = $request->code;
+
+        //dd($from_date);
+        /* $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get(); */
+        $sales = Sale::where('code', $code)->get();
+
+        foreach ($sales as $key => $sale) {
+            
+        }
+
+        $title =' Facture n° : '.$code;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('admin.sales.factures', compact(
+            'sales',
+            'sale',
+            'code',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Facture n° '.$code.' du '.$anne.'.pdf', ['Attachment' => false]);
+
+        /* dd($sales); */
+
+        return view('admin.sales.factures', compact(
+            'sales',
+            'sale',
+            'code',
             'title'
         ));
     }

@@ -3,10 +3,14 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Vendre un produit</h5>
+                <h5 class="modal-title">
+                    <a class="{{ route_is('sales.create') ? 'active' : '' }}" href="{{ route('sales.create') }}">Cliquer
+                        ici pour effectuer une vente</a></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('sales.store') }}">
@@ -18,12 +22,12 @@
                                 <select class="select2 form-select form-control" name="product">
                                     <option disabled selected> Sélectionner un produit</option>
                                     @foreach (\App\Models\Product::get() as $product)
-                                    <?php
-                                            $expiry_date = strtotime($product->purchase->expiry_date);
-                                            $now = strtotime(now());
-                                            $perime = $expiry_date - $now;
-                                            $perime = floor($perime / 3600 / 24);
-                                            ?>
+                                        <?php
+                                        $expiry_date = strtotime($product->purchase->expiry_date);
+                                        $now = strtotime(now());
+                                        $perime = $expiry_date - $now;
+                                        $perime = floor($perime / 3600 / 24);
+                                        ?>
                                         @if (!empty($product->purchase) && $perime >= 0)
                                             @if (!($product->purchase->quantity <= 0))
                                                 <option value="{{ $product->id }}">{{ $product->purchase->product }}
@@ -38,7 +42,8 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label>Quantité <span class="text-danger">*</span></label>
-                                <input type="number" value="1" class="form-control" name="quantity" min="1">
+                                <input type="number" value="1" class="form-control" name="quantity"
+                                    min="1">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -55,9 +60,8 @@
                                     placeholder="Telephone du client" value="+221">
                             </div>
                         </div>
-                                <input class="form-control" type="hidden" name="modal_vente"
-                                    placeholder="" value="oui">
-                            
+                        <input class="form-control" type="hidden" name="modal_vente" placeholder="" value="oui">
+
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Effectuer la vente</button>
                 </form>

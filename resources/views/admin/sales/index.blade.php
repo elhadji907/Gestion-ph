@@ -30,13 +30,14 @@
                             <table id="sales-table" class="datatable table table-hover table-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Nom du médicament</th>
+                                        <th>Code</th>
+                                        <th>Produit</th>
                                         <th>Qté vendu</th>
                                         <th>Prix total (CFA)</th>
                                         <th>Date</th>
                                         <th>Nom client</th>
                                         <th>Contact client</th>
-                                        <th class="action-btn">Action</th>
+                                        <th class="action-btn"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,6 +89,10 @@
                 serverSide: true,
                 ajax: "{{ route('sales.index') }}",
                 columns: [{
+                        data: 'code',
+                        name: 'code'
+                    },
+                    {
                         data: 'product',
                         name: 'product'
                     },
