@@ -30,14 +30,15 @@
                             <table id="sales-table" class="datatable table table-hover table-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Code</th>
+                                        {{--  <th>Code</th>  --}}
                                         <th>Produit</th>
                                         <th>Qté vendu</th>
+                                        <th>PU</th>
                                         <th>Prix total (CFA)</th>
                                         <th>Date</th>
                                         <th>Nom client</th>
                                         <th>Contact client</th>
-                                        <th class="action-btn"></th>
+                                        <th class="action-btn" width="8%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,16 +90,16 @@
                 serverSide: true,
                 ajax: "{{ route('sales.index') }}",
                 columns: [{
-                        data: 'code',
-                        name: 'code'
-                    },
-                    {
                         data: 'product',
                         name: 'product'
                     },
                     {
                         data: 'quantity',
                         name: 'quantity'
+                    },
+                    {
+                        data: 'price',
+                        name: 'price'
                     },
                     {
                         data: 'total_price',

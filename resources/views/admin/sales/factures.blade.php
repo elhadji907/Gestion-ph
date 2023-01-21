@@ -4,7 +4,6 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>{{ $title }}</title>
     <style>
         .invoice-box {
             max-width: 800px;
@@ -21,14 +20,24 @@
         }
 
         .invoice-box table tr.heading td {
-            background: #eee;
+            background: rgb(194, 194, 194);
             border-bottom: 1px solid #ddd;
             font-weight: bold;
         }
 
         .invoice-box table tr.total td {
             border-top: 2px solid #eee;
+            border-bottom: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            background: #eee;
             font-weight: bold;
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
         }
 
         table {
@@ -71,7 +80,7 @@
                     <td colspan="2" align="right" valign="top">
                         <p>
                             <b>Pharmacie de Niaguis </b> <span><br />
-                                <b>Facture n° </b> : <span>
+                                <b>N° facture</b> : <span>
                                     {{ $code ?? '' }}</span><br />
                                 <b>Date </b> : <span>
                                     {{ $sale->created_at->format('d-m-Y') ?? '' }}
@@ -88,12 +97,12 @@
         <table class="table table-responsive">
             <tbody>
                 <tr>
-                    <td colspan="4"><b>{{ __('Client') }}</b> :
-                        {{ $sale->nom_client }}
+                    <td colspan="4"><b>{{ __('CLIENT') }}</b> :
+                        {{ ucwords(strtolower($sale->nom_client)) }}
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4"><b>{{ __('Téléphone') }}</b> :
+                    <td colspan="4"><b>{{ __('TELEPHONE') }}</b> :
                         {{ $sale->telephone_client }}
                 </tr>
             </tbody>
@@ -102,40 +111,40 @@
         <table class="table table-responsive table-striped">
             <tbody>
                 <tr class="heading">
-                    <td colspan="1"><b>{{ __('N°') }}</b>
+                    <td colspan="1" align="center"><b>{{ __('N°') }}</b>
 
                     </td>
-                    <td colspan="1"><b>{{ __('Produit') }}</b>
+                    <td colspan="1" align="center"><b>{{ __('PRODUIT') }}</b>
 
                     </td>
-                    <td colspan="1"><b>{{ __('Quantité') }}</b>
+                    <td colspan="1" align="center" align="center"><b>{{ __('QUANTITÉ') }}</b>
 
                     </td>
-                    <td colspan="1"><b>{{ __('PU') }}</b>
+                    <td colspan="1" align="center"><b>{{ __('PU') }}</b>
 
                     </td>
-                    <td align="right" colspan="1"><b>{{ __('TOTAL') }}</b>
+                    <td colspan="1" align="center"><b>{{ __('TOTAL') }}</b>
 
                     </td>
                 </tr>
                 <?php $i = 1; ?>
                 @foreach ($sales as $sale)
                     <tr class="item">
-                        <td colspan="1">
+                        <td colspan="1" align="center">
                             {!! $i++ !!}<br>
                         </td>
-                        <td colspan="1">
-                            {!! $sale->name !!}<br>
+                        <td colspan="1" align="center">
+                            {!! strtoupper($sale->name) !!}<br>
                         </td>
-                        <td colspan="1">
+                        <td colspan="1" align="center">
                             {!! $sale->quantity !!}<br>
                         </td>
                         <?php $price = $sale->total_price / $sale->quantity; ?>
-                        <td colspan="1">
-                            {!! number_format($price, 2, ',', ' ') !!}<br>
+                        <td colspan="1" align="center">
+                            {!! number_format($price, 2, '.', ' ') !!}<br>
                         </td>
-                        <td align="right" colspan="1">
-                            {!! number_format($sale->total_price, 2, ',', ' ') !!}<br>
+                        <td align="center" colspan="1">
+                            {!! number_format($sale->total_price, 2, '.', ' ') !!}<br>
                         </td>
                     </tr>
                 @endforeach
@@ -144,12 +153,29 @@
                         TOTAL
                     </td>
 
-                    <td align="right" colspan="1">
-                        {{ number_format($total, 2, ',', ' ') }}
+                    <td align="center" colspan="1">
+                        {{ number_format($total, 2, '.', ' ') }}
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div
+            style="position: fixed;
+            bottom: -10px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            text-align: center;
+            line-height: 10px;">
+            <hr />
+            <span>
+                {{ __('Pharmacie de Niaguis, Ziguinchor, commune de Niaguis, Tel : 78 264 08 02, Email: niaguis-pharma@gmail.com') }}
+            </span>
+            {{--  <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp_f.png'))) }}"
+                style="width: 100%; height: auto;">  --}}
+        </div>
     </div>
 </body>
 

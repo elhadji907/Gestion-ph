@@ -44,9 +44,12 @@ class SaleController extends Controller
                             return $sale->product->purchase->product. ' ' . $image;
                         }
                     })
-                    /* ->addColumn('total_price', function ($sale) {
-                        return settings('app_currency', '').' '. $sale->total_price;
-                    }) */
+                    ->addColumn('total_price', function ($sale) {
+                        return settings('app_currency', '').' '. number_format(($sale->total_price), 2, '.', ' ');
+                    })
+                    ->addColumn('price', function ($sale) {
+                        return settings('app_currency', '').' '. number_format(($sale->total_price)/($sale->quantity), 2, '.', ' ');
+                    })
                    /*  ->addColumn('code', function ($sale) {
                         return settings('app_currency', '').' '. $sale->code;
                     }) */
@@ -61,9 +64,9 @@ class SaleController extends Controller
                         return settings('app_currency','').' '. $sale->telephone_client;
                     }) */
                     ->addColumn('action', function ($row) {
-                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
-                        $showbtn = '<a href="'.route("sales.show", $row->id).'" class="showbtn" target="_blank"><button class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
+                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn" title="Modifier"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $showbtn = '<a href="'.route("sales.show", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-success btn-sm"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"  title="Supprimer"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
                         if (!auth()->user()->hasPermissionTo('edit-sale')) {
                             $editbtn = '';
                         }
@@ -208,6 +211,8 @@ class SaleController extends Controller
             **/
             $total_price = ($request->quantity) * ($sold_product->price);
 
+            $product_name = $sold_product->purchase->product;
+
             $sale = Sale::create([
                 'product_id'          =>    $request->product,
                 'code'                =>    $code,
@@ -215,7 +220,7 @@ class SaleController extends Controller
                 'purchase_quantity'   =>    $purchased_item->quantity+1,
                 'total_price'         =>    $total_price,
                 'nom_client'          =>    $request->nom_client,
-                'name'                =>    $request->product,
+                'name'                =>    $product_name,
                 'telephone_client'    =>    $request->telephone_client,
                 'created_by'          =>    $created_by,
                 'updated_by'          =>    $updated_by
@@ -243,7 +248,8 @@ class SaleController extends Controller
         $product_id = $sold_product->id;
 
         if ($sold_product == null) {
-            dd("Le produit n'est pas encore mis en vente");
+            $notification = notify("Le produit n'est pas encore mis en vente");
+            return back()->with($notification);
         }
 
         /**update quantity of
@@ -355,50 +361,66 @@ class SaleController extends Controller
             'product'=>'required',
             'quantity'=>'required|integer|min:1'
         ]);
+
         $sold_product = Product::find($request->product);
-        
-        $user_connect           =   Auth::user();
-        $updated_by  = strtolower($user_connect->name);
-        /**
-         * update quantity of sold item from purchases
-        **/
-        $purchased_item = Purchase::find($sold_product->purchase->id);
-        if (!empty($request->quantity)) {
-            $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-        }
-        $new_quantity = $sale->quantity;
-        $notification = '';
-        if (!($new_quantity < 0)) {
-            $purchased_item->update([
-                'quantity'=>$new_quantity,
-            ]);
 
+        /* dd($sale->quantity);
+        dd($request->quantity); */
+
+        if ($sale->quantity == $request->quantity) {
+        if ($sold_product->purchase->quantity >= 0) {
+            $user_connect           =   Auth::user();
+            $updated_by  = strtolower($user_connect->name);
             /**
-             * calcualting item's total price
+             * update quantity of sold item from purchases
             **/
+            $purchased_item = Purchase::find($sold_product->purchase->id);
             if (!empty($request->quantity)) {
-                $total_price = ($request->quantity) * ($sold_product->price);
+                $new_quantity = ($purchased_item->quantity) - ($request->quantity);
             }
-            $total_price = $sale->total_price;
-            $sale->update([
-                'product_id'            =>  $request->product,
-                'quantity'              =>  $request->quantity,
-                'total_price'           =>  $total_price,
-                'nom_client'            =>  $request->nom_client,
-                'updated_by'            =>  $updated_by,
-                'telephone_client'      =>  $request->telephone_client,
-            ]);
-
-            $notification = notify("Le produit a été mis à jour");
+            $new_quantity = $sale->quantity;
+            $notification = '';
+            if (!($new_quantity < 0)) {
+                $purchased_item->update([
+                    'quantity'=>$new_quantity,
+                ]);
+    
+                /**
+                 * calcualting item's total price
+                **/
+                if (!empty($request->quantity)) {
+                    $total_price = ($request->quantity) * ($sold_product->price);
+                }
+                $total_price = $sale->total_price;
+                $sale->update([
+                    'product_id'            =>  $request->product,
+                    'quantity'              =>  $request->quantity,
+                    'total_price'           =>  $total_price,
+                    'nom_client'            =>  $request->nom_client,
+                    'updated_by'            =>  $updated_by,
+                    'telephone_client'      =>  $request->telephone_client,
+                ]);
+    
+                $notification = notify("Le produit a été mis à jour");
+            }
+            if ($new_quantity <=1 && $new_quantity !=0) {
+                // send notification
+                $product = Purchase::where('quantity', '<=', 1)->first();
+                event(new PurchaseOutStock($product));
+                // end of notification
+                $notification = notify("Le produit est en rupture de stock!!!");
+            }
+            return redirect()->route('sales.index')->with($notification);
+        } else {
+            /* dd("Impossible de faire une mise à jour possible"); */
+            $notification = notify("Impossible de faire une mise à jour possible car le produit est épuisé");
+            return back()->with($notification);
         }
-        if ($new_quantity <=1 && $new_quantity !=0) {
-            // send notification
-            $product = Purchase::where('quantity', '<=', 1)->first();
-            event(new PurchaseOutStock($product));
-            // end of notification
-            $notification = notify("Le produit est en rupture de stock!!!");
+        } else {
+            $notification = notify("Impossible de faire une mise à jour possible car la quantité est supérieure à celle en stock");
+            return back()->with($notification);
         }
-        return redirect()->route('sales.index')->with($notification);
+   
     }
 
 
@@ -414,7 +436,7 @@ class SaleController extends Controller
 
         $total = $sales->sum('total_price');
       
-        $title =' Facture n° : '.$code;
+        $title =' Facture n° '.$code;
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
@@ -443,7 +465,7 @@ class SaleController extends Controller
         $anne = $anne.' '.date('i').'min';
         $anne = $anne.' '.date('s').'s';
 
-        $name = 'Facture n° '.$code.' du '.$anne.'.pdf';
+        $name = $sale->nom_client.', facture n° '.$code.' du '.$anne.'.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);

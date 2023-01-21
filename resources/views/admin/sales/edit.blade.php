@@ -31,9 +31,9 @@
 								<select class="select2 form-select form-control edit_product" name="product"> 
 									@foreach ($products as $product)
 										@if (!empty($product->purchase))
-											@if (!($product->purchase->quantity <= 0))
+											{{--  @if (!($product->purchase->quantity <= 0))  --}}
 												<option {{($product->purchase->id == $sale->product->purchase_id) ? 'selected': ''}} value="{{$product->id}}">{{$product->purchase->product}}</option>
-											@endif
+											{{--  @endif  --}}
 										@endif
 									@endforeach
 								</select>

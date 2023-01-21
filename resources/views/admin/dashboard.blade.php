@@ -25,8 +25,8 @@
                             <i class="fe fe-money"></i>
                         </span>
                         <div class="dash-count">
-                            <h3>{{ AppSettings::get('app_currency', 'CFA ') }}
-                                {{ number_format($today_sales, 2, ',', ' ') }}</h3>
+                            <h3>{{ AppSettings::get('app_currency', 'F CFA ') }}
+                                {{ number_format($today_sales, 2, '.', ' ') }}</h3>
                         </div>
                     </div>
                     <div class="dash-widget-info">
@@ -157,7 +157,7 @@
                                     <tr>
                                         <td>{!! $sale->product->purchase->product ?? '' !!}</td>
                                         <td>{!! $sale->quantity ?? '' !!}</td>
-                                        <td>{!! $sale->total_price ?? '' !!}</td>
+                                        <td>{{ number_format($sale->total_price, 2, '.', ' ') }}</td>
                                         <td>{!! $sale->nom_client ?? '' !!}</td>
                                         {{--  <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') ?? '' !!}</td>  --}}
                                         <td>{!! optional($sale->created_at)->translatedFormat('H\h:i') ?? '' !!}</td>

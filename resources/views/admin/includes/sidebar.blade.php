@@ -11,6 +11,23 @@
                     <a href="{{ route('dashboard') }}"><i class="fe fe-home"></i> <span>Tableau de bord</span></a>
                 </li>
 
+                @can('view-sales')
+                    <li class="submenu">
+                        <a href="#"><i class="fe fe-activity"></i> <span> Vente</span> <span
+                                class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a class="{{ route_is('sales.index') ? 'active' : '' }}"
+                                    href="{{ route('sales.index') }}">Ventes</a></li>
+                            @can('create-sale')
+                                <li><a class="{{ route_is('sales.create') ? 'active' : '' }}"
+                                        href="{{ route('sales.create') }}">Ajouter une vente</a></li>
+                            @endcan
+                            {{--  <li><a class="{{ route_is('sales.facture') ? 'active' : '' }}"
+                                    href="{{ route('sales.facture') }}">Facture</a></li>  --}}
+                        </ul>
+                    </li>
+                @endcan
+
                 @can('view-category')
                     <li class="{{ route_is('categories.*') ? 'active' : '' }}">
                         <a href="{{ route('categories.index') }}"><i class="fe fe-layout"></i> <span>Catégories</span></a>
@@ -29,7 +46,8 @@
                                         href="{{ route('products.create') }}">Ajouter un produit</a></li>
                             @endcan
                             @can('view-outstock-products')
-                                <li><a class="{{ route_is('outstock') ? 'active' : '' }}" href="{{ route('outstock') }}">Rupture
+                                <li><a class="{{ route_is('outstock') ? 'active' : '' }}"
+                                        href="{{ route('outstock') }}">Rupture
                                         de stock</a></li>
                             @endcan
                             @can('view-expired-products')
@@ -54,23 +72,6 @@
                         </ul>
                     </li>
                 @endcan
-                @can('view-sales')
-                    <li class="submenu">
-                        <a href="#"><i class="fe fe-activity"></i> <span> Vente</span> <span
-                                class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a class="{{ route_is('sales.index') ? 'active' : '' }}"
-                                    href="{{ route('sales.index') }}">Ventes</a></li>
-                            @can('create-sale')
-                                <li><a class="{{ route_is('sales.create') ? 'active' : '' }}"
-                                        href="{{ route('sales.create') }}">Ajouter une vente</a></li>
-                            @endcan
-                            {{--  <li><a class="{{ route_is('sales.facture') ? 'active' : '' }}"
-                                    href="{{ route('sales.facture') }}">Facture</a></li>  --}}
-                        </ul>
-                    </li>
-                @endcan
-
                 @can('view-supplier')
                     <li class="submenu">
                         <a href="#"><i class="fe fe-user"></i> <span> Fournisseur</span> <span
