@@ -63,7 +63,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-   {{--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  --}}    
+    {{--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 
@@ -87,7 +87,9 @@
                                 <b>Email </b> : <span>
                                     {{ Auth::user()->email ?? '' }}</span><br />
                                 <b>Téléphone </b> : <span>
-                                    {{ Auth::user()->phone ?? '78 264 08 02' }}</span><br />
+                                    <?php $phone = str_replace(' ', '', Auth::user()->phone ?? '78 264 08 02'); ?>
+                                    {{ substr($phone, -13, -9) . ' ' . substr($phone, -9, -7) . ' ' . substr($phone, -7, -4) . ' ' . substr($phone, -4, -2) . ' ' . substr($phone, -2) }}
+                                </span><br />
                         </p>
                     </td>
                 </tr>
@@ -101,8 +103,9 @@
                     </td>
                 </tr>
                 <tr>
+                    <?php $tel = str_replace(' ', '', $sale->telephone_client); ?>
                     <td colspan="4"><b>{{ __('TELEPHONE') }}</b> :
-                        {{ $sale->telephone_client }}
+                        {{ substr($tel, -13, -9) . ' ' . substr($tel, -9, -7) . ' ' . substr($tel, -7, -4) . ' ' . substr($tel, -4, -2) . ' ' . substr($tel, -2) }}
                 </tr>
             </tbody>
         </table>
@@ -168,8 +171,8 @@
             color: rgb(0, 0, 0);
             text-align: center;
             line-height: 10px;">
-            <span>                
-            <hr>
+            <span>
+                <hr>
                 {{ __('Pharmacie de Niaguis, Ziguinchor, commune de Niaguis, Tel : 78 264 08 02, Email: niaguis-pharma@gmail.com') }}
             </span>
             {{--  <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp_f.png'))) }}"
