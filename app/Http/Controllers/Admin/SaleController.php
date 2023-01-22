@@ -95,9 +95,11 @@ class SaleController extends Controller
     {
         $title = 'Créer des ventes';
         $products = Product::get();
+        $sales = Sale::whereDate('created_at', '=', Carbon::now())->orderBy('created_at', 'desc')->take(1)->get();
 
         return view('admin.sales.create', compact(
             'title',
+            'sales',
             'products'
         ));
     }

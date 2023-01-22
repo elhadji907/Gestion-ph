@@ -43,8 +43,10 @@
 
             <div class="logo me-auto">
                 {{--  <h1><a href="{{ url('/') }}">Niaguis</a></h1>  --}}
-                <a href="{{ url('/') }}"><img class="img-fluid" src="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/img/logo-white.png')}}" alt="Logo"></a>
-                <!-- Uncomment below if you prefer to use an image logo -->
+                <a href="{{ url('/') }}"><img class="img-fluid"
+                        src="{{ !empty(AppSettings::get('logo')) ? asset('storage/' . AppSettings::get('logo')) : asset('assets/img/logo-white.png') }}"
+                        alt="Logo"></a>
+                <!-- Uncomment below if you prefer to an image logo -->
                 <!-- <a href="index.html"><img src="asets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
 
@@ -53,19 +55,20 @@
                     @if (Route::has('login'))
                         @auth
                             <li>
-                            <li>
                                 <a class="nav-link scrollto active" href="{{ route('dashboard') }}"
                                     class="text-sm text-gray-700 dark:text-gray-500 underline">
                                     <span class="user-img"><img class="rounded-circle"
                                             src="{{ !empty(auth()->user()->avatar) ? asset('storage/users/' . auth()->user()->avatar) : asset('assets/img/avatar.png') }}"
                                             width="31" alt="avatar"></span>
                                     {{ auth()->user()->name }}
-                                    <a href="javascript:void(0)" class="dropdown-item">
-                                      <form action="{{ route('logout') }}" method="post">
-                                          @csrf
-                                          <button type="submit" class="btn">Déconnexion</button>
-                                      </form>
-                                  </a>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="dropdown-item">
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="text-sm text-gray-700 dark:text-gray-500 underline">Déconnexion</button>
+                                    </form>
                                 </a>
                             </li>
                         @else

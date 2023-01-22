@@ -31,7 +31,8 @@
                                         @if (!empty($product->purchase) && $perime >= 0)
                                             @if (!($product->purchase->quantity <= 0))
                                                 <option value="{{ $product->id }}">{{ $product->purchase->product }}
-                                                    [{{ $product->purchase->quantity }}]
+                                                    [ {{__("Qté : ")}} {{ $product->purchase->quantity }}]
+                                                    [ {{__("Prix : ")}} {{ $product->price }}]
                                                 </option>
                                             @endif
                                         @endif
