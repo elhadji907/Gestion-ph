@@ -41,7 +41,7 @@
                             <tr>
                                 <td>{{ $k+1 }}</td>
                                 <td>{{ $b['disk'] }}</td>
-                                <td>{{ \Carbon\Carbon::createFromTimeStamp($b['last_modified'])->formatLocalized('%d %B %Y, %H:%M') }}</td>
+                                <td>{{ \Carbon\Carbon::createFromTimeStamp($b['last_modified'])->formatLocalized('%d %B %Y, %Hh : %Mmn') }}</td>
                                 <td>{{ round((int)$b['file_size']/1048576, 2).' MB' }}</td>
                              {{--     <td class="text-center">
                                     <div class="actions">

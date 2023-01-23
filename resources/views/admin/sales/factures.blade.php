@@ -11,7 +11,7 @@
             padding: 30px;
             font-size: 12px;
             line-height: 24px;
-            color: #555;
+            color: color: rgb(0, 0, 0);;
         }
 
         /** RTL **/
@@ -104,7 +104,12 @@
                 </tr>
                 <tr>
                     <?php $tel = str_replace(' ', '', $sale->telephone_client); ?>
-                    <td colspan="4"><b>{{ __('TELEPHONE') }}</b> :
+                    <td colspan="4"><b>
+                            @if (isset($sale->telephone_client))
+                                {{ __('TELEPHONE :') }}
+                            @else
+                            @endif
+                        </b>
                         {{ substr($tel, -13, -9) . ' ' . substr($tel, -9, -7) . ' ' . substr($tel, -7, -4) . ' ' . substr($tel, -4, -2) . ' ' . substr($tel, -2) }}
                 </tr>
             </tbody>

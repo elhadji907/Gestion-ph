@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $title = 'categories';
-        $categories = Category::get();
+        $categories = Category::latest();
         if ($request->ajax()) {
             /* $categories = Category::get(); */
             return DataTables::of($categories)

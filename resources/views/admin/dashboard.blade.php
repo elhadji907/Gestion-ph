@@ -84,31 +84,6 @@
                 </div>
             </a>
         </div>
-        {{--  @can('view-users')  --}}
-            <div class="col-xl-2 col-sm-6 col-12">
-                <a href="{{ route('users.index') }}" target="_blank">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="dash-widget-header">
-                                <span class="dash-widget-icon text-info border-info">
-                                    <i class="fe fe-users"></i>
-                                </span>
-                                <div class="dash-count">
-                                    <h3>{{ \DB::table('users')->count() }}</h3>
-                                </div>
-                            </div>
-                            <div class="dash-widget-info">
-
-                                <h6 class="text-muted">Utilisateurs système</h6>
-                                <div class="progress progress-sm">
-                                    <div class="progress-bar bg-info w-50"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {{--  @endcan  --}}
         <div class="col-xl-2 col-sm-6 col-12">
             <a href="{{ route('outstock') }}" target="_blank">
                 <div class="card">
@@ -132,6 +107,37 @@
                 </div>
             </a>
         </div>
+        {{--  @can('view-users')  --}}
+        <div class="col-xl-2 col-sm-6 col-12">
+            @can('view-users')
+                <a href="{{ route('users.index') }}" target="_blank">
+                @endcan
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon text-info border-info">
+                                <i class="fe fe-users"></i>
+                            </span>
+                            <div class="dash-count">
+                                @can('view-users')
+                                    <h3>{{ \DB::table('users')->count() }}</h3>
+                                @endcan
+                            </div>
+                        </div>
+                        <div class="dash-widget-info">
+
+                            <h6 class="text-muted">Utilisateurs système</h6>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-info w-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @can('view-users')
+                </a>
+            @endcan
+        </div>
+        {{--  @endcan  --}}
     </div>
     <div class="row">
         <div class="col-md-12 col-lg-6">
@@ -162,11 +168,9 @@
                                         <td>{!! $sale->nom_client ?? '' !!}</td>
                                         {{--  <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') ?? '' !!}</td>  --}}
                                         <td>{!! $sale->created_at->diffForHumans() !!}</td>
-                                        <td><a href="{{ url('admin/sales', ['$id' => $sale->id]) }}"
-                                                class="showbtn" target="_blank"
-                                                title="Imprimer facture"><button
-                                                    class="btn btn-success btn-sm"><i
-                                                        class="fa fa-print"
+                                        <td><a href="{{ url('admin/sales', ['$id' => $sale->id]) }}" class="showbtn"
+                                                target="_blank" title="Imprimer facture"><button
+                                                    class="btn btn-success btn-sm"><i class="fa fa-print"
                                                         aria-hidden="true"></i></button></a></td>
                                     </tr>
                                 @endforeach

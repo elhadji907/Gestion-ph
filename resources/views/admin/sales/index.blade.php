@@ -15,7 +15,7 @@
     </div>
     @can('create-sale')
         <div class="col-sm-5 col">
-            <a href="{{ route('sales.create') }}" class="btn btn-primary float-right mt-2">Ajouter une vente</a>
+            <a href="{{ route('sales.create') }}" class="btn btn-sm bg-primary-light float-right mt-2"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter</a>
         </div>
     @endcan
 @endpush
@@ -30,7 +30,7 @@
                             <table id="sales-table" class="datatable table table-hover table-center mb-0">
                                 <thead>
                                     <tr>
-                                        {{--  <th>Code</th>  --}}
+                                        <th>Code</th>
                                         <th>Produit</th>
                                         <th>Qté vendu</th>
                                         <th>PU</th>
@@ -90,6 +90,10 @@
                 serverSide: true,
                 ajax: "{{ route('sales.index') }}",
                 columns: [{
+                        data: 'code',
+                        name: 'code'
+                    },
+                    {
                         data: 'product',
                         name: 'product'
                     },
@@ -128,9 +132,6 @@
                 "lengthMenu": [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "Tout"]
-                ],
-                "order": [
-                    [0, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

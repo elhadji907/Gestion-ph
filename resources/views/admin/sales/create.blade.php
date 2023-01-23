@@ -190,7 +190,7 @@
                         </div>  --}}
                         <div class="col-md-2" style="margin-top:32px;">
                             <div class="form-group">
-                                <button id="addMore" class="btn btn-success btn-sm">Ajouter au panier</button>
+                                <button id="addMore" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter au panier</button>
                             </div>
                         </div>
                     </div>
@@ -198,9 +198,9 @@
             </div>
         </div>
 
-        <div class="container-fluid style="margin-top:26px;"">
+        <div class="container-fluid">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <small class="row form-row justify-content-center pb-2">
+                <small class="row form-row justify-content-center pb-4">
                     @foreach ($sales as $sale)
                         <a href="{{ url('admin/sales', ['$id' => $sale->id]) }}" class="showbtn" target="_blank"
                             title="Imprimer la dernière facture"><button class="btn btn-outline-secondary btn-sm"><i
@@ -275,7 +275,7 @@
                                                             class="avoir_ammount form-control form-control-sm" value="0">  --}}
                                                     <input id="amount" type="number" min="1" max="1000000"
                                                         class="form-control form-control-sm" placeholder="Montant reçu"
-                                                        onchange="computeLoan()">
+                                                        onchange="computeLoan()" required>
                                                 </td>
                                             </tr>
                                         </tbody>

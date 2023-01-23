@@ -26,7 +26,7 @@ class PurchaseController extends Controller
     {
         $title = 'Achats';
         if ($request->ajax()) {
-            $purchases = Purchase::get();
+            $purchases = Purchase::latest();
             //$purchase->notify(new StockAlertNotification($purchase));
             return DataTables::of($purchases)
                 ->addColumn('product', function ($purchase) {

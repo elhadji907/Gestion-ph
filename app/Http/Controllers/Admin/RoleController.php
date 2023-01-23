@@ -10,6 +10,16 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+        /* $this->middleware(['role:super-admin']); */
+        $this->middleware('permission:view-user|create-user|edit-user|destroy-user', ['only' => ['index']]);
+         $this->middleware('permission:create-user', ['only' => ['create','store']]);
+         $this->middleware('permission:edit-user', ['only' => ['edit','update']]);
+         $this->middleware('permission:delete-user', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +30,7 @@ class RoleController extends Controller
     {
         $title = 'Rôles';
         if($request->ajax()){
-            $roles = Role::get();
+            $roles = Role::latest();
             return DataTables::of($roles)
                 ->addIndexColumn()
                 ->addColumn('permissions',function ($role){

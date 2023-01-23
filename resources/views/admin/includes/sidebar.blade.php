@@ -64,7 +64,7 @@
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li><a class="{{ route_is('purchases.*') ? 'active' : '' }}"
-                                    href="{{ route('purchases.index') }}">Entrer stock</a></li>
+                                    href="{{ route('purchases.index') }}">Stock</a></li>
                             @can('create-purchase')
                                 <li><a class="{{ route_is('purchases.create') ? 'active' : '' }}"
                                         href="{{ route('purchases.create') }}">Ajouter un stock</a></li>

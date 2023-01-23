@@ -64,12 +64,12 @@ class SaleController extends Controller
                         return settings('app_currency','').' '. $sale->telephone_client;
                     }) */
                     ->addColumn('action', function ($row) {
-                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn" title="Modifier"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
-                        $showbtn = '<a href="'.route("sales.show", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-success btn-sm"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"  title="Supprimer"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
-                        if (!auth()->user()->hasPermissionTo('edit-sale')) {
+                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn" title="Modifier"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';
+                        $showbtn = '<a href="'.route("sales.show", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-sm bg-info-light"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"  title="Supprimer"><button class="btn btn-sm bg-danger-light"><i class="fas fa-trash"></i></button></a>';
+                        /* if (!auth()->user()->hasPermissionTo('edit-sale')) {
                             $editbtn = '';
-                        }
+                        } */
                         if (!auth()->user()->hasPermissionTo('destroy-sale')) {
                             $deletebtn = '';
                         }
@@ -80,9 +80,11 @@ class SaleController extends Controller
                     ->make(true);
         }
         $products = Product::get();
+        $sales = Sale::get();
         return view('admin.sales.index', compact(
             'title',
-            'products',
+            'sales',
+            'products'
         ));
     }
 
