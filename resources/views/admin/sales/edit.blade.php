@@ -42,7 +42,7 @@
 						<div class="col-6">
 							<div class="form-group">
 								<label>Quantité</label>
-								<input type="number" class="form-control edit_quantity" value="{{$sale->quantity ?? '1'}}" name="quantity">
+								<input type="number" class="form-control edit_quantity" value="{{$sale->quantity ?? '1'}}" name="quantity" min="1">
 							</div>
 						</div>
 						<div class="col-lg-6">

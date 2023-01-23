@@ -65,7 +65,7 @@ class SaleController extends Controller
                     }) */
                     ->addColumn('action', function ($row) {
                         $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn" title="Modifier"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';
-                        $showbtn = '<a href="'.route("sales.show", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-sm bg-info-light"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
+                        $showbtn = '<a href="'.route("sales.facture", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-sm bg-info-light"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"  title="Supprimer"><button class="btn btn-sm bg-danger-light"><i class="fas fa-trash"></i></button></a>';
                         /* if (!auth()->user()->hasPermissionTo('edit-sale')) {
                             $editbtn = '';
@@ -428,7 +428,7 @@ class SaleController extends Controller
     }
 
 
-    public function show($id)
+    public function facture($id)
     {
         $sale = Sale::find($id);
         $code = $sale->code;
@@ -505,9 +505,9 @@ class SaleController extends Controller
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
         if ($from_date == $to_date) {
-            $title = 'Rapports de vente du '.$from_date.' à '.$now;
+            $title = 'Ventes du '.$from_date.' à '.$now;
         } else {
-            $title = 'Rapports de vente du '.$from_date.' au '.$to_date.' à '.$now;
+            $title = 'Ventes du'.$from_date.' au '.$to_date.' à '.$now;
         }
         //dd($from_date);
         $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
@@ -518,84 +518,6 @@ class SaleController extends Controller
             'title'
         ));
     }
-
-    public function factures(Request $request)
-    {
-        $title = 'Factures de ventes';
-        $sales = Sale::get();
-        return view('admin.sales.factures', compact(
-            'title',
-            'sales'
-        ));
-    }
-
-    public function generateFacture($id)
-    {
-        dd($id);
-      /*   $this->validate($request, [
-            'code' => 'required|numeric',
-        ]); */
-
-        $now =  Carbon::now()->format('H:i:s');
-        $from_date = date_format(date_create($request->from_date), 'd/m/Y');
-        $to_date = date_format(date_create($request->to_date), 'd/m/Y');
-        /* if ($from_date == $to_date) {
-            $title = 'Rapports de vente du '.$from_date.' à '.$now;
-        } else {
-            $title = 'Rapports de vente du '.$from_date.' au '.$to_date.' à '.$now;
-        } */
-
-        $code = $request->code;
-
-        //dd($from_date);
-        /* $sales = Sale::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get(); */
-        $sales = Sale::where('code', $code)->get();
-
-        foreach ($sales as $key => $sale) {
-            
-        }
-
-        $title =' Facture n° : '.$code;
-
-        $dompdf = new Dompdf();
-        $options = $dompdf->getOptions();
-        $options->setDefaultFont('Courier');
-        $options->setIsHtml5ParserEnabled(true);
-        $dompdf->setOptions($options);
-
-        $dompdf->loadHtml(view('admin.sales.factures', compact(
-            'sales',
-            'sale',
-            'code',
-            'title'
-        )));
-
-        // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4', 'portrait');
-
-        // Render the HTML as PDF
-        $dompdf->render();
-
-        $anne = date('d');
-        $anne = $anne.' '.date('m');
-        $anne = $anne.' '.date('Y');
-        $anne = $anne.' à '.date('H').'h';
-        $anne = $anne.' '.date('i').'min';
-        $anne = $anne.' '.date('s').'s';
-
-        // Output the generated PDF to Browser
-        $dompdf->stream('Facture n° '.$code.' du '.$anne.'.pdf', ['Attachment' => false]);
-
-        /* dd($sales); */
-
-        return view('admin.sales.factures', compact(
-            'sales',
-            'sale',
-            'code',
-            'title'
-        ));
-    }
-
 
     /**
      * Remove the specified resource from storage.

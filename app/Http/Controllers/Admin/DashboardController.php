@@ -57,4 +57,5 @@ class DashboardController extends Controller
             'stock_out_purchases'
         ));
     }
+    
 }

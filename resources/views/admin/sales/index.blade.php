@@ -15,7 +15,7 @@
     </div>
     @can('create-sale')
         <div class="col-sm-5 col">
-            <a href="{{ route('sales.create') }}" class="btn btn-sm bg-primary-light float-right mt-2"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter</a>
+            <a href="{{ route('sales.create') }}" class="btn btn-sm btn-primary float-right"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter</a>
         </div>
     @endcan
 @endpush

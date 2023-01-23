@@ -55,11 +55,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::resource('products',ProductController::class)->except('show');
     Route::get('products/outstock',[ProductController::class,'outstock'])->name('outstock');
     Route::get('products/expired',[ProductController::class,'expired'])->name('expired');
-    Route::resource('sales',SaleController::class);
+    Route::resource('sales',SaleController::class)->except('show');
     Route::get('sales/reports',[SaleController::class,'reports'])->name('sales.report');
-    Route::get('sales/factures',[SaleController::class,'factures'])->name('sales.facture');
+    Route::get('sales/facture/{id}',[SaleController::class,'facture'])->name('sales.facture');
     Route::post('sales/reports',[SaleController::class,'generateReport']);
-    Route::post('sales/factures',[SaleController::class,'generateFacture']);
 
     Route::get('backup', [BackupController::class,'index'])->name('backup.index');
     Route::put('backup/create', [BackupController::class,'create'])->name('backup.store');

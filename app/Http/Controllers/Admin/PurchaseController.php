@@ -54,8 +54,8 @@ class PurchaseController extends Controller
                     return date_format(date_create($purchase->expiry_date), 'd/m/Y');
                 })
                 ->addColumn('action', function ($row) {
-                    $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
-                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('purchases.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
+                    $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';
+                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('purchases.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-sm bg-danger-light"><i class="fas fa-trash"></i></button></a>';
                     if (!auth()->user()->hasPermissionTo('edit-purchase')) {
                         $editbtn = '';
                     }
@@ -195,7 +195,7 @@ class PurchaseController extends Controller
 
     public function reports()
     {
-        $title ='Rapports d’achat';
+        $title ='Rapports achat';
         return view('admin.purchases.reports', compact('title'));
     }
 
@@ -210,9 +210,10 @@ class PurchaseController extends Controller
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
         if ($from_date == $to_date) {
-            $title = 'Rapports d’achats du '.$from_date.' à '.$now;
+            $title = 'Achats du '.$from_date.' à '.$now;
         }else {
-            $title = 'Rapports d’achats du '.$from_date.' au '.$to_date.' à '.$now;
+            $from_date = date_format(date_create($request->from_date), 'd/m/Y');
+            $title = 'Achats du '.$from_date.' au '.$to_date.' à '.$now;
         }
         $purchases = Purchase::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
         return view('admin.purchases.reports', compact(
