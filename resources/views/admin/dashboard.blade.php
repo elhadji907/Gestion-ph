@@ -168,7 +168,7 @@
                                         <td>{!! $sale->nom_client ?? '' !!}</td>
                                         {{--  <td>{!! optional($sale->created_at)->translatedFormat('d F Y à H\h i') ?? '' !!}</td>  --}}
                                         <td>{!! $sale->created_at->diffForHumans() !!}</td>
-                                        <td><a href="{{ url('admin/sales', ['$id' => $sale->id]) }}" class="showbtn"
+                                        <td><a href="{{ url('admin/sales/facture', ['$id' => $sale->id]) }}" class="showbtn"
                                                 target="_blank" title="Imprimer facture"><button
                                                     class="btn btn-success btn-sm"><i class="fa fa-print"
                                                         aria-hidden="true"></i></button></a></td>
@@ -238,9 +238,6 @@
                 "lengthMenu": [
                     [5, 10, 25, 50, 100, -1],
                     [5, 10, 25, 50, 100, "Tout"]
-                ],
-                "order": [
-                    [4, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

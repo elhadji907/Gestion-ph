@@ -134,6 +134,7 @@ class SaleController extends Controller
 
         $product = $row->product;
         $quantity = $row->quantity;
+        $id = $row->id;
         
         $purchase_id = Purchase::where('product', $product)->first()->id;
         $price = Product::where('purchase_id', $purchase_id)->first()->price;
@@ -142,7 +143,54 @@ class SaleController extends Controller
 
        $output .= '
        
-       <li data-price="'.$price.'" data-quantity="'.$quantity.'"><a href="#">'.$product.'</a></li>
+       <li data-id="'.$id.'" data-price="'.$price.'" data-quantity="'.$quantity.'"><a href="#">'.$product.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
+
+    
+    function fetche(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      
+      $mytime = Carbon::now();
+      $mytime = $mytime->toDateTimeString();
+
+      $data = DB::table('purchases')
+        ->where('product', 'LIKE', "%{$query}%")
+        ->where('expiry_date', '>=', "{$mytime}")
+        ->where('quantity', '>=', "1")
+        ->where('vendu', "Non")
+        ->get();
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+        
+        $now = strtotime(now());
+        
+        /* $expiry_date = strtotime($product->purchase->expiry_date);
+        $now = strtotime(now());
+        $perime = $expiry_date - $now;
+        $perime = floor($perime / 3600 / 24); */
+
+        $product = $row->product;
+        $quantity = $row->quantity;
+        $price = $row->cost_price;
+        $id = $row->id;
+        
+        /* $purchase_id = Purchase::where('product', $product)->first()->id;
+        $price = Product::where('purchase_id', $purchase_id)->first()->price; */
+
+        /* $cost_price = $row->cost_price; */
+
+       $output .= '
+       
+       <li data-id="'.$id.'" data-price="'.$price.'" data-quantity="'.$quantity.'"><a href="#">'.$product.'</a></li>
        ';
       }
       $output .= '</ul>';
@@ -196,7 +244,9 @@ class SaleController extends Controller
 
         if (isset($request->modal_vente) && $request->modal_vente == 'oui') {
             
-        $sold_product = Product::find($request->product);
+        /* dd($request->id); */
+            
+        $sold_product = Product::find($request->id);
 
         /**update quantity of
             sold item from
@@ -213,12 +263,16 @@ class SaleController extends Controller
             /**
              * calcualting item's total price
             **/
-            $total_price = ($request->quantity) * ($sold_product->price);
+            $total_price = ($request->quantity) * ($request->total_price);
 
             $product_name = $sold_product->purchase->product;
 
+            $sold_product->update([
+                'price'=>$request->total_price,
+            ]);
+
             $sale = Sale::create([
-                'product_id'          =>    $request->product,
+                'product_id'          =>    $request->id,
                 'code'                =>    $code,
                 'quantity'            =>    $request->quantity,
                 'purchase_quantity'   =>    $purchased_item->quantity+1,

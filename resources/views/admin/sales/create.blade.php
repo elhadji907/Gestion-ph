@@ -202,9 +202,9 @@
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <small class="row form-row justify-content-center pb-4">
                     @foreach ($sales as $sale)
-                        <a href="{{ url('admin/sales', ['$id' => $sale->id]) }}" class="showbtn" target="_blank"
-                            title="Imprimer la dernière facture"><button class="btn btn-outline-secondary btn-sm"><i
-                                    class="fa fa-print" aria-hidden="true">&nbsp;Imprimer la facture de la dernière
+                        <a href="{{ url('admin/sales/facture', ['$id' => $sale->id]) }}" class="showbtn" target="_blank"
+                            title="Télécharger la dernière facture"><button class="btn btn-outline-secondary btn-sm"><i
+                                    class="fa fa-print" aria-hidden="true">&nbsp;Télécharger la facture de la dernière
                                     vente</i></button></a>
                     @endforeach
                 </small>
@@ -243,7 +243,7 @@
                                                     {{--  <label>Prénom du client <span class="text-danger">*</span></label>  --}}
                                                     <input type="text" placeholder="Prénom du client"
                                                         class="form-control form-control-sm @error('nom_client') is-invalid @enderror"
-                                                        name="nom_client" id="nom_client" value="" required>
+                                                        name="nom_client" id="nom_client" value="Inconnue" required>
                                                 </td>
                                                 <td colspan="1" class="text-right">
                                                     <strong>Net à payer :</strong>
@@ -274,8 +274,8 @@
                                                     {{--  <input type="number" id="avoir_ammount"
                                                             class="avoir_ammount form-control form-control-sm" value="0">  --}}
                                                     <input id="amount" type="number" min="1" max="1000000"
-                                                        class="form-control form-control-sm" placeholder="Montant reçu"
-                                                        onchange="computeLoan()" required>
+                                                        class="form-control form-control-sm" placeholder="Montant en chiffres"
+                                                        onchange="computeLoan()" required value="0.00">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -330,7 +330,7 @@
         <script id="document-template" type="text/x-handlebars-template">
       <tr class="delete_add_more_item" id="delete_add_more_item">    
           <td>
-            <input type="text" name="product[]" value="@{{ product }}" required placeholder="le nom du produit" class="form-control form-control-sm" readonly>
+            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Nom du produit" class="form-control form-control-sm" readonly>
           </td>
             <input type="hidden" name="nom_client" value="@{{ nom_client }}">
             <input type="hidden" name="telephone_client" value="@{{ telephone_client }}">

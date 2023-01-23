@@ -114,19 +114,28 @@ class ProductController extends Controller
             'description'=>'nullable|max:255',
         ]);
         $price = $request->price;
-        if ($request->discount >0) {
+
+        /* dd($price); */
+
+        if ($request->discount > 0) {
             /* $price = $request->discount * $request->price; */
             $price = $request->price - ($request->price * ($request->discount/100));
         }
+        /* dd($request->id); */
+        $purchase = Purchase::findOrFail($request->id);
 
-        $purchase = Purchase::findOrFail($request->product);
+        /* $purchase = Purchase::where('product',$request->product)->first();
+
+        $purchase_id = $purchase->id; */
+        
+        /* dd($purchase); */
 
         $purchase->update([
             'vendu'=>"Oui",
         ]);
 
         Product::create([
-            'purchase_id'=>$request->product,
+            'purchase_id'=>$request->id,
             'price'=>$price,
             'discount'=>$request->discount,
             'description'=>$request->description,
