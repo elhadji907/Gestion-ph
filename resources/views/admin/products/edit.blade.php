@@ -26,8 +26,7 @@
 					@csrf
                     @method("PUT")
 					<div class="service-fields mb-3">
-						<div class="row">
-							
+						<div class="row">							
 							<div class="col-lg-12">
 								<div class="form-group">
 									<label>Produit <span class="text-danger">*</span></label>

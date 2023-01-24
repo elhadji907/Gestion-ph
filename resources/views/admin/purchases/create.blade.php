@@ -69,7 +69,7 @@
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label>Quantité<span class="text-danger">*</span></label>
-									<input class="form-control" type="text" name="quantity" placeholder="Quantité achetée">
+									<input class="form-control" type="number" name="quantity" placeholder="Quantité achetée" min="1">
 								</div>
 							</div>
 						</div>

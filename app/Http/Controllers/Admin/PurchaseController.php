@@ -24,7 +24,7 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'Achats';
+        $title = 'Stock';
         if ($request->ajax()) {
             $purchases = Purchase::latest();
             //$purchase->notify(new StockAlertNotification($purchase));
@@ -80,7 +80,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        $title = 'Créer un achat';
+        $title = 'Ajouter un stock';
         $categories = Category::get();
         $suppliers = Supplier::get();
         return view('admin.purchases.create', compact(
@@ -139,7 +139,7 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
-        $title = 'Modifier l’achat';
+        $title = 'Modifier stock';
         $categories = Category::get();
         $suppliers = Supplier::get();
         return view('admin.purchases.edit', compact(

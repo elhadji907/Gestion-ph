@@ -170,7 +170,7 @@
                                         <td>{!! $sale->created_at->diffForHumans() !!}</td>
                                         <td><a href="{{ url('admin/sales/facture', ['$id' => $sale->id]) }}" class="showbtn"
                                                 target="_blank" title="Imprimer facture"><button
-                                                    class="btn btn-success btn-sm"><i class="fa fa-print"
+                                                    class="btn btn-sm bg-success-light"><i class="fa fa-print"
                                                         aria-hidden="true"></i></button></a></td>
                                     </tr>
                                 @endforeach

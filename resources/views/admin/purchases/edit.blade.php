@@ -66,7 +66,7 @@
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Quantité<span class="text-danger">*</span></label>
-								<input class="form-control" value="{{$purchase->quantity}}" type="text" name="quantity">
+								<input class="form-control" value="{{$purchase->quantity}}" type="number" name="quantity" min="1">
 							</div>
 						</div>
 					</div>
