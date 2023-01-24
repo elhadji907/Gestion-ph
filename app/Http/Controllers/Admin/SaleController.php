@@ -315,6 +315,13 @@ class SaleController extends Controller
 
             //$sale->notify(new SaleAlertNotification($sale, auth()->user()));
             $notification = notify("Le produit est en rupture de stock!!!");
+            $this->validate($request, [
+                'quantite_insuffisante'=>'required'
+            ],
+            [
+                'quantite_insuffisante.required' => 'La quantité du produit est insuffisante'
+            ]
+        );
         }
 
         /* return redirect()->route('sales.index')->with($notification); */

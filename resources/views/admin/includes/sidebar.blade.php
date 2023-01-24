@@ -10,7 +10,11 @@
                 <li class="{{ route_is('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}"><i class="fe fe-home"></i> <span>Tableau de bord</span></a>
                 </li>
-
+                @can('view-sales')
+                    <li class="{{ route_is('sales.create') ? 'active' : '' }}">
+                        <a href="{{ route('sales.create') }}"><i class="fe fe-cart"></i> <span> Nouvelle vente</span></a>
+                    </li>
+                @endcan
                 @can('view-sales')
                     <li class="submenu">
                         <a href="#"><i class="fe fe-activity"></i> <span> Vente</span> <span
@@ -19,8 +23,7 @@
                             <li><a class="{{ route_is('sales.index') ? 'active' : '' }}"
                                     href="{{ route('sales.index') }}">Ventes</a></li>
                             @can('create-sale')
-                                <li><a class="{{ route_is('sales.create') ? 'active' : '' }}"
-                                        href="{{ route('sales.create') }}">Ajouter une vente</a></li>
+                                {{--  <li><a href="{{ route('sales.create') }}">Ajouter une vente</a></li>  --}}
                             @endcan
                             {{--  <li><a class="{{ route_is('sales.facture') ? 'active' : '' }}"
                                     href="{{ route('sales.facture') }}">Facture</a></li>  --}}

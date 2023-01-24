@@ -170,16 +170,16 @@ class ProductController extends Controller
             'discount'=>'nullable',
             'description'=>'nullable|max:255',
         ]);
-
+        
         $price = $request->price;
-        if ($request->discount >0) {
+        if ($request->discount > 0) {
             /* $price = $request->discount * $request->price; */            
             $price = $request->price - ($request->price * ($request->discount/100));
         }
         $product->update([
              'purchase_id'=>$request->product,
              'price'=>$price,
-             'discount'=>$request->discount,
+             'discount'=>$request->discounte,
              'description'=>$request->description,
          ]);
         $notification = notify('Le produit a été mis à jour');

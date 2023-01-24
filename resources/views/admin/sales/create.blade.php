@@ -147,6 +147,10 @@
                             class="form-control form-control-sm @error('quantite') is-invalid @enderror" name="quantite"
                             id="quantite" value="0.0" min="0">
 
+                            <input type="hidden" placeholder=""
+                                                        class="form-control form-control-sm @error('quantite_insuffisante') is-invalid @enderror"
+                                                        name="quantite_insuffisante" id="quantite_insuffisante" value="">
+
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="">Quantité Restante</label>
