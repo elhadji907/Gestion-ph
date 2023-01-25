@@ -49,7 +49,7 @@ class SaleController extends Controller
                         return settings('app_currency', '').' '. number_format(($sale->total_price), 2, '.', ' ');
                     })
                     ->addColumn('price', function ($sale) {
-                        return settings('app_currency', '').' '. number_format(($sale->total_price)/($sale->quantity), 2, '.', ' ');
+                        return settings('app_currency', '').' '. number_format(($sale->product->price), 2, '.', ' ');
                     })
                    /*  ->addColumn('code', function ($sale) {
                         return settings('app_currency', '').' '. $sale->code;
@@ -194,9 +194,9 @@ class SaleController extends Controller
             $code   =   strtolower($code);
         }
         if (isset($request->modal_vente) && $request->modal_vente == 'oui') {
-            /* dd($request->id_product); */
+            /* dd($request->id_producte); */
             /* $sold_product = Product::find($request->product); */
-            $purchase = Purchase::find($request->id_product);    
+            $purchase = Purchase::find($request->id_producte);    
             $products = Product::where('purchase_id', $purchase->id)->get();
 
             foreach ($products as $product)
@@ -218,13 +218,13 @@ class SaleController extends Controller
                 ]);
 
                 $product->update([
-                    'price'=>$request->total_price,
+                    'price'=>$request->price,
                 ]);
     
                 /**
                  * calcualting item's total price
                 **/
-                $total_price = ($request->quantity) * ($request->total_price);
+                $total_price = ($request->quantity) * ($request->price);
     
                 $sale = Sale::create([
                     'product_id'          =>    $product_id,

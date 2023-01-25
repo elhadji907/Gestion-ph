@@ -110,7 +110,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'product'=>'required|max:200',
+            'producte'=>'required|max:200',
             'price'=>'required|min:1',
             'discount'=>'nullable',
             'description'=>'nullable|max:255',

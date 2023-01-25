@@ -120,7 +120,7 @@ Route::post('/tasks',function(Request $request) {
 Route::get('/autocomplete', [AutocompleteController::class, 'index']);
 Route::post('/autocomplete/fetch', [AutocompleteController::class, 'fetch'])->name('autocomplete.fetch');
 Route::post('/product/fetch', [SaleController::class, 'fetch'])->name('product.fetch');
-Route::post('/product/autocomplete', [ProductController::class, 'autocomplete'])->name('product.autocomplete');
+Route::post('/producte/autocomplete', [ProductController::class, 'autocomplete'])->name('producte.autocomplete');
 
 /* Route::get('/purchases/product/{id}', [ProductController::class, 'getStates'])->name('product.getStates'); */
 

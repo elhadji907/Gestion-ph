@@ -45,19 +45,19 @@
                                     class="form-control form-control-sm @error('product') is-invalid @enderror"
                                     name="product" id="product" required>
                                 <input type="hidden" placeholder="Nom produit"
-                                    class="form-control form-control-sm @error('id_product') is-invalid @enderror"
-                                    name="id_product" id="id_product" value="">
+                                    class="form-control form-control-sm @error('id_producte') is-invalid @enderror"
+                                    name="id_producte" id="id_producte" value="">
                                 <div id="productList">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="">Prix de vente</label>
-                                <input type="text" placeholder="Entrer prix de vente"
-                                    class="form-control form-control-sm @error('total_price') is-invalid @enderror"
-                                    name="total_price" id="total_price" value="0.00" min="0">
-                                @error('total_price')
+                                <label for="">Prix de vente </label>
+                                <input type="number" placeholder="Entrer prix de vente"
+                                    class="form-control form-control-sm @error('price') is-invalid @enderror"
+                                    name="price" id="price" value="0.00" min="0">
+                                @error('price')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
@@ -90,7 +90,7 @@
                                 @enderror
                             </div>
                         </div>
-                       {{--   <div class="col-6">
+                        {{--   <div class="col-6">
                             <div class="form-group">
                                 <label>Quantité <span class="text-danger">*</span></label>
                                 <input type="number" value="1" class="form-control" name="quantity"
@@ -150,9 +150,9 @@
     $(document).on('click', 'li', function() {
         {{--  Ici je récupère le produit selectioné sur la liste autoload  --}}
         $('#product').val($(this).text());
-        $('#total_price').val($(this).data("price"));
+        $('#price').val($(this).data("price"));
         $('#quantite').val($(this).data("quantity"));
-        $('#id_product').val($(this).data("id"));
+        $('#id_producte').val($(this).data("id"));
         $('#productList').fadeOut();
     });
 </script>

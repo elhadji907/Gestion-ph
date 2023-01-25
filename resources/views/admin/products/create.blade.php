@@ -38,12 +38,17 @@
                                     <div class="form-group">
                                         <label>Produit <span class="text-danger">*</span></label>
                                         <input type="text" placeholder="Nom produit"
-                                            class="form-control form-control-sm @error('product') is-invalid @enderror"
-                                            name="product" id="product" value="{{ old('produit') }}">
+                                            class="form-control form-control-sm @error('producte') is-invalid @enderror"
+                                            name="producte" id="producte" value="{{ old('producte') }}">
+                                        @error('producte')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                         <input type="hidden" placeholder="Id produit"
                                             class="form-control form-control-sm @error('id_product') is-invalid @enderror"
                                             name="id_product" id="id_product" value="{{ old('id_product') }}">
-                                        <div id="productList">
+                                        <div id="producteList">
                                         </div>
                                     </div>
                                 </div>
@@ -66,14 +71,21 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label>Prix de vente <span class="text-danger">*</span></label>
-                                        <input class="form-control form-control-sm @error('product') is-invalid @enderror" type="text" name="price"
-                                        value="{{ old('price') }}" placeholder="Prix de vente du médicament">
+                                        <input class="form-control form-control-sm @error('pice') is-invalid @enderror"
+                                            type="text" name="price" value="{{ old('price') }}"
+                                            placeholder="Prix de vente du médicament">
+                                        @error('price')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label>Rabais (%)<span class="text-danger">*</span></label>
-                                        <input class="form-control form-control-sm" type="text" name="discount" value="0">
+                                        <input class="form-control form-control-sm" type="text" name="discount"
+                                            value="0">
                                     </div>
                                 </div>
                             </div>
@@ -106,31 +118,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
     {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>  --}}
     <script type="text/javascript">
-        $('#product').keyup(function() {
+        $('#producte').keyup(function() {
             var query = $(this).val();
             if (query != '') {
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: "{{ route('product.autocomplete') }}",
+                    url: "{{ route('producte.autocomplete') }}",
                     method: "POST",
                     data: {
                         query: query,
                         _token: _token
                     },
                     success: function(data) {
-                        $('#productList').fadeIn();
-                        $('#productList').html(data);
+                        $('#producteList').fadeIn();
+                        $('#producteList').html(data);
                     }
                 });
             }
         });
         $(document).on('click', 'li', function() {
             {{--  Ici je récupère le produit selectioné sur la liste autoload  --}}
-            $('#product').val($(this).text());
+            $('#producte').val($(this).text());
             $('#total_price').val($(this).data("price"));
             $('#quantity').val($(this).data("quantity"));
             $('#id_product').val($(this).data("id"));
-            $('#productList').fadeOut();
+            $('#producteList').fadeOut();
         });
     </script>
 @endsection
