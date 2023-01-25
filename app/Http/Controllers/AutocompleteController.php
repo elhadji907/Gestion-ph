@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DB;
 
 class AutocompleteController extends Controller
@@ -19,14 +20,21 @@ class AutocompleteController extends Controller
      if($request->get('query'))
      {
       $query = $request->get('query');
-      $data = DB::table('apps_countries')
-        ->where('country_name', 'LIKE', "%{$query}%")
+      
+      $mytime = Carbon::now();
+      $mytime = $mytime->toDateTimeString();
+      
+      $data = DB::table('purchases')
+        ->where('product', 'LIKE', "%{$query}%")
+        ->where('expiry_date', '>=', "{$mytime}")
+        ->where('quantity', '>=', "1")
+        ->where('vendu', "Non")
         ->get();
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
       foreach($data as $row)
       {
        $output .= '
-       <li><a href="#">'.$row->country_name.'</a></li>
+       <li data-code="'.$row->cost_price.'"><a href="#">'.$row->product.'</a></li>
        ';
       }
       $output .= '</ul>';

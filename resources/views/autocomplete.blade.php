@@ -51,7 +51,8 @@ $(document).ready(function(){
     });
 
     $(document).on('click', 'li', function(){  
-        $('#country_name').val($(this).text());  
+        $('#country_name').val($(this).text());          
+        $('#country_code').val($(this).data("code"));
         $('#countryList').fadeOut();  
     });  
 

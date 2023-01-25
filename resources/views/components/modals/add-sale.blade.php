@@ -5,12 +5,12 @@
             <div class="modal-header">
                 <h5 class="modal-title w-100 text-center">
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                       {{--   <button type="submit" class="btn btn-outline-warning bg-gradient-default">&nbsp;Cliquer
+                        {{--   <button type="submit" class="btn btn-outline-warning bg-gradient-default">&nbsp;Cliquer
                                 ici pour faire une vente multiple</button>  --}}
-                                <a class="btn btn-outline-warning bg-gradient-default" href="{{ route('sales.create') }}">Cliquer
-                                    ici pour faire une vente multiple</a>
+                        <a class="btn btn-warning bg-gradient-default" href="{{ route('sales.create') }}">Cliquer
+                            ici pour faire une vente multiple</a>
                     </div>
-                    
+
                     {{--  <a class="{{ route_is('sales.create') ? 'active' : '' }}" href="{{ route('sales.create') }}">Cliquer
                         ici pour faire une vente multiple</a>  --}}
                 </h5>
@@ -22,10 +22,10 @@
                 <form method="POST" action="{{ route('sales.store') }}">
                     @csrf
                     <div class="row form-row">
-                        <div class="col-6">
+                        <div class="col-3">
                             <div class="form-group">
                                 <label>Produit <span class="text-danger">*</span></label>
-                                <select class="select2 form-select form-control" name="product">
+                                {{--  <select class="select2 form-select form-control" name="product">
                                     <option disabled selected> Sélectionner un produit</option>
                                     @foreach (\App\Models\Product::get() as $product)
                                         <?php
@@ -40,33 +40,80 @@
                                             @endif
                                         @endif
                                     @endforeach
-                                </select>
+                                </select>  --}}
+                                <input type="text" placeholder="Nom produit"
+                                    class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                    name="product" id="product" required>
+                                <input type="hidden" placeholder="Nom produit"
+                                    class="form-control form-control-sm @error('id_product') is-invalid @enderror"
+                                    name="id_product" id="id_product" value="">
+                                <div id="productList">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="">Prix de vente</label>
+                                <input type="text" placeholder="Entrer prix de vente"
+                                    class="form-control form-control-sm @error('total_price') is-invalid @enderror"
+                                    name="total_price" id="total_price" value="0.00" min="0">
+                                @error('total_price')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="">Quantité Restante</label>
+                                <input type="number" placeholder="Restant en stock"
+                                    class="form-control form-control-sm @error('quantite') is-invalid @enderror"
+                                    name="quantite" id="quantite" value="" min="1" readonly>
+                                @error('quantite')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="">Quantité achetée</label>
+                                <input type="number" placeholder="Quantité à acheter"
+                                    class="form-control form-control-sm @error('quantity') is-invalid @enderror"
+                                    name="quantity" id="quantity" value="1" min="1" required>
+                                @error('quantity')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                       {{--   <div class="col-6">
                             <div class="form-group">
                                 <label>Quantité <span class="text-danger">*</span></label>
                                 <input type="number" value="1" class="form-control" name="quantity"
                                     min="1">
                             </div>
-                        </div>
+                        </div>  --}}
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Client <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="nom_client"
-                                    placeholder="Nom du client">
+                                <input class="form-control form-control-sm" type="text" name="nom_client"
+                                    placeholder="Nom du client" value="Inconnue">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Téléphone </label>
-                                <input class="form-control" type="text" name="telephone_client"
+                                <input class="form-control form-control-sm" type="text" name="telephone_client"
                                     placeholder="Telephone du client" value="">
                             </div>
                         </div>
                         <input class="form-control" type="hidden" name="modal_vente" placeholder="" value="oui">
 
-                    </div>                    
+                    </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                         <button type="submit" class="btn btn-outline-primary"><i
                                 class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
@@ -77,3 +124,35 @@
     </div>
 </div>
 <!-- /Ajouter Vente Modale -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+{{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>  --}}
+<script type="text/javascript">
+    $('#product').keyup(function() {
+        var query = $(this).val();
+        if (query != '') {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{ route('product.fetch') }}",
+                method: "POST",
+                data: {
+                    query: query,
+                    _token: _token
+                },
+                success: function(data) {
+                    $('#productList').fadeIn();
+                    $('#productList').html(data);
+                }
+            });
+        }
+    });
+    $(document).on('click', 'li', function() {
+        {{--  Ici je récupère le produit selectioné sur la liste autoload  --}}
+        $('#product').val($(this).text());
+        $('#total_price').val($(this).data("price"));
+        $('#quantite').val($(this).data("quantity"));
+        $('#id_product').val($(this).data("id"));
+        $('#productList').fadeOut();
+    });
+</script>

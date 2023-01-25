@@ -141,7 +141,7 @@
                             {!! $i++ !!}<br>
                         </td>
                         <td colspan="1" align="center">
-                            {!! strtoupper($sale->name) !!}<br>
+                            {!! ucwords(strtolower($sale->name)) !!}<br>
                         </td>
                         <td colspan="1" align="center">
                             {!! $sale->quantity !!}<br>

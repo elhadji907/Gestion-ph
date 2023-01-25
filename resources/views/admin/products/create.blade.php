@@ -34,51 +34,50 @@
                         @csrf
                         <div class="service-fields mb-3">
                             <div class="row">
-
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Produit <span class="text-danger">*</span></label>
-                                        <select class="select2 form-select form-control" name="product">
-                                            <option disabled selected> Sélectionner un produit</option>
-                                            @foreach ($purchases->sortByDesc('created_at') as $purchase)
-                                                @if (!($purchase->quantity <= 0) && $purchase->vendu != 'Oui')
-                                                    <option value="{{ $purchase->id }}">{{ $purchase->product }}
-                                                        {{--  [{{ $purchase->quantity }}] 
-                                                        du {{ optional($purchase->created_at)->format('d/m/yy') }}  --}}
-                                                        {{--   <p class="noti-time"><span
-                                                                class="notification-time"> ajouté {{ $purchase->created_at->diffForHumans() }}</span>
-                                                        </p>  --}}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                        <input type="text" placeholder="Nom produit"
+                                            class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                            name="product" id="product" value="{{ old('produit') }}">
+                                        <input type="hidden" placeholder="Id produit"
+                                            class="form-control form-control-sm @error('id_product') is-invalid @enderror"
+                                            name="id_product" id="id_product" value="{{ old('id_product') }}">
+                                        <div id="productList">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="service-fields mb-3">
-                            <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label>Prix de vente<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="price"
-                                            value="{{ old('price') }}" placeholder="Prix de vente du médicament">
+                                        <label>Prix de revient <span class="text-danger">*</span></label>
+                                        <input type="number" placeholder="Entrer prix de vente"
+                                            class="form-control form-control-sm @error('total_price') is-invalid @enderror"
+                                            name="total_price" id="total_price" value="0.00" min="0" readonly>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-6">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>Quantité en stock <span class="text-danger">*</span></label>
+                                        <input type="number" placeholder="Quantité en stock"
+                                            class="form-control form-control-sm @error('quantity') is-invalid @enderror"
+                                            name="quantity" id="quantity" value="0.00" min="0" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>Prix de vente <span class="text-danger">*</span></label>
+                                        <input class="form-control form-control-sm @error('product') is-invalid @enderror" type="text" name="price"
+                                        value="{{ old('price') }}" placeholder="Prix de vente du médicament">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
                                     <div class="form-group">
                                         <label>Rabais (%)<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="discount" value="0">
+                                        <input class="form-control form-control-sm" type="text" name="discount" value="0">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-
-
                         <div class="service-fields mb-3">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -102,7 +101,38 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+    {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>  --}}
+    <script type="text/javascript">
+        $('#product').keyup(function() {
+            var query = $(this).val();
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ route('product.autocomplete') }}",
+                    method: "POST",
+                    data: {
+                        query: query,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#productList').fadeIn();
+                        $('#productList').html(data);
+                    }
+                });
+            }
+        });
+        $(document).on('click', 'li', function() {
+            {{--  Ici je récupère le produit selectioné sur la liste autoload  --}}
+            $('#product').val($(this).text());
+            $('#total_price').val($(this).data("price"));
+            $('#quantity').val($(this).data("quantity"));
+            $('#id_product').val($(this).data("id"));
+            $('#productList').fadeOut();
+        });
+    </script>
 @endsection
-
 @push('page-js')
 @endpush

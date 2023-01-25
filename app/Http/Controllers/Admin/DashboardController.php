@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $stock_out_purchases = Purchase::where('quantity', '<=', 0)->count();
         //dd($stock_out_purchases);
 
-        $sales = Sale::whereDate('created_at', '=', Carbon::now())->orderBy('created_at', 'desc')->get();
+        $sales = Sale::whereDate('created_at', '=', Carbon::now())->orderBy('created_at', 'DESC')->get();
 
         /* dd($sales); */
 

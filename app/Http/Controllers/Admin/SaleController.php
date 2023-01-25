@@ -9,13 +9,14 @@ use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Events\PurchaseOutStock;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\DB;
+/* use Illuminate\Support\Facades\DB; */
 use App\Http\Controllers\Controller;
 use App\Notifications\SaleAlertNotification;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Carbon;
 use Auth;
 use Dompdf\Dompdf;
+use DB;
 
 class SaleController extends Controller
 {
@@ -125,7 +126,7 @@ class SaleController extends Controller
       foreach($data as $row)
       {
         
-        $now = strtotime(now());
+        /* $now = strtotime(now()); */
         
         /* $expiry_date = strtotime($product->purchase->expiry_date);
         $now = strtotime(now());
@@ -179,7 +180,6 @@ class SaleController extends Controller
             $code = "00001";
 
         }
-
         $longueur = strlen($code);
 
         if ($longueur <= 1) {
@@ -193,34 +193,44 @@ class SaleController extends Controller
         } else {
             $code   =   strtolower($code);
         }
-
-
         if (isset($request->modal_vente) && $request->modal_vente == 'oui') {
-            
-            $sold_product = Product::find($request->product);
-    
+            /* dd($request->id_product); */
+            /* $sold_product = Product::find($request->product); */
+            $purchase = Purchase::find($request->id_product);    
+            $products = Product::where('purchase_id', $purchase->id)->get();
+
+            foreach ($products as $product)
+
+            $product_id = $product->id;
             /**update quantity of
                 sold item from
              purchases
             **/
-            $purchased_item = Purchase::find($sold_product->purchase->id);
-            $new_quantity = ($purchased_item->quantity) - ($request->quantity);
+            /* $purchased_item = Purchase::find($sold_product->purchase->id); */
+
+            $new_quantity = ($purchase->quantity) - ($request->quantity);
+
             $notification = '';
+
             if (!($new_quantity < 0)) {
-                $purchased_item->update([
+                $purchase->update([
                     'quantity'=>$new_quantity,
+                ]);
+
+                $product->update([
+                    'price'=>$request->total_price,
                 ]);
     
                 /**
                  * calcualting item's total price
                 **/
-                $total_price = ($request->quantity) * ($sold_product->price);
+                $total_price = ($request->quantity) * ($request->total_price);
     
                 $sale = Sale::create([
-                    'product_id'          =>    $request->product,
+                    'product_id'          =>    $product_id,
                     'code'                =>    $code,
                     'quantity'            =>    $request->quantity,
-                    'purchase_quantity'   =>    $purchased_item->quantity+1,
+                    'purchase_quantity'   =>    $purchase->quantity+1,
                     'total_price'         =>    $total_price,
                     'nom_client'          =>    $request->nom_client,
                     'name'                =>    $request->product,
@@ -229,7 +239,7 @@ class SaleController extends Controller
                     'updated_by'          =>    $updated_by
                 ]);
     
-                if ($purchased_item->quantity == 0) {
+                if ($purchase->quantity == 0) {
                     $notification = notify("Le produit a été vendu mais et il n'en reste plus en stock");
                 } else {
                     $notification = notify("Le produit a été vendu");
@@ -241,8 +251,9 @@ class SaleController extends Controller
         
         for ($i=0; $i < $count; $i++) {
 
-        $purchase_id = Purchase::where('product', $request->product[$i])->first()->id;
-
+        $purchase = Purchase::findOrFail($request->id_produit[$i]);
+        
+        $purchase_id = $purchase->id;
 
         $sold_product = Product::where('purchase_id', $purchase_id)->get();
 

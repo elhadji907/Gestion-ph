@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+/* use Illuminate\Support\Carbon; */
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use QCod\AppSettings\Setting\AppSettings;
+use Carbon\Carbon;
+use DB;
 
 class ProductController extends Controller
 {
@@ -118,15 +120,18 @@ class ProductController extends Controller
             /* $price = $request->discount * $request->price; */
             $price = $request->price - ($request->price * ($request->discount/100));
         }
-
-        $purchase = Purchase::findOrFail($request->product);
+        
+        //pour le menu select
+        /* $purchase = Purchase::findOrFail($request->product); */
+        //pour le menu autocomplete
+        $purchase = Purchase::findOrFail($request->id_product);
 
         $purchase->update([
             'vendu'=>"Oui",
         ]);
 
         Product::create([
-            'purchase_id'=>$request->product,
+            'purchase_id'=>$request->id_product,
             'price'=>$price,
             'discount'=>$request->discount,
             'description'=>$request->description,
@@ -134,7 +139,7 @@ class ProductController extends Controller
 
 
         $notification = notify("Le produit a été ajouté");
-        return redirect()->route('products.create')->with($notification);
+        return back()->with($notification);
     }
 
 
@@ -398,6 +403,41 @@ class ProductController extends Controller
         return view('admin.products.outstock', compact(
             'title',
         ));
+    }
+
+    public function getStates($id) {
+        $states = DB::table("purchases")->where("vendu",'Non')->pluck("product","id");
+
+        return json_encode($states);
+
+    }
+
+    function autocomplete(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      
+      $mytime = Carbon::now();
+      $mytime = $mytime->toDateTimeString();
+      
+      $data = DB::table('purchases')
+        ->where('product', 'LIKE', "%{$query}%")
+        ->where('expiry_date', '>=', "{$mytime}")
+        ->where('quantity', '>=', "1")
+        ->where('vendu', "Non")
+        ->get();
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+        
+       $output .= '
+       <li data-id="'.$row->id.'" data-price="'.$row->cost_price.'" data-quantity="'.$row->quantity.'"><a href="#">'.$row->product.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 
     /**

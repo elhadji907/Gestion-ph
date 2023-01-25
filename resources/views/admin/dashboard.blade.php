@@ -150,6 +150,7 @@
                         <table id="sales-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
+                                    <th>Code</th>
                                     <th>Produit</th>
                                     <th>Qté</th>
                                     <th>Prix total (CFA)</th>
@@ -162,6 +163,7 @@
                                 <?php $i = 1; ?>
                                 @foreach ($sales as $sale)
                                     <tr>
+                                        <td>{!! $sale->code ?? '' !!}</td>
                                         <td>{!! $sale->product->purchase->product ?? '' !!}</td>
                                         <td>{!! $sale->quantity ?? '' !!}</td>
                                         <td>{{ number_format($sale->total_price, 2, '.', ' ') }}</td>
@@ -238,6 +240,9 @@
                 "lengthMenu": [
                     [5, 10, 25, 50, 100, -1],
                     [5, 10, 25, 50, 100, "Tout"]
+                ],
+                "order": [
+                    [0, 'DESC']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

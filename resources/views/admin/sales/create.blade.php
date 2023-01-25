@@ -132,7 +132,7 @@
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="">Prix de vente</label>
-                                <input type="number" placeholder="Entrer prix de vente"
+                                <input type="text" placeholder="Entrer prix de vente"
                                     class="form-control form-control-sm @error('total_price') is-invalid @enderror"
                                     name="total_price" id="total_price" value="0.00" min="0">
                                 @error('total_price')
@@ -146,6 +146,9 @@
                         <input type="hidden" placeholder="Entrer quantite"
                             class="form-control form-control-sm @error('quantite') is-invalid @enderror" name="quantite"
                             id="quantite" value="0.0" min="0">
+                        <input type="hidden" placeholder="ID"
+                            class="form-control form-control-sm @error('id_produit') is-invalid @enderror" name="id_produit"
+                            id="id_produit" value="0.0" min="0">
 
                             <input type="hidden" placeholder=""
                                                         class="form-control form-control-sm @error('quantite_insuffisante') is-invalid @enderror"
@@ -335,6 +338,7 @@
       <tr class="delete_add_more_item" id="delete_add_more_item">    
           <td>
             <input type="text" name="product[]" value="@{{ product }}" required placeholder="Nom du produit" class="form-control form-control-sm" readonly>
+            <input type="hidden" name="id_produit[]" value="@{{ id_produit }}" required placeholder="Nom du produit" class="form-control form-control-sm" readonly>
           </td>
             <input type="hidden" name="nom_client" value="@{{ nom_client }}">
             <input type="hidden" name="telephone_client" value="@{{ telephone_client }}">
@@ -361,6 +365,7 @@
                 var quantity = $("#quantity").val();
                 var total_price = $("#total_price").val();
                 var price = $("#price").val();
+                var id_produit = $("#id_produit").val();
                 var avoir_client = $("#avoir_client").val();
                 var quantite = $("#quantite").val();
                 var nom_client = $("#nom_client").val();
@@ -375,6 +380,7 @@
                     telephone_client: telephone_client,
                     total_price: total_price * quantity,
                     price: total_price,
+                    id_produit: id_produit,
                     avoir_client: avoir_client
                 }
                 var html = template(data);
@@ -434,6 +440,7 @@
                 $('#product').val($(this).text());
                 $('#total_price').val($(this).data("price"));
                 $('#quantite_res').val($(this).data("quantity"));
+                $('#id_produit').val($(this).data("id"));
                 $('#productList').fadeOut();
             });
 
