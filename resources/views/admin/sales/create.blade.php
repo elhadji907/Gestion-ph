@@ -286,9 +286,9 @@
                                                 <td>
                                                     {{--  <input type="number" id="avoir_ammount"
                                                             class="avoir_ammount form-control form-control-sm" value="0">  --}}
-                                                    <input id="amount" type="number" min="1" max="1000000"
+                                                    <input id="amount" type="number" min="0"
                                                         class="form-control form-control-sm" placeholder="Montant en chiffres"
-                                                        onchange="computeLoan()" required value="0.00">
+                                                        onchange="computeLoan()" value="0.00">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -343,7 +343,7 @@
         <script id="document-template" type="text/x-handlebars-template">
       <tr class="delete_add_more_item" id="delete_add_more_item">    
           <td>
-            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Nom du produit" class="form-control form-control-sm" readonly>
+            <input type="text" name="product[]" value="@{{ product }}" placeholder="Nom du produit" class="form-control form-control-sm" readonly>
             <input type="hidden" name="id_produit[]" value="@{{ id_produit }}" required placeholder="Nom du produit" class="form-control form-control-sm" readonly>
           </td>
             <input type="hidden" name="nom_client" value="@{{ nom_client }}">

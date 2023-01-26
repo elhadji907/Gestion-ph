@@ -40,7 +40,7 @@ class PurchaseController extends Controller
                 })
                 ->addColumn('category', function ($purchase) {
                     if (!empty($purchase->category)) {
-                        return $purchase->category->categorie;
+                        return $purchase->category->categorie ?? '';
                     }
                 })
                 ->addColumn('cost_price', function ($purchase) {
@@ -48,7 +48,7 @@ class PurchaseController extends Controller
                     return settings('app_currency', ''). ' '. $purchase->cost_price;
                 })
                 ->addColumn('supplier', function ($purchase) {
-                    return $purchase->supplier->name;
+                    return $purchase->supplier->name ?? '';
                 })
                 ->addColumn('expiry_date', function ($purchase) {
                     return date_format(date_create($purchase->expiry_date), 'd/m/Y');

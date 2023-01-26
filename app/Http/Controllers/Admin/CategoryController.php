@@ -78,7 +78,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             /* 'name'=>'required|max:100|unique:categories,name,NULL,id,deleted_at,NULL', */
-            'categories.*.categorie' => 'required'
+            'categories.*.categorie' => 'required|unique:categories,categorie'
         ]);
 
         $user_connect           =   Auth::user();

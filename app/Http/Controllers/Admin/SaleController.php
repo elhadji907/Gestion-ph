@@ -161,7 +161,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {      
         $this->validate($request, [
-            'product'=>'required',
+            'product.*'=>'required',
             'nom_client'=>'required|min:2|max:100',
             'telephone_client'=>'nullable|min:9|max:20',
             'quantity'=>'required|min:1'
@@ -251,7 +251,17 @@ class SaleController extends Controller
         
         for ($i=0; $i < $count; $i++) {
 
-        $purchase = Purchase::findOrFail($request->id_produit[$i]);
+            $purchase = Purchase::findOrFail($request->id_produit[$i]);
+            
+            for ($i=0; $i < $count; $i++) {            
+                $this->validate($request, [
+                    'quantite_insuffisante'=>'required'
+                ],
+                [
+                    'quantite_insuffisante.required' => 'La quantité du produit '.$purchase->product.' est insuffisante, il ne reste que '.$purchase->quantity.' en stock'
+                ]
+            );
+            }
         
         $purchase_id = $purchase->id;
 
@@ -286,6 +296,8 @@ class SaleController extends Controller
              * calcualting item's total price
             **/
             $total_price = ($request->quantity[$i]) * ($sold_product->price);
+
+            /* dd($total_price); */
             
             /* dd($request->total_price[$i]); */
 
@@ -330,11 +342,17 @@ class SaleController extends Controller
                 'quantite_insuffisante'=>'required'
             ],
             [
-                'quantite_insuffisante.required' => 'La quantité du produit est insuffisante'
+                'quantite_insuffisante.required' => 'La quantité du produit '.$purchase->product.' est insuffisante, il ne reste que '.$purchase->quantity.' en stock'
             ]
         );
         }
 
+              /* $this->validate($request, [
+                'quantity'=>'max:'.$purchase->quantity
+            ],
+            [
+                'quantity.max' => 'La quantité du produit '.$purchase->product.' est insuffisante, il ne reste que '.$purchase->quantity.' en stock'
+            ]); */
         /* return redirect()->route('sales.index')->with($notification); */
 
         if (isset($sale) && $new_quantity <=10) {

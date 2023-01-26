@@ -55,7 +55,7 @@
                                                     </h2>
                                                 </td>
                                                 <td>{{ $purchase->category->categorie }}</td>
-                                                <td>{{ $purchase->supplier->name }}</td>
+                                                <td>{{ $purchase->supplier->name ?? '' }}</td>
                                                 {{--  <td>{{AppSettings::get('app_currency', 'CFA')}}{{$purchase->cost_price}}</td>  --}}
                                                 <td>{{ $purchase->cost_price }}</td>
                                                 <td>{{ $purchase->quantity }}</td>
