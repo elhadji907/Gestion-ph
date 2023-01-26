@@ -151,7 +151,7 @@
                             <thead>
                                 <tr>
                                     <th>Code</th>
-                                    <th>Produit</th>
+                                    <th style="width:5%;">Produit</th>
                                     <th>Qté</th>
                                     <th>Prix total (CFA)</th>
                                     <th>Client</th>

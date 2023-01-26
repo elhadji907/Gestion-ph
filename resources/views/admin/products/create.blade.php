@@ -34,7 +34,7 @@
                         @csrf
                         <div class="service-fields mb-3">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Produit <span class="text-danger">*</span></label>
                                         <input type="text" placeholder="Nom produit"
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label>Prix de revient <span class="text-danger">*</span></label>
                                         <input type="number" placeholder="Entrer prix de vente"
@@ -60,7 +60,7 @@
                                             name="total_price" id="total_price" value="0.00" min="0" readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label>Quantité en stock <span class="text-danger">*</span></label>
                                         <input type="number" placeholder="Quantité en stock"
@@ -68,7 +68,7 @@
                                             name="quantity" id="quantity" value="0.00" min="0" readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label>Prix de vente <span class="text-danger">*</span></label>
                                         <input class="form-control form-control-sm @error('pice') is-invalid @enderror"
@@ -81,7 +81,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label>Rabais (%)<span class="text-danger">*</span></label>
                                         <input class="form-control form-control-sm" type="text" name="discount"

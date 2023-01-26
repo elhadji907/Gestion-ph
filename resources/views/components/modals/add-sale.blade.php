@@ -22,7 +22,7 @@
                 <form method="POST" action="{{ route('sales.store') }}">
                     @csrf
                     <div class="row form-row">
-                        <div class="col-3">
+                        <div class="col-12">
                             <div class="form-group">
                                 <label>Produit <span class="text-danger">*</span></label>
                                 {{--  <select class="select2 form-select form-control" name="product">
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Prix de vente </label>
                                 <input type="number" placeholder="Entrer prix de vente"
@@ -64,7 +64,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Quantité Restante</label>
                                 <input type="number" placeholder="Restant en stock"
@@ -77,7 +77,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Quantité achetée</label>
                                 <input type="number" placeholder="Quantité à acheter"
@@ -124,9 +124,13 @@
     </div>
 </div>
 <!-- /Ajouter Vente Modale -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="//code.jquery.com/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+{{--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">  --}}
+<link href="{{asset('assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+{{--  <script src="//code.jquery.com/jquery.js"></script>  --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+{{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>  --}}
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>  --}}
 <script type="text/javascript">
     $('#product').keyup(function() {

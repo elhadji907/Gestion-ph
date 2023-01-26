@@ -126,7 +126,8 @@ class PurchaseController extends Controller
         $purchase->notify(new StockAlertNotification($purchase, auth()->user()));
 
         $notifications = notify("L’achat a été ajouté");
-        return redirect()->route('purchases.index')->with($notifications);
+        /* return redirect()->route('purchases.index')->with($notifications); */
+        return back()->with($notifications);
     }
 
 

@@ -31,14 +31,14 @@
                         @csrf
                         <div class="service-fields mb-3">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Nom du médicament<span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="product"
                                             placeholder="Nom du médicament">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Catégorie <span class="text-danger">*</span></label>
                                         <select class="select2 form-select form-control" name="category">
@@ -49,7 +49,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Fournisseur <span class="text-danger">*</span></label>
                                         <select class="select2 form-select form-control" name="supplier">

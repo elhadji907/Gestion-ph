@@ -121,7 +121,7 @@
                     <td colspan="1" align="center"><b>{{ __('N°') }}</b>
 
                     </td>
-                    <td colspan="1" align="center"><b>{{ __('PRODUIT') }}</b>
+                    <td style="width:50%;" colspan="1" align="center"><b>{{ __('PRODUIT') }}</b>
 
                     </td>
                     <td colspan="1" align="center" align="center"><b>{{ __('QUANTITÉ') }}</b>

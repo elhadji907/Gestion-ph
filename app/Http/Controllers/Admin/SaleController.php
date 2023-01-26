@@ -385,39 +385,21 @@ class SaleController extends Controller
 
         $product = Product::find($request->product);
 
-        /* dd($sale->quantity);
-        dd($request->quantity); */
-        $sale_quantity = $sale->quantity;
         $new_quantity = $request->quantity;
         $purchase_quantity = $product->purchase->quantity;
 
         $user_connect           =   Auth::user();
         $updated_by  = strtolower($user_connect->name);
 
-        if ($sale_quantity == $new_quantity) {
-            /**
-             * update quantity of sold item from purchases
-            **/
-            $purchased_item = Purchase::find($product->purchase->id);
+        if ($request->quantity == $sale->quantity) {
+            $purchase = Purchase::find($product->purchase->id);
             if (!empty($request->quantity)) {
-                $new_quantity = ($purchased_item->quantity) - ($request->quantity);
+                $request->quantity = ($purchase->quantity) - ($request->quantity);
             }
-            $new_quantity = $sale->quantity;
+            $request->quantity = $sale->quantity;
             $notification = '';
-            if (!($new_quantity < 0)) {
-                /* $purchased_item->update([
-                    'quantity'=>$new_quantity,
-                ]); */
-    
-                  /**
-                 * calcualting item's total price
-                **/
-                /* if (!empty($request->quantity)) { */
+            if (!($request->quantity < 0)) {
                     $total_price = ($request->quantity) * ($product->price);
-               /*  } */
-
-                /* $total_price = $sale->total_price; */
-
                 $sale->update([
                     'product_id'            =>  $request->product,
                     'quantity'              =>  $request->quantity,
@@ -427,143 +409,79 @@ class SaleController extends Controller
                     'telephone_client'      =>  $request->telephone_client,
                 ]);
     
-                $notification = notify("".$purchased_item->product." a été mis à jour");
+                $notification = notify("".$purchase->product." a été mis à jour");
             }
-            /* if ($new_quantity <=1 && $new_quantity !=0) { */
-                // send notification
-               /*  $product = Purchase::where('quantity', '<=', 1)->first();
-                event(new PurchaseOutStock($product)); */
-                // end of notification
-            /*     $notification = notify("Produit mis à jour, mais est en rupture de stock!!!");
-            } */
             return redirect()->route('sales.index')->with($notification);
-        } elseif($sale_quantity > $new_quantity) {
+        } elseif($request->quantity < $sale->quantity) {
             $product = $sale->product;
-            $purchase = $product->purchase;            
-            $surplus = $new_quantity - $sale_quantity;
+            $purchase = $product->purchase;   
 
-            if ($purchase->quantity >= $surplus) {
-                /**
-                 * update quantity of sold item from purchases
-                **/
-                $purchased_item = Purchase::find($product->purchase->id);
-                
-                if (!empty($request->quantity)) {
-                    $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-                }
-    
-                /* $new_quantity = $sale->quantity; */
-                $new_quantity = $purchase_quantity - $surplus;
-    
-                $notification = '';
-                if (!($new_quantity < 0)) {
-    
-                    $purchased_item->update([
-                        'quantity'=>$new_quantity,
-                    ]);
-        
-                  /**
-                     * calcualting item's total price
-                    **/
-                    /* if (!empty($request->quantity)) { */
-                        $total_price = ($request->quantity) * ($product->price);
-                   /*  } */
-    
-                    /* $total_price = $sale->total_price; */
-    
-                    $purchase->update([
-                        'quantity'=>$new_quantity,
-                    ]);
-    
-                    $sale->update([
-                        'product_id'            =>  $request->product,
-                        'quantity'              =>  $request->quantity,
-                        'total_price'           =>  $total_price,
-                        'nom_client'            =>  $request->nom_client,
-                        'updated_by'            =>  $updated_by,
-                        'telephone_client'      =>  $request->telephone_client,
-                    ]);
-        
-                    $notification = notify("".$purchase->product." a été mis à jour");
-                }
-                /* if ($new_quantity <=1 && $new_quantity !=0) { */
-                    // send notification
-                    /* $product = Purchase::where('quantity', '<=', 1)->first();
-                    event(new PurchaseOutStock($product)); */
-                    // end of notification
-                    /* $notification = notify("Le produit est en rupture de stock!!!"); */
-                /* } */
-            } else {
-                $notification = notify("Impossible, il ne reste que ".$purchase->quantity." ".$purchase->product." en stock");
-            }
+            $quantity_remise = $sale->quantity - $request->quantity;
+
+            $nouvelle_quantity = $purchase->quantity + $quantity_remise;
+
             
+            $total_price = ($request->quantity) * ($product->price);
+
+            $purchase->update([
+                'quantity'=>$nouvelle_quantity,
+            ]);
+
+            $sale->update([
+                'product_id'            =>  $request->product,
+                'quantity'              =>  $request->quantity,
+                'total_price'           =>  $total_price,
+                'nom_client'            =>  $request->nom_client,
+                'updated_by'            =>  $updated_by,
+                'telephone_client'      =>  $request->telephone_client,
+            ]);
+            
+            $notification = notify("".$purchase->product." a été mis à jour");
+
             return redirect()->route('sales.index')->with($notification);
 
         } else {
+            
             $product = $sale->product;
-            $purchase = $product->purchase;            
-            $surplus = $sale_quantity - $new_quantity;
+            $purchase = $product->purchase;
 
-            if ($surplus < 0) {
-                $notification = notify("Impossible, il ne reste que ".$purchase->quantity." ".$purchase->product." en stock");
-            } else {        
-                /**
-                 * update quantity of sold item from purchases
-                **/
-                $purchased_item = Purchase::find($product->purchase->id);
+            $surplus = $request->quantity - $sale->quantity;
+            $surplusss = $request->quantity + $sale->quantity;
+
+            if ($surplus > $purchase->quantity) {
+                $this->validate($request, [
+                    'quantity'=>'min:'.$surplusss
+                ],
+                [
+                    'quantity.min' => 'Impossible de faire cette mise à jour car il reste en stock '.$purchase->quantity.' '.$purchase->product
+                ]
+            );
                 
-                if (!empty($request->quantity)) {
-                    $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-                }
+            } else {            
+                $nouvelle_quantity = $purchase->quantity - $surplus;
+                
+                $purchase = Purchase::find($product->purchase->id);
+                
+                $total_price = ($request->quantity) * ($product->price);
     
-                /* $new_quantity = $sale->quantity; */
-                $new_quantity = $purchase_quantity + $surplus;
+                $purchase->update([
+                    'quantity'=>$nouvelle_quantity,
+                ]);
     
-                $notification = '';
-                if (!($new_quantity < 0)) {
+                $sale->update([
+                    'product_id'            =>  $request->product,
+                    'quantity'              =>  $request->quantity,
+                    'total_price'           =>  $total_price,
+                    'nom_client'            =>  $request->nom_client,
+                    'updated_by'            =>  $updated_by,
+                    'telephone_client'      =>  $request->telephone_client,
+                ]);
     
-                    $purchased_item->update([
-                        'quantity'=>$new_quantity,
-                    ]);
-    
-                    /**
-                     * calcualting item's total price
-                    **/
-                    /* if (!empty($request->quantity)) { */
-                        $total_price = ($request->quantity) * ($product->price);
-                   /*  } */
-    
-                    /* $total_price = $sale->total_price; */
-    
-    
-                    $purchase->update([
-                        'quantity'=>$new_quantity,
-                    ]);
-    
-                    $sale->update([
-                        'product_id'            =>  $request->product,
-                        'quantity'              =>  $request->quantity,
-                        'total_price'           =>  $total_price,
-                        'nom_client'            =>  $request->nom_client,
-                        'updated_by'            =>  $updated_by,
-                        'telephone_client'      =>  $request->telephone_client,
-                    ]);
-        
-                    $notification = notify("".$purchase->product." a été mis à jour");
-                }
-                /* if ($new_quantity <=1 && $new_quantity !=0) { */
-                    // send notification
-                    /* $product = Purchase::where('quantity', '<=', 1)->first();
-                    event(new PurchaseOutStock($product)); */
-                    // end of notification
-                    /* $notification = notify("Le produit est en rupture de stock!!!");
-                } */
                 $notification = notify("".$purchase->product." a été mis à jour");
-                
-            }
+            }           
             return redirect()->route('sales.index')->with($notification);
             }
-   
+
     }
 
 

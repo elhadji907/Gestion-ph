@@ -114,13 +114,13 @@
                                     name="avoir_client" id="avoir_client" value="0.00" min="0">
                             </div>
                         </div>  --}}
-                        <div class="col-lg-4">
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="">Nom produit</label>
                                 <input type="text" placeholder="Nom produit"
                                     class="form-control form-control-sm @error('product') is-invalid @enderror"
                                     name="product" id="product" value="">
-                                <div id="productList">
+                                <div class="col-lg-12" id="productList">
                                 </div>
                                 @error('product')
                                     <span class="invalid-feedback" role="alert">
@@ -129,7 +129,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Prix de vente</label>
                                 <input type="text" placeholder="Entrer prix de vente"
@@ -154,7 +154,7 @@
                                                         class="form-control form-control-sm @error('quantite_insuffisante') is-invalid @enderror"
                                                         name="quantite_insuffisante" id="quantite_insuffisante" value="">
 
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Quantité Restante</label>
                                 <input type="number" placeholder="Restant en stock"
@@ -168,7 +168,7 @@
                                 {{--  <font style="color:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
                             </div>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="">Quantité achetée</label>
                                 <input type="number" placeholder="Quantité à acheter"
@@ -195,11 +195,17 @@
                                 @enderror
                             </div>
                         </div>  --}}
-                        <div class="col-md-2" style="margin-top:32px;">
+                       {{--   <div class="col-md-2" style="margin-top:32px;">
                             <div class="form-group">
                                 <button id="addMore" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter au panier</button>
                             </div>
-                        </div>
+                        </div>  --}}
+                        
+                        
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <button id="addMore" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter au panier</button>
+                    </div>
+
                     </div>
                 </div>
             </div>
