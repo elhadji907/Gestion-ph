@@ -28,7 +28,7 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'ventes';
+        /* $title = 'ventes';
         if ($request->ajax()) {
             $sales = Sale::latest();
             return DataTables::of($sales)
@@ -51,26 +51,16 @@ class SaleController extends Controller
                     ->addColumn('price', function ($sale) {
                         return settings('app_currency', '').' '. number_format(($sale->product->price ?? ''), 2, '.', ' ');
                     })
-                   /*  ->addColumn('code', function ($sale) {
-                        return settings('app_currency', '').' '. $sale->code;
-                    }) */
                     ->addColumn('date', function ($row) {
-                        /* return date_format(date_create($row->created_at), 'd/m/Y à H\h:i'); */
                         return date_format(date_create($row->created_at), 'd/m/Y');
                     })
-                   /*  ->addColumn('nom_client',function($row){
-                        return settings('app_currency','').' '. $sale->nom_client;
-                    })
-                    ->addColumn('telephone_client',function($row){
-                        return settings('app_currency','').' '. $sale->telephone_client;
-                    }) */
                     ->addColumn('action', function ($row) {
                         $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn" title="Modifier"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';
                         $showbtn = '<a href="'.route("sales.facture", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-sm bg-info-light"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"  title="Supprimer"><button class="btn btn-sm bg-danger-light"><i class="fas fa-trash"></i></button></a>';
-                        /* if (!auth()->user()->hasPermissionTo('edit-sale')) {
+                        if (!auth()->user()->hasPermissionTo('edit-sale')) {
                             $editbtn = '';
-                        } */
+                        }
                         if (!auth()->user()->hasPermissionTo('destroy-sale')) {
                             $deletebtn = '';
                         }
@@ -79,13 +69,94 @@ class SaleController extends Controller
                     })
                     ->rawColumns(['product','action'])
                     ->make(true);
-        }
-        $products = Product::get();
+        } */
+
+        $title = 'Ventes';
         $sales = Sale::get();
+        foreach ($sales as $key => $sale) {
+            if ($request->ajax()) {
+                return DataTables::of($sales)
+                ->addColumn('product', function ($sale) {
+                    $image = '';
+                    if (!empty($sale->product)) {
+                        $image = null;
+                        if (!empty($sale->product->purchase->image)) {
+                            $image = '<span class="avatar avatar-sm mr-2">
+                            <img class="avatar-img" src="'.asset("storage/purchases/".$sale->product->purchase->image).'" alt="image">
+                            </span>';
+                        }
+                        return $sale->product->purchase->product. ' ' . $image;
+                    }
+                })
+                
+                ->addColumn('total_price', function ($sale) {
+                    return settings('app_currency', '').' '. number_format(($sale->total_price ?? ''), 2, '.', ' ');
+                })
+                ->addColumn('price', function ($sale) {
+                    return settings('app_currency', '').' '. number_format(($sale->product->price ?? ''), 2, '.', ' ');
+                })
+                ->addColumn('date', function ($row) {
+                    return date_format(date_create($row->created_at), 'd/m/Y');
+                })
+                ->addColumn('action', function ($row) {
+                    $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn" title="Modifier"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';
+                    $showbtn = '<a href="'.route("sales.facture", $row->id).'" class="showbtn" target="_blank" title="Imprimer facture"><button class="btn btn-sm bg-info-light"><i class="fa fa-print" aria-hidden="true"></i></button></a>';
+                    $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"  title="Supprimer"><button class="btn btn-sm bg-danger-light"><i class="fas fa-trash"></i></button></a>';
+                    if (!auth()->user()->hasPermissionTo('edit-sale')) {
+                        $editbtn = '';
+                    }
+                    if (!auth()->user()->hasPermissionTo('destroy-sale')) {
+                        $deletebtn = '';
+                    }
+                    $btn = $editbtn.' '.$showbtn.' '.$deletebtn;
+                    return $btn;
+                })
+
+                   /*  ->addColumn('category', function ($product) {
+                        $category = null;
+                        if (!empty($product->purchase->category)) {
+                            $category = $product->purchase->category->categorie;
+                        }
+                        return $category;
+                    })
+
+                    ->addColumn('price', function ($product) {
+                        return settings('app_currency', '').' '. $product->price ?? '';
+                    })
+                    ->addColumn('quantity', function ($product) {
+                        if (!empty($product)) {
+                            return $product->purchase->quantity;
+                        }
+                    })
+                    ->addColumn('discount', function ($product) {
+                        if (!empty($product)) {
+                            return $product->discount;
+                        }
+                    })
+                    ->addColumn('expiry_date', function ($product) {
+                        if (!empty($product)) {
+                            return date_format(date_create($product->purchase->expiry_date), 'd/m/Y');
+                        }
+                    }) */
+                  /*   ->addColumn('action', function ($row) {
+                        $editbtn = '<a href="'.route("products.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('products.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
+                        if (!auth()->user()->hasPermissionTo('edit-product')) {
+                            $editbtn = '';
+                        }
+                        if (!auth()->user()->hasPermissionTo('destroy-purchase')) {
+                            $deletebtn = '';
+                        }
+                        $btn = $editbtn.' '.$deletebtn;
+                        return $btn;
+                    }) */
+                    ->rawColumns(['product','action'])
+                    ->make(true);
+            }
+        }
+
         return view('admin.sales.index', compact(
-            'title',
-            'sales',
-            'products'
+            'title'
         ));
     }
 
@@ -252,8 +323,24 @@ class SaleController extends Controller
         for ($i=0; $i < $count; $i++) {
 
             $purchase = Purchase::findOrFail($request->id_produit[$i]);
+
+            /* dd(($request->quantity[$i])); */
+
+            /* dd($purchase->quantity); */
+
+            if ($request->quantity[$i] > $purchase->quantity) {
+                $this->validate($request, [
+                    'quantity'=>'min:'.$purchase->quantity
+                ],
+                [
+                    'quantity.min' => 'Impossible de vendre ce produit car il ne reste en stock que '.$purchase->quantity.' '.$purchase->product
+                ]
+            );
+                
+            }
+
             
-            for ($i=0; $i < $count; $i++) {            
+            /* for ($i=0; $i < $count; $i++) {            
                 $this->validate($request, [
                     'quantite_insuffisante'=>'required'
                 ],
@@ -261,7 +348,7 @@ class SaleController extends Controller
                     'quantite_insuffisante.required' => 'La quantité du produit '.$purchase->product.' est insuffisante, il ne reste que '.$purchase->quantity.' en stock'
                 ]
             );
-            }
+            } */
         
         $purchase_id = $purchase->id;
 
@@ -339,10 +426,10 @@ class SaleController extends Controller
             //$sale->notify(new SaleAlertNotification($sale, auth()->user()));
             $notification = notify("Le produit est en rupture de stock!!!");
             $this->validate($request, [
-                'quantite_insuffisante'=>'required'
+                'quantity'=>'required'
             ],
             [
-                'quantite_insuffisante.required' => 'La quantité du produit '.$purchase->product.' est insuffisante, il ne reste que '.$purchase->quantity.' en stock'
+                'quantity.required' => 'La quantité du produit '.$purchase->product.' est insuffisante, il ne reste que '.$purchase->quantity.' en stock'
             ]
         );
         }
@@ -471,7 +558,7 @@ class SaleController extends Controller
                     'quantity'=>'min:'.$surplusss
                 ],
                 [
-                    'quantity.min' => 'Impossible de faire cette mise à jour car il reste en stock '.$purchase->quantity.' '.$purchase->product
+                    'quantity.min' => 'Impossible ! il reste en stock : '.$purchase->quantity.' ('.$purchase->product.')'
                 ]
             );
                 

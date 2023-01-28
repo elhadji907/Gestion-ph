@@ -133,6 +133,9 @@
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "Tout"]
                 ],
+                "order": [
+                    [0, 'DESC']
+                ],
                 language: {
                     "sProcessing": "Traitement en cours...",
                     "sSearch": "Rechercher&nbsp;:",
