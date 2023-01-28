@@ -17,6 +17,11 @@ class Product extends Model
 
     public function purchase()
     {
-        return $this->belongsTo(Purchase::class);
+        return $this->belongsTo(Purchase::class)->latest();
     }
+
+    public function sales()
+	{
+		return $this->hasMany(Sale::class);
+	}
 }

@@ -22,6 +22,8 @@ use App\Http\Controllers\AutocompleteController;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\ProductAjaxController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -125,3 +127,6 @@ Route::post('/producte/autocomplete', [ProductController::class, 'autocomplete']
 /* Route::get('/purchases/product/{id}', [ProductController::class, 'getStates'])->name('product.getStates'); */
 
 Route::get('states/get/{id}', 'ProductController@getStates');
+
+
+Route::resource('ajaxproducts',ProductAjaxController::class);

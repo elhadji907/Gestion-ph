@@ -46,10 +46,10 @@ class SaleController extends Controller
                         }
                     })
                     ->addColumn('total_price', function ($sale) {
-                        return settings('app_currency', '').' '. number_format(($sale->total_price), 2, '.', ' ');
+                        return settings('app_currency', '').' '. number_format(($sale->total_price ?? ''), 2, '.', ' ');
                     })
                     ->addColumn('price', function ($sale) {
-                        return settings('app_currency', '').' '. number_format(($sale->product->price), 2, '.', ' ');
+                        return settings('app_currency', '').' '. number_format(($sale->product->price ?? ''), 2, '.', ' ');
                     })
                    /*  ->addColumn('code', function ($sale) {
                         return settings('app_currency', '').' '. $sale->code;
@@ -603,8 +603,8 @@ class SaleController extends Controller
     public function destroy(Request $request)
     {
         $sale = Sale::findOrFail($request->id);
-        $product = Product::findOrFail($sale->product_id);
-        $purchase = Purchase::findOrFail($product->purchase_id);
+        $product = $sale->product;
+        $purchase = $product->purchase;
         
         $new_quantity = $sale->quantity + $purchase->quantity;
 

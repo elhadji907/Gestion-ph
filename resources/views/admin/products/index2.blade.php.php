@@ -14,7 +14,7 @@
         </ul>
     </div>
     <div class="col-sm-5 col">
-        <a href="{{ route('products.create') }}" class="btn btn-primary float-right mt-2">Ajouter</a>
+        <a href="{{ route('products.create') }}" class="btn btn-primary float-right mt-2">Mettre un produit en vendre</a>
     </div>
 @endpush
 
@@ -22,16 +22,15 @@
     <div class="row">
         <div class="col-md-12">
 
-            <!-- Recent Orders -->
+            <!-- Produits -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="product-table"
-                            class="datatable table table-striped table-bordered table-hover table-center mb-0">
+                        <table id="product-table" class="datatable table table-striped" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th width="20%">Produit</th>
-                                    {{--  <th>Catégorie</th>  --}}
+                                    <th style="width: 20%">Produit</th>
+                                    <th>Catégorie</th>
                                     <th>Prix de vente (CFA)</th>
                                     <th>Qté restante</th>
                                     <th>Rabais (%)</th>
@@ -41,38 +40,24 @@
                             </thead>
                             <tbody>
 
-
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <!-- /Expired Products -->
+            <!-- /Products -->
 
         </div>
+        <style>
+            table {
+                table-layout: auto;
+                width: 100%;
+            }
+        </style>
     </div>
 @endsection
 
 @push('page-js')
-    {{--  <script type="text/javascript">
-    $(document).ready(function() {
-        var table = $('#product-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{route('expired')}}",
-            columns: [
-                {data: 'product', name: 'product'},
-                {data: 'category', name: 'category'},
-                {data: 'price', name: 'price'},
-                {data: 'quantity', name: 'quantity'},
-                {data: 'discount', name: 'discount'},
-				{data: 'expiry_date', name: 'expiry_date'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
-        });
-        
-    });
-</script>   --}}
     <script>
         $(document).ready(function() {
             var table = $('#product-table').DataTable({
@@ -116,10 +101,10 @@
                         data: 'product',
                         name: 'product'
                     },
-                  {{--    {
+                    {
                         data: 'category',
                         name: 'category'
-                    },  --}}
+                    },
                     {
                         data: 'price',
                         name: 'price'
@@ -142,6 +127,39 @@
                         orderable: false,
                         searchable: false
                     },
+                ],
+                "columnDefs": [{
+                        "width": "20%",
+                        "targets": 0
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 1
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 2
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 3
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 4
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 5
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 6
+                    },
+                    {
+                        "orderable": false,
+                        "targets": [0, 6]
+                    } // Can't order
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

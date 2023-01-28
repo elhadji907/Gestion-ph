@@ -31,7 +31,7 @@
                                 <tr>
                                     <th>Médicament</th>
                                     <th>Catégorie</th>
-                                    <th width="10%">Fournisseur</th>
+                                    {{--  <th width="10%">Fournisseur</th>  --}}
                                     <th>Prix d’achat (CFA)</th>
                                     <th>Qté</th>
                                     <th>Date d’expiration</th>
@@ -95,7 +95,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [6, 'asc']
+                    [5, 'ASC']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
@@ -134,10 +134,10 @@
                         data: 'category',
                         name: 'category'
                     },
-                    {
+                    {{--  {
                         data: 'supplier',
                         name: 'supplier'
-                    },
+                    },  --}}
                     {
                         data: 'cost_price',
                         name: 'cost_price'

@@ -24,10 +24,9 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'Stock';
+        /* $title = 'Stock';
         if ($request->ajax()) {
             $purchases = Purchase::latest();
-            //$purchase->notify(new StockAlertNotification($purchase));
             return DataTables::of($purchases)
                 ->addColumn('product', function ($purchase) {
                     $image = '';
@@ -44,11 +43,13 @@ class PurchaseController extends Controller
                     }
                 })
                 ->addColumn('cost_price', function ($purchase) {
-                    /* return settings('app_currency','$'). ' '. $purchase->cost_price; */
                     return settings('app_currency', ''). ' '. $purchase->cost_price;
                 })
                 ->addColumn('supplier', function ($purchase) {
                     return $purchase->supplier->name ?? '';
+                })
+                ->addColumn('quantity', function ($purchase) {
+                    return $purchase->quantity ?? '';
                 })
                 ->addColumn('expiry_date', function ($purchase) {
                     return date_format(date_create($purchase->expiry_date), 'd/m/Y');
@@ -67,7 +68,76 @@ class PurchaseController extends Controller
                 })
                 ->rawColumns(['product','action'])
                 ->make(true);
+        } */
+
+        
+        $title = 'Stock';
+        $products = Purchase::get();
+
+        foreach ($products as $key => $product) {
+            //dd($product);
+            if ($request->ajax()) {
+                //$products = Product::latest();
+                return DataTables::of($products)
+                    ->addColumn('product', function ($product) {
+                        $image = '';
+                        if (!empty($product)) {
+                            $image = null;
+                            if (!empty($product->image)) {
+                                $image = '<span class="avatar avatar-sm mr-2">
+                            <img class="avatar-img" src="'.asset("storage/purchases/".$product->image).'" alt="image">
+                            </span>';
+                            }
+                            return $product->product. ' ' . $image;
+                        }
+                    })
+
+                    ->addColumn('category', function ($product) {
+                        $category = null;
+                        if (!empty($product->category)) {
+                            $category = $product->category->categorie;
+                        }
+                        return $category;
+                    })
+                    ->addColumn('supplier', function ($purchase) {
+                        return $purchase->supplier->name ?? '';
+                    })
+                    ->addColumn('price', function ($product) {
+                        /* return settings('app_currency','CFA').' '. $product->price; */
+                        return settings('app_currency', '').' '. $product->cost_price;
+                    })
+                    ->addColumn('quantity', function ($product) {
+                        if (!empty($product)) {
+                            return $product->quantity;
+                        }
+                    })
+                    ->addColumn('discount', function ($product) {
+                        if (!empty($product)) {
+                            return $product->discount;
+                        }
+                    })
+                    ->addColumn('expiry_date', function ($product) {
+                        if (!empty($product)) {
+                            return date_format(date_create($product->expiry_date), 'd/m/Y');
+                        }
+                    })
+                    ->addColumn('action', function ($row) {
+                        $editbtn = '<a href="'.route("purchases.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('purchases.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
+                        if (!auth()->user()->hasPermissionTo('edit-product')) {
+                            $editbtn = '';
+                        }
+                        if (!auth()->user()->hasPermissionTo('destroy-purchase')) {
+                            $deletebtn = '';
+                        }
+                        $btn = $editbtn.' '.$deletebtn;
+                        return $btn;
+                    })
+                    ->rawColumns(['product','action'])
+                    ->make(true);
+            }
         }
+
         return view('admin.purchases.index', compact(
             'title'
         ));

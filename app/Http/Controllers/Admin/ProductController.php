@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'Produits';
+       /*  $title = 'Produits';
         if ($request->ajax()) {
             $products = Product::latest();
             return DataTables::of($products)
@@ -47,7 +47,6 @@ class ProductController extends Controller
                     return $category;
                 })
                 ->addColumn('price', function ($product) {
-                    /* return settings('app_currency','CFA').' '. $product->price; */
                     return settings('app_currency', '').' '. $product->price;
                 })
                 ->addColumn('quantity', function ($product) {
@@ -65,6 +64,7 @@ class ProductController extends Controller
                         return $product->purchase->vendu;
                     }
                 })
+                ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editbtn = '<a href="'.route("products.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
                     $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('products.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
@@ -79,6 +79,79 @@ class ProductController extends Controller
                 })
                 ->rawColumns(['product','action'])
                 ->make(true);
+        }
+        return view('admin.products.index', compact(
+            'title'
+        )); */
+
+        
+
+        $title = 'Produits';
+        /* $products = Product::whereDate('expiry_date', '<=', Carbon::now())->where('quantity', '>', '0')->get(); */
+        $products = Product::get();
+
+        /* dd($products); */
+
+        foreach ($products as $key => $product) {
+            //dd($product);
+            if ($request->ajax()) {
+                //$products = Product::latest();
+                return DataTables::of($products)
+                ->addColumn('product', function ($product) {
+                    $image = '';
+                    if (!empty($product->purchase)) {
+                        $image = null;
+                        if (!empty($product->purchase->image)) {
+                            $image = '<span class="avatar avatar-sm mr-2">
+                            <img class="avatar-img" src="'.asset("storage/purchases/".$product->purchase->image).'" alt="image">
+                            </span>';
+                        }
+                        return $product->purchase->product. ' ' . $image;
+                    }
+                })
+
+                    ->addColumn('category', function ($product) {
+                        $category = null;
+                        if (!empty($product->purchase->category)) {
+                            $category = $product->purchase->category->categorie;
+                        }
+                        return $category;
+                    })
+
+                    ->addColumn('price', function ($product) {
+                        /* return settings('app_currency','CFA').' '. $product->price; */
+                        return settings('app_currency', '').' '. $product->price ?? '';
+                    })
+                    ->addColumn('quantity', function ($product) {
+                        if (!empty($product)) {
+                            return $product->purchase->quantity;
+                        }
+                    })
+                    ->addColumn('discount', function ($product) {
+                        if (!empty($product)) {
+                            return $product->discount;
+                        }
+                    })
+                    ->addColumn('expiry_date', function ($product) {
+                        if (!empty($product)) {
+                            return date_format(date_create($product->purchase->expiry_date), 'd/m/Y');
+                        }
+                    })
+                    ->addColumn('action', function ($row) {
+                        $editbtn = '<a href="'.route("products.edit", $row->id).'" class="editbtn"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('products.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>';
+                        if (!auth()->user()->hasPermissionTo('edit-product')) {
+                            $editbtn = '';
+                        }
+                        if (!auth()->user()->hasPermissionTo('destroy-purchase')) {
+                            $deletebtn = '';
+                        }
+                        $btn = $editbtn.' '.$deletebtn;
+                        return $btn;
+                    })
+                    ->rawColumns(['product','action'])
+                    ->make(true);
+            }
         }
         return view('admin.products.index', compact(
             'title'
@@ -448,6 +521,25 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-        return Product::findOrFail($request->id)->delete();
+        $title = 'Produits';
+        $product = Product::findOrFail($request->id);
+        $purchase = $product->purchase;
+
+        foreach ($product->sales as $sale) {
+            if (isset($sale)) {
+                $notification = notify("Le produit ne peut pas être supprimé");
+                return view('admin.products.index', compact(
+                    'title'
+                ))->with($notification);
+            } else {               
+              return Product::findOrFail($request->id)->delete();
+            }
+         }
+        /*  foreach ($product->sales as $key => $sale) {
+            $notification = notify("Le produit ne peut pas être supprimé");
+            return view('admin.products.index', compact(
+                'title'
+            ));
+         } */
     }
 }
