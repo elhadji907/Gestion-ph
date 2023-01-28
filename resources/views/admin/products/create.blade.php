@@ -71,7 +71,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label>Prix de vente <span class="text-danger">*</span></label>
-                                        <input class="form-control form-control-sm @error('pice') is-invalid @enderror"
+                                        <input class="form-control form-control-sm @error('price') is-invalid @enderror"
                                             type="text" name="price" value="{{ old('price') }}"
                                             placeholder="Prix de vente du médicament">
                                         @error('price')

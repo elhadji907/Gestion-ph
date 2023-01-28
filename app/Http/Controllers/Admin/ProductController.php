@@ -189,7 +189,7 @@ class ProductController extends Controller
             'description'=>'nullable|max:255',
         ]);
         $price = $request->price;
-        if ($request->discount >0) {
+        if ($request->discount > 0) {
             /* $price = $request->discount * $request->price; */
             $price = $request->price - ($request->price * ($request->discount/100));
         }
@@ -197,21 +197,35 @@ class ProductController extends Controller
         //pour le menu select
         /* $purchase = Purchase::findOrFail($request->product); */
         //pour le menu autocomplete
+        
         $purchase = Purchase::findOrFail($request->id_product);
 
-        $purchase->update([
-            'vendu'=>"Oui",
-        ]);
+        /* dd($purchase->cost_price); */
 
-        Product::create([
-            'purchase_id'=>$request->id_product,
-            'price'=>$price,
-            'discount'=>$request->discount,
-            'description'=>$request->description,
-        ]);
-
-
-        $notification = notify("Le produit a été ajouté");
+        if ($purchase->cost_price >= $request->price) {           
+            $this->validate($request, [
+                'price'=>'min:'.$purchase->cost_price
+            ],
+            [
+                'price.min' => 'Attention ! le prix de vente doit être supérieur au prix d\'achat'
+            ]
+        );
+        } else {
+        
+            $purchase->update([
+                'vendu'=>"Oui",
+            ]);
+    
+            Product::create([
+                'purchase_id'=>$request->id_product,
+                'price'=>$price,
+                'discount'=>$request->discount,
+                'description'=>$request->description,
+            ]);
+    
+    
+            $notification = notify("Produit mis en vente");
+        }
         return back()->with($notification);
     }
 
@@ -253,11 +267,18 @@ class ProductController extends Controller
         if ($request->discount > 0) {
             /* $price = $request->discount * $request->price; */            
             $price = $request->price - ($request->price * ($request->discount/100));
+            $product->update([
+                'discount'=>$request->discount,
+            ]);
+        } else {
+            $product->update([
+                'discount'=>$request->discounte,
+            ]);
         }
+
         $product->update([
              'purchase_id'=>$request->product,
              'price'=>$price,
-             'discount'=>$request->discounte,
              'description'=>$request->description,
          ]);
         $notification = notify('Le produit a été mis à jour');
