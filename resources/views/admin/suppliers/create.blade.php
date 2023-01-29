@@ -13,6 +13,12 @@
 		<li class="breadcrumb-item active">Ajouter un fournisseur</li>
 	</ul>
 </div>
+<div class="container row justify-content-center pt-5">
+	<div class="col-lg-12">
+		<a class="btn btn-outline-primary" href="{{ route('suppliers.index') }}"> <i
+				class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+	</div>
+</div>
 @endpush
 
 @section('content')

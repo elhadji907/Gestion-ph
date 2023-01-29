@@ -542,7 +542,10 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-        $title = 'Produits';
+
+        return Product::findOrFail($request->id)->delete();
+
+       /*  $title = 'Produits';
         $product = Product::findOrFail($request->id);
         $purchase = $product->purchase;
 
@@ -555,7 +558,7 @@ class ProductController extends Controller
             } else {               
               return Product::findOrFail($request->id)->delete();
             }
-         }
+         } */
         /*  foreach ($product->sales as $key => $sale) {
             $notification = notify("Le produit ne peut pas être supprimé");
             return view('admin.products.index', compact(

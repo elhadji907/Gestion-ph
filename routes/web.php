@@ -60,6 +60,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::resource('sales',SaleController::class)->except('show');
     Route::get('sales/reports',[SaleController::class,'reports'])->name('sales.report');
     Route::get('sales/facture/{id}',[SaleController::class,'facture'])->name('sales.facture');
+    Route::get('suppliers/supplier/{id}',[SupplierController::class,'supplier'])->name('suppliers.supplier');
     Route::post('sales/reports',[SaleController::class,'generateReport']);
 
     Route::get('backup', [BackupController::class,'index'])->name('backup.index');
