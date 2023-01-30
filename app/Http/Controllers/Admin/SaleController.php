@@ -298,6 +298,7 @@ class SaleController extends Controller
                  * calcualting item's total price
                 **/
                 $total_price = ($request->quantity) * ($request->price);
+                $total_price = $total_price + ($total_price*$request->tva_app/100);
     
                 $sale = Sale::create([
                     'product_id'          =>    $product_id,
@@ -308,6 +309,7 @@ class SaleController extends Controller
                     'nom_client'          =>    $request->nom_client,
                     'name'                =>    $request->product,
                     'telephone_client'    =>    $request->telephone_client,
+                    'item'                =>    $request->tva_app,
                     'created_by'          =>    $created_by,
                     'updated_by'          =>    $updated_by
                 ]);

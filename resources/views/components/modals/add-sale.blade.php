@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Prix de vente </label>
                                 <input type="number" placeholder="Entrer prix de vente"
@@ -64,7 +64,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Quantité Restante</label>
                                 <input type="number" placeholder="Restant en stock"
@@ -77,7 +77,14 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>TVA (%)<span class="text-danger">*</span></label>
+                                <input class="form-control form-control-sm" type="text" id="tva_app" name="tva_app"
+                                    value="0" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Quantité achetée</label>
                                 <input type="number" placeholder="Quantité à acheter"
@@ -156,6 +163,7 @@
         $('#product').val($(this).text());
         $('#price').val($(this).data("price"));
         $('#quantite').val($(this).data("quantity"));
+        $('#tva_app').val($(this).data("tva_app"));
         $('#id_producte').val($(this).data("id"));
         $('#productList').fadeOut();
     });
