@@ -20,7 +20,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="card">
                 <div class="card-header">
                     <h4><i class="fas fa-table"></i>
@@ -84,7 +84,7 @@
                 </form>
             </div>
         </div>  --}}
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <div class="card">
                 <div class="card-header">
                     <h4><i class="fas fa-table"></i>
@@ -96,7 +96,8 @@
                             class="datatable table table-striped table-bordered table-hover table-center mb-0">
                             <thead>
                                 <tr style="boder:1px solid black;">
-                                    <th>Nom</th>
+                                    <th>Catégorie</th>
+                                    <th>Qté</th>
                                     <th style="width:10%;">Date</th>
                                     <th class="text-center action-btn-sm" style="width:7%;"></th>
                                 </tr>
@@ -226,6 +227,10 @@
                         name: 'categorie'
                     },
                     {
+                        data: 'count',
+                        name: 'count'
+                    },
+                    {
                         data: 'created_at',
                         name: 'created_at'
                     },
@@ -241,7 +246,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [1, 'desc']
+                    [1, 'DESC']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

@@ -175,13 +175,16 @@ class PurchaseController extends Controller
             'quantity'=>'required|min:1',
             'expiry_date'=>'required',
             'supplier'=>'required',
+            'tva'=>'nullable|numeric',
             'image'=>'file|image|mimes:jpg,jpeg,png,gif',
         ]);
+        /* dd($request->tva); */
         $imageName = null;
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('storage/purchases'), $imageName);
         }
+
         $purchase = Purchase::create([
             'product'=>$request->product,
             'category_id'=>$request->category,
@@ -191,6 +194,7 @@ class PurchaseController extends Controller
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
             'vendu'=>"Non",
+            'item'=>$request->tva,
         ]);
 
         $purchase->notify(new StockAlertNotification($purchase, auth()->user()));
@@ -243,6 +247,7 @@ class PurchaseController extends Controller
             'quantity'=>'required|min:1',
             'expiry_date'=>'required',
             'supplier'=>'required',
+            'tva'=>'nullable|numeric',
             'image'=>'file|image|mimes:jpg,jpeg,png,gif',
         ]);
         
@@ -257,6 +262,7 @@ class PurchaseController extends Controller
             'supplier_id'=>$request->supplier,
             'cost_price'=>$request->cost_price,
             'quantity'=>$request->quantity,
+            'item'=>$request->tva,
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
         ]);

@@ -30,13 +30,13 @@
                             <table id="supplier-table" class="table table-hover table-center mb-0">
                                 <thead>
                                     <tr>
-                                        {{--  <th>Produit</th>  --}}
-                                        <th>Nom</th>
+                                        <th>Fournisseur</th>
+                                        <th>Qté</th>
+                                        <th>Montant</th>
                                         <th>Téléphone</th>
-                                        {{--  <th>Email</th>  --}}
                                         <th>Addresse</th>
-                                        {{--  <th>Compagnie</th>  --}}
-                                        <th width="8%" class="action-btn">Action</th>
+                                        <th>Email</th>
+                                        <th width="8%" class="action-btn"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,7 +116,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [2, 'DESC']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
@@ -148,18 +148,18 @@
                     }
                 },
                 columns: [
-                  {{--    {
-                        data: 'product',
-                        name: 'product'
-                    },  --}}
                     {
                         data: 'name',
                         name: 'name'
                     },
-                  {{--    {
-                        data: 'email',
-                        name: 'email'
-                    },  --}}
+                    {
+                        data: 'count',
+                        name: 'count'
+                    },
+                    {
+                        data: 'somme',
+                        name: 'somme'
+                    },
                     {
                         data: 'phone',
                         name: 'phone'
@@ -168,10 +168,10 @@
                         data: 'address',
                         name: 'address'
                     },
-                   {{--   {
-                        data: 'company',
-                        name: 'company'
-                    },  --}}
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
                     {
                         data: 'action',
                         name: 'action',

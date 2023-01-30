@@ -129,7 +129,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Prix de vente</label>
                                 <input type="text" placeholder="Entrer prix de vente"
@@ -154,7 +154,7 @@
                                                         class="form-control form-control-sm @error('quantite_insuffisante') is-invalid @enderror"
                                                         name="quantite_insuffisante" id="quantite_insuffisante" value="">
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Quantité Restante</label>
                                 <input type="number" placeholder="Restant en stock"
@@ -168,7 +168,14 @@
                                 {{--  <font style="color:red"> {{ $errors->has('total_price') ? $errors->first('total_price') : '' }} </font>  --}}
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>TVA (%)<span class="text-danger">*</span></label>
+                                <input class="form-control form-control-sm" type="text" id="tva_app" name="tva_app"
+                                    value="0" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="">Quantité achetée</label>
                                 <input type="number" placeholder="Quantité à acheter"
@@ -243,6 +250,7 @@
                                             <tr>
                                                 <th style="width: 30%">Produit</th>
                                                 <th>Quantité</th>
+                                                <th>TVA (%)</th>
                                                 <th>Prix Unitaire (PU)</th>
                                                 <th>Prix Total</th>
                                                 <th>#</th>
@@ -352,6 +360,9 @@
               <input type="text" class="quantity form-control form-control-sm" name="quantity[]" value="@{{ quantity }}" required min="1" placeholder="la quantité achetée" readonly>
             </td>
             <td>
+              <input type="text" class="tva_app form-control form-control-sm" name="tva_app[]" value="@{{ tva_app }}" required min="0" placeholder="la tva (%)" readonly>
+            </td>
+            <td>
             <input type="text" class="price form-control form-control-sm" name="price[]" value="@{{ price }}" required min="1" placeholder="le prix de vente" readonly>
           </td>
             <td>
@@ -369,6 +380,7 @@
                 $('.table').show();
                 var product = $("#product").val();
                 var quantity = $("#quantity").val();
+                var tva_app = $("#tva_app").val();
                 var total_price = $("#total_price").val();
                 var price = $("#price").val();
                 var id_produit = $("#id_produit").val();
@@ -381,10 +393,11 @@
                 var data = {
                     product: product,
                     quantity: quantity,
+                    tva_app: tva_app,
                     quantite: quantite,
                     nom_client: nom_client,
                     telephone_client: telephone_client,
-                    total_price: total_price * quantity,
+                    total_price: (total_price * quantity) + (total_price * quantity*tva_app/100),
                     price: total_price,
                     id_produit: id_produit,
                     avoir_client: avoir_client
@@ -446,6 +459,7 @@
                 $('#product').val($(this).text());
                 $('#total_price').val($(this).data("price"));
                 $('#quantite_res').val($(this).data("quantity"));
+                $('#tva_app').val($(this).data("tva_app"));
                 $('#id_produit').val($(this).data("id"));
                 $('#productList').fadeOut();
             });

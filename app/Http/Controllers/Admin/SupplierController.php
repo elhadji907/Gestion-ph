@@ -19,9 +19,21 @@ class SupplierController extends Controller
     {
         $title = 'Fournisseurs';
         if($request->ajax()){
-            $suppliers = Supplier::latest();
+            /* $suppliers = Supplier::latest(); */
+            $suppliers = Supplier::all();
             return DataTables::of($suppliers)
                 ->addIndexColumn()
+                ->addColumn('count', function ($count) {
+                    return $count->purchases->count();
+                    /* $counts = Supplier::select("id")->withCount('purchases')->get();
+                    return $counts; */
+                    /* foreach ($counts as $key => $count) {
+                        return $count->purchases_count;
+                    } */
+                })
+                ->addColumn('somme', function ($somme) {
+                    return number_format(($somme->purchases->sum('cost_price')), 2, '.', ' ');
+                })
                 ->addColumn('action', function ($row) {
                     $editbtn = '<a href="'.route("suppliers.edit", $row->id).'" class="editbtn"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';
                     $showbtn = '<a href="'.route("suppliers.supplier", $row->id).'" class="showbtn" target="_blank" title="Voir"><button class="btn btn-sm bg-info-light"><i class="fa fa-eye" aria-hidden="true"></i></button></a>';

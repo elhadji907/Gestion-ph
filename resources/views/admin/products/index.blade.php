@@ -143,6 +143,9 @@
                         searchable: false
                     },
                 ],
+                "order": [
+                    [2, 'ASC']
+                ],
                 language: {
                     "sProcessing": "Traitement en cours...",
                     "sSearch": "Rechercher&nbsp;:",

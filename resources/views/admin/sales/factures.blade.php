@@ -121,13 +121,19 @@
                     <td colspan="1" align="center"><b>{{ __('N°') }}</b>
 
                     </td>
-                    <td style="width:50%;" colspan="1" align="center"><b>{{ __('PRODUIT') }}</b>
+                    <td style="width:35%;" colspan="1" align="center"><b>{{ __('PRODUIT') }}</b>
 
                     </td>
                     <td colspan="1" align="center" align="center"><b>{{ __('QUANTITÉ') }}</b>
 
                     </td>
-                    <td colspan="1" align="center"><b>{{ __('PU') }}</b>
+                    <td colspan="1" align="center"><b>{{ __('Prix U') }}</b>
+
+                    </td>
+                    <td colspan="1" align="center"><b>{{ __('Prix HT') }}</b>
+
+                    </td>
+                    <td colspan="1" align="center"><b>{{ __('TVA (%)') }}</b>
 
                     </td>
                     <td colspan="1" align="center"><b>{{ __('TOTAL') }}</b>
@@ -146,9 +152,15 @@
                         <td colspan="1" align="center">
                             {!! $sale->quantity !!}<br>
                         </td>
-                        <?php $price = $sale->total_price / $sale->quantity; ?>
+                        {{--  <?php $price = $sale->total_price / $sale->quantity; ?>  --}}
                         <td colspan="1" align="center">
-                            {!! number_format($price, 2, '.', ' ') !!}<br>
+                            {!! number_format($sale->product->price, 2, '.', ' ') !!}<br>
+                        </td>
+                        <td colspan="1" align="center">
+                            {!! number_format(($sale->product->price * $sale->quantity), 2, '.', ' ') !!}<br>
+                        </td>
+                        <td colspan="1" align="center">
+                            {!! $sale->product->purchase->item !!}<br>
                         </td>
                         <td align="center" colspan="1">
                             {!! number_format($sale->total_price, 2, '.', ' ') !!}<br>
@@ -156,7 +168,7 @@
                     </tr>
                 @endforeach
                 <tr class="total" align="center">
-                    <td colspan="4">
+                    <td colspan="6">
                         TOTAL
                     </td>
 

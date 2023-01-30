@@ -68,7 +68,14 @@
                                             name="quantity" id="quantity" value="0.00" min="0" readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label>TVA (%)<span class="text-danger">*</span></label>
+                                        <input class="form-control form-control-sm" type="text" id="tva" name="tva"
+                                            value="0" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
                                     <div class="form-group">
                                         <label>Prix de vente <span class="text-danger">*</span></label>
                                         <input class="form-control form-control-sm @error('price') is-invalid @enderror"
@@ -81,7 +88,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
                                     <div class="form-group">
                                         <label>Rabais (%)<span class="text-danger">*</span></label>
                                         <input class="form-control form-control-sm" type="text" name="discount"
@@ -141,6 +148,7 @@
             $('#producte').val($(this).text());
             $('#total_price').val($(this).data("price"));
             $('#quantity').val($(this).data("quantity"));
+            $('#tva').val($(this).data("tva"));
             $('#id_product').val($(this).data("id"));
             $('#producteList').fadeOut();
         });

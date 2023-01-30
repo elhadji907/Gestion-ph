@@ -39,7 +39,7 @@
                                         <td>{!! $purchase->category->categorie ?? '' !!}</td>
                                         <td>{!! $purchase->created_at->format('d/m/Y') !!}</td>
                                         <td>{!! $purchase->quantity ?? '' !!}</td>
-                                        <td>{!! $purchase->cost_price ?? '' !!}</td>
+                                        <td>{!! number_format(($purchase->cost_price ?? ''), 2, '.', ' ') !!}</td>
                                         <td>{!! date_format(date_create($purchase->expiry_date), 'd/m/Y') !!}</td>
                                     </tr>
                                 @endforeach
@@ -86,8 +86,8 @@
                     }
                 ],
                 "lengthMenu": [
-                    [5, 10, 25, 50, 100, -1],
-                    [5, 10, 25, 50, 100, "Tout"]
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
                     [0, 'DESC']

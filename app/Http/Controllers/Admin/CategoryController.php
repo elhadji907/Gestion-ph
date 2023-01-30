@@ -36,13 +36,17 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $title = 'categories';
-        $categories = Category::latest();
+        /* $categories = Category::latest(); */
+        $categories = Category::all();
         if ($request->ajax()) {
             /* $categories = Category::get(); */
             return DataTables::of($categories)
                     ->addIndexColumn()
                     ->addColumn('created_at', function ($category) {
                         return date_format(date_create($category->created_at), "d/m/Y");
+                    })
+                    ->addColumn('count', function ($count) {
+                        return $count->purchases->count();
                     })
                     ->addColumn('action', function ($row) {
                         $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->categorie.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-sm bg-primary-light"><i class="fas fa-edit"></i></button></a>';

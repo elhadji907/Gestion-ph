@@ -76,6 +76,7 @@ class SaleController extends Controller
         foreach ($sales as $key => $sale) {
             if ($request->ajax()) {
                 return DataTables::of($sales)
+                ->addIndexColumn()
                 ->addColumn('product', function ($sale) {
                     $image = '';
                     if (!empty($sale->product)) {
@@ -207,6 +208,7 @@ class SaleController extends Controller
         $product = $row->product;
         $quantity = $row->quantity;
         $id = $row->id;
+        $tva = $row->item;
         
         $purchase_id = Purchase::where('product', $product)->first()->id;
         $price = Product::where('purchase_id', $purchase_id)->first()->price;
@@ -215,7 +217,7 @@ class SaleController extends Controller
 
        $output .= '
        
-       <li data-id="'.$id.'" data-price="'.$price.'" data-quantity="'.$quantity.'"><a href="#">'.$product.'</a></li>
+       <li data-id="'.$id.'" data-price="'.$price.'" data-quantity="'.$quantity.'" data-tva_app="'.$tva.'"><a href="#">'.$product.'</a></li>
        ';
       }
       $output .= '</ul>';

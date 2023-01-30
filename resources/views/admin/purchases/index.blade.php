@@ -32,7 +32,8 @@
                                     <th>Médicament</th>
                                     <th>Catégorie</th>
                                     {{--  <th width="10%">Fournisseur</th>  --}}
-                                    <th>Prix d’achat (CFA)</th>
+                                    <th>Prix</th>
+                                    <th>tva</th>
                                     <th>Qté</th>
                                     <th>Date d’expiration</th>
                                     <th>En vente</th>
@@ -95,7 +96,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [5, 'ASC']
+                    [4, 'DESC']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
@@ -141,6 +142,10 @@
                     {
                         data: 'cost_price',
                         name: 'cost_price'
+                    },
+                    {
+                        data: 'item',
+                        name: 'item'
                     },
                     {
                         data: 'quantity',

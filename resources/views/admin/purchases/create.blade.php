@@ -31,89 +31,129 @@
                         @csrf
                         <div class="service-fields mb-3">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-9">
                                     <div class="form-group">
                                         <label>Nom du médicament<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="product"
-                                            placeholder="Nom du médicament">
+                                        <input class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                            type="text" name="product" placeholder="Nom du médicament">
+                                        @error('product')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label>TVA (%)<span class="text-danger">*</span></label>
+                                        <input class="form-control form-control-sm @error('price') is-invalid @enderror"
+                                            type="text" name="tva" placeholder="TVA (%)" value="0">
+                                        @error('tva')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Catégorie <span class="text-danger">*</span></label>
-                                        <select class="select2 form-select form-control" name="category">
+                                        <select
+                                            class="select2 form-control form-control-sm @error('category') is-invalid @enderror"
+                                            name="category">
                                             <option disabled selected>Sélectionner une catégorie</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->categorie }}</option>
                                             @endforeach
                                         </select>
+                                        @error('category')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Fournisseur <span class="text-danger">*</span></label>
-                                        <select class="select2 form-select form-control" name="supplier">
+                                        <select
+                                            class="select2 form-control form-control-sm @error('supplier') is-invalid @enderror"
+                                            name="supplier">
                                             <option disabled selected>Sélectionner un fournisseur</option>
                                             @foreach ($suppliers as $supplier)
                                                 <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('supplier')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="service-fields mb-3">
-                            <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Prix de revient<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="cost_price"
-                                            placeholder="Coût d'achat du médicament">
+                                        <input
+                                            class="form-control form-control-sm @error('cost_price') is-invalid @enderror"
+                                            type="text" name="cost_price" placeholder="Coût d'achat du médicament">
+                                        @error('cost_price')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Quantité<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="number" name="quantity"
-                                            placeholder="Quantité achetée" min="1">
+                                        <input class="form-control form-control-sm @error('quantity') is-invalid @enderror"
+                                            type="number" name="quantity" placeholder="Quantité achetée" min="1">
+                                        @error('quantity')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="service-fields mb-3">
-                            <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Date d’expiration<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" name="expiry_date">
+                                        <input
+                                            class="form-control form-control-sm @error('expiry_date') is-invalid @enderror"
+                                            type="date" name="expiry_date">
+                                        @error('expiry_date')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Image de médecine</label>
-                                        <input type="file" name="image" class="form-control">
+                                        <input type="file" name="image"
+                                            class="form-control form-control-sm @error('image') is-invalid @enderror">
+                                        @error('image')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="submit-section">
                             <button class="btn btn-primary submit-btn" type="submit">Envoyer</button>
                         </div>
                     </form>
                     <!-- /Add Medicine -->
-
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+        @endsection
 
-@push('page-js')
-    <!-- Datetimepicker JS -->
-    <script src="{{ asset('assets/js/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
-@endpush
+        @push('page-js')
+            <!-- Datetimepicker JS -->
+            <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+        @endpush

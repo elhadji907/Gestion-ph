@@ -12,4 +12,9 @@ class Category extends Model
     use SoftDeletes;
 
     protected $fillable = ['categorie','created_by','updated_by', 'deleted_by'];
+
+    public function purchases()
+	{
+		return $this->hasMany(Purchase::class);
+	}
 }

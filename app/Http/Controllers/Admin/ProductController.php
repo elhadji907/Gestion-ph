@@ -88,14 +88,14 @@ class ProductController extends Controller
 
         $title = 'Produits';
         /* $products = Product::whereDate('expiry_date', '<=', Carbon::now())->where('quantity', '>', '0')->get(); */
-        $products = Product::get();
 
         /* dd($products); */
 
-        foreach ($products as $key => $product) {
+        /* foreach ($products as $key => $product) { */
             //dd($product);
             if ($request->ajax()) {
                 //$products = Product::latest();
+                $products = Product::all();
                 return DataTables::of($products)
                 ->addColumn('product', function ($product) {
                     $image = '';
@@ -152,7 +152,7 @@ class ProductController extends Controller
                     ->rawColumns(['product','action'])
                     ->make(true);
             }
-        }
+      /*   } */
         return view('admin.products.index', compact(
             'title'
         ));
@@ -526,7 +526,7 @@ class ProductController extends Controller
       {
         
        $output .= '
-       <li data-id="'.$row->id.'" data-price="'.$row->cost_price.'" data-quantity="'.$row->quantity.'"><a href="#">'.$row->product.'</a></li>
+       <li data-id="'.$row->id.'" data-price="'.$row->cost_price.'" data-quantity="'.$row->quantity.'" data-tva="'.$row->item.'"><a href="#">'.$row->product.'</a></li>
        ';
       }
       $output .= '</ul>';
