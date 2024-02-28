@@ -17,6 +17,8 @@ use Illuminate\Support\Carbon;
 use Auth;
 use Dompdf\Dompdf;
 use DB;
+use NumberToWords\NumberToWords;
+use \NumberFormatter;
 
 class SaleController extends Controller
 {
@@ -608,6 +610,12 @@ class SaleController extends Controller
       
         $title =' Facture n° '.$code;
 
+        $numberToWords = new NumberToWords();
+    	$numberTransformer = $numberToWords->getNumberTransformer('fr');
+    	$f = new NumberFormatter("fr", NumberFormatter::SPELLOUT);
+    	$total_lettre = $f->format($total);
+    	//dd($numberTransformer->toWords(5120));
+
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
         $options->setDefaultFont('Courier');
@@ -619,7 +627,8 @@ class SaleController extends Controller
             'code',
             'sale',
             'total',
-            'title'
+            'title',
+            'total_lettre'
         )));
 
         // (Optional) Setup the paper size and orientation

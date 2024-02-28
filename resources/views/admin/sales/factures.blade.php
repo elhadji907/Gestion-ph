@@ -11,7 +11,8 @@
             padding: 30px;
             font-size: 12px;
             line-height: 24px;
-            color: color: rgb(0, 0, 0);;
+            color: color: rgb(0, 0, 0);
+            ;
         }
 
         /** RTL **/
@@ -74,7 +75,7 @@
                 <tr>
                     <td colspan="2">
                         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pharma-niaguis.png'))) }}"
-                            style="width: 100%; max-width: 200px" />
+                            style="width: 50%; max-width: 100px" />
                     </td>
                     <td colspan="2" align="right" valign="top">
                         <p>
@@ -111,6 +112,7 @@
                             @endif
                         </b>
                         {{ substr($tel, -13, -9) . ' ' . substr($tel, -9, -7) . ' ' . substr($tel, -7, -4) . ' ' . substr($tel, -4, -2) . ' ' . substr($tel, -2) }}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -157,7 +159,7 @@
                             {!! number_format($sale->product->price, 2, '.', ' ') !!}<br>
                         </td>
                         <td colspan="1" align="center">
-                            {!! number_format(($sale->product->price * $sale->quantity), 2, '.', ' ') !!}<br>
+                            {!! number_format($sale->product->price * $sale->quantity, 2, '.', ' ') !!}<br>
                         </td>
                         <td colspan="1" align="center">
                             {!! $sale->product->purchase->item !!}<br>
@@ -175,6 +177,12 @@
                     <td align="center" colspan="1">
                         {{ number_format($total, 2, '.', ' ') }}
                     </td>
+                </tr>
+                
+                <tr class="" align="left">
+                    <td colspan="7">
+                        Arrêtée cette facture, la somme de : {{ ucfirst(strtolower($total_lettre)) }} <b> {{ __('F CFA') }}</b>
+                    </td>                   
                 </tr>
             </tbody>
         </table>

@@ -35,7 +35,7 @@ use App\Http\Controllers\ProductAjaxController;
 |
 */
 Route::middleware(['auth'])->prefix('admin')->group(function(){
-    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');   
     Route::get('',[DashboardController::class,'Index']);
     Route::get('notification',[NotificationController::class,'markAsRead'])->name('mark-as-read');
     Route::get('notification-read',[NotificationController::class,'read'])->name('read');
